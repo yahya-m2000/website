@@ -14,7 +14,7 @@ const HeroImage = () => {
     <Box
       sx={{
         position: "relative",
-        height: "80vh", // Adjust according to your design
+        height: "60vh", // Adjust according to your design
         backgroundImage: `url(${bgImage})`, // Use a template literal to set the background image
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -46,7 +46,7 @@ const HeroImage = () => {
           textAlign: "center",
           zIndex: 2, // Ensure the text is above the overlay
           fontSize: "1vw",
-          letterSpacing: "0.5vw",
+          letterSpacing: "0.25vw",
         }}
       >
         WE BELIEVE IN INNOVATION AND, MORE IMPORTANTLY, THE INNOVATORS

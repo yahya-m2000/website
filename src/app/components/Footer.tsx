@@ -42,7 +42,6 @@ const CopyrightText = styled(Typography)(({ theme }) => ({
 
 const Footer = () => {
   const theme = useTheme();
-  console.log("Theme:", theme); // Debugging to check if theme is correctly loaded
 
   return (
     <FooterContainer>
