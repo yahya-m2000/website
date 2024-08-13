@@ -45,8 +45,9 @@ const HeroImage = () => {
           fontFamily: juliusSansOne.style.fontFamily,
           textAlign: "center",
           zIndex: 2, // Ensure the text is above the overlay
-          fontSize: "1vw",
+          fontSize: "1em",
           letterSpacing: "0.25vw",
+          marginInline: "10vw",
         }}
       >
         WE BELIEVE IN INNOVATION AND, MORE IMPORTANTLY, THE INNOVATORS

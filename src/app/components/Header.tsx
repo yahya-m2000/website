@@ -8,10 +8,11 @@ import {
   IconButton,
   Drawer,
 } from "@mui/material";
-import { Menu as MenuIcon } from "@mui/icons-material"; // Import Menu Icon for the Hamburger button
+import { Menu as MenuIcon } from "@mui/icons-material";
 import { inriaSerif } from "../fonts";
 import Image from "next/image";
 
+// Styled component for NavItem with media queries
 const NavItem = styled(Typography)(({ theme }) => ({
   fontFamily: inriaSerif.style.fontFamily,
   fontSize: "0.9em",
@@ -20,41 +21,52 @@ const NavItem = styled(Typography)(({ theme }) => ({
   whiteSpace: "nowrap", // Prevent text from wrapping
 }));
 
+// Container for desktop and mobile navigation
+const NavContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  height: "10vh",
+  width: "100%",
+  [`@media (max-width: 1024px)`]: {
+    display: "none", // Hide on mobile view
+  },
+}));
+
+// Mobile drawer toggle button container
+const MobileNavContainer = styled(Box)(({ theme }) => ({
+  display: "none",
+  [`@media (max-width: 1024px)`]: {
+    display: "flex", // Show on mobile view
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    height: "10vh",
+  },
+}));
+
 const Header = () => {
   const theme = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [initialWindowWidth, setInitialWindowWidth] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      // This code will only run in the browser
-      setInitialWindowWidth(window.innerWidth);
-      setWindowWidth(window.innerWidth);
+    const handleScroll = () => {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      setIsScrolled(scrollTop > (60 * window.innerHeight) / 100);
+    };
 
-      const handleResize = () => {
-        setWindowWidth(window.innerWidth);
-        console.log("Window resized. Current windowWidth:", window.innerWidth);
-      };
+    window.addEventListener("scroll", handleScroll);
 
-      window.addEventListener("resize", handleResize);
-
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
-
-  const isMobile = windowWidth <= initialWindowWidth * 0.7; // Set your breakpoint for mobile view
-
-  console.log("Current windowWidth:", windowWidth);
-  console.log("Initial windowWidth:", initialWindowWidth);
-  console.log("Is mobile:", isMobile);
 
   return (
     <Box
@@ -77,190 +89,152 @@ const Header = () => {
         padding: "0 2vw",
       }}
     >
-      {/* Conditional rendering based on screen size */}
-      {isMobile ? (
-        <>
-          <Box
+      <NavContainer>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <NavItem
+            variant="h6"
             sx={{
-              display: "flex",
-              flex: 1,
-
-              alignItems: "center",
-              justifyContent: "space-between",
-              height: "10vh",
-              // backgroundColor: "red",
+              color: isScrolled ? "black" : theme.palette.primary.contrastText,
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flex: 1,
-              }}
-            >
-              <IconButton
-                onClick={toggleDrawer}
-                sx={{
-                  color: isScrolled
-                    ? "black"
-                    : theme.palette.primary.contrastText,
-                }}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Box>
+            About Us
+          </NavItem>
+          <NavItem
+            variant="h6"
+            sx={{
+              color: isScrolled ? "black" : theme.palette.primary.contrastText,
+            }}
+          >
+            Our Vision
+          </NavItem>
+          <NavItem
+            variant="h6"
+            sx={{
+              color: isScrolled ? "black" : theme.palette.primary.contrastText,
+            }}
+          >
+            News
+          </NavItem>
+        </Box>
+        <Box>
+          <Image
+            src={require("../assets/images/logo.png")}
+            layout="fill"
+            objectFit="contain"
+            alt="Logo"
+            style={{
+              filter: isScrolled ? "invert(1)" : "invert(0)",
+              paddingBlock: "1vh",
+            }} // Invert color for dark background
+          />
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center", height: "10vh" }}>
+          <NavItem
+            variant="h6"
+            sx={{
+              color: isScrolled ? "black" : theme.palette.primary.contrastText,
+            }}
+          >
+            Services
+          </NavItem>
+          <NavItem
+            variant="h6"
+            sx={{
+              color: isScrolled ? "black" : theme.palette.primary.contrastText,
+            }}
+          >
+            Placeholder
+          </NavItem>
+          <NavItem
+            variant="h6"
+            sx={{
+              color: isScrolled ? "black" : theme.palette.primary.contrastText,
+            }}
+          >
+            Contact
+          </NavItem>
+        </Box>
+      </NavContainer>
 
-            <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
-              <Box
-                sx={{
-                  width: 250,
-                  padding: "2vh",
-                  backgroundColor: theme.palette.background.default,
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <NavItem
-                  variant="h6"
-                  sx={{ color: "black", marginBottom: theme.spacing(3) }}
-                >
-                  About Us
-                </NavItem>
-                <NavItem
-                  variant="h6"
-                  sx={{ color: "black", marginBottom: theme.spacing(3) }}
-                >
-                  Our Vision
-                </NavItem>
-                <NavItem
-                  variant="h6"
-                  sx={{ color: "black", marginBottom: theme.spacing(3) }}
-                >
-                  News
-                </NavItem>
-                <NavItem
-                  variant="h6"
-                  sx={{ color: "black", marginBottom: theme.spacing(3) }}
-                >
-                  Services
-                </NavItem>
-                <NavItem
-                  variant="h6"
-                  sx={{ color: "black", marginBottom: theme.spacing(3) }}
-                >
-                  Placeholder
-                </NavItem>
-                <NavItem
-                  variant="h6"
-                  sx={{ color: "black", marginBottom: theme.spacing(3) }}
-                >
-                  Contact
-                </NavItem>
-              </Box>
-            </Drawer>
-
-            <Box
-              sx={{
-                position: "relative",
-                width: "20em",
-                height: "4em",
-                display: "flex",
-                flex: 1,
-              }}
-            >
-              <Image
-                src={require("../assets/images/logo.png")}
-                layout="fill"
-                objectFit="contain"
-                alt="Logo"
-                style={{
-                  filter: isScrolled ? "invert(1)" : "invert(0)",
-                }} // Invert color for dark background
-              />
-            </Box>
-            <Box sx={{ display: "flex", flex: 1 }} />
-          </Box>
-        </>
-      ) : (
-        <>
-          <Box sx={{ display: "flex", alignItems: "center", height: "10vh" }}>
+      <MobileNavContainer>
+        <IconButton
+          onClick={toggleDrawer}
+          sx={{
+            color: isScrolled ? "black" : theme.palette.primary.contrastText,
+          }}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
+          <Box
+            sx={{
+              width: 250,
+              padding: "2vh",
+              backgroundColor: theme.palette.background.default,
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <NavItem
               variant="h6"
-              sx={{
-                color: isScrolled
-                  ? "black"
-                  : theme.palette.primary.contrastText,
-              }}
+              sx={{ color: "black", marginBottom: theme.spacing(3) }}
             >
               About Us
             </NavItem>
             <NavItem
               variant="h6"
-              sx={{
-                color: isScrolled
-                  ? "black"
-                  : theme.palette.primary.contrastText,
-              }}
+              sx={{ color: "black", marginBottom: theme.spacing(3) }}
             >
               Our Vision
             </NavItem>
             <NavItem
               variant="h6"
-              sx={{
-                color: isScrolled
-                  ? "black"
-                  : theme.palette.primary.contrastText,
-              }}
+              sx={{ color: "black", marginBottom: theme.spacing(3) }}
             >
               News
             </NavItem>
-          </Box>
-          <Box>
-            <Image
-              src={require("../assets/images/logo.png")}
-              layout="fill"
-              objectFit="contain"
-              alt="Logo"
-              style={{
-                filter: isScrolled ? "invert(1)" : "invert(0)",
-                paddingBlock: "1vh",
-              }} // Invert color for dark background
-            />
-          </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
             <NavItem
               variant="h6"
-              sx={{
-                color: isScrolled
-                  ? "black"
-                  : theme.palette.primary.contrastText,
-              }}
+              sx={{ color: "black", marginBottom: theme.spacing(3) }}
             >
               Services
             </NavItem>
             <NavItem
               variant="h6"
-              sx={{
-                color: isScrolled
-                  ? "black"
-                  : theme.palette.primary.contrastText,
-              }}
+              sx={{ color: "black", marginBottom: theme.spacing(3) }}
             >
               Placeholder
             </NavItem>
             <NavItem
               variant="h6"
-              sx={{
-                color: isScrolled
-                  ? "black"
-                  : theme.palette.primary.contrastText,
-              }}
+              sx={{ color: "black", marginBottom: theme.spacing(3) }}
             >
               Contact
             </NavItem>
           </Box>
-        </>
-      )}
+        </Drawer>
+
+        <Box
+          sx={{
+            position: "relative",
+            width: "20em",
+            height: "4em",
+            display: "flex",
+            flex: 1,
+          }}
+        >
+          <Image
+            src={require("../assets/images/logo.png")}
+            layout="fill"
+            objectFit="contain"
+            alt="Logo"
+            style={{
+              filter: isScrolled ? "invert(1)" : "invert(0)",
+            }}
+          />
+        </Box>
+      </MobileNavContainer>
     </Box>
   );
 };
