@@ -16,30 +16,46 @@ const AssistantText = styled(Typography)(({ theme }) => ({
 const OurVision = () => {
   return (
     <Box marginBlock={"10vh"}>
-      <Box sx={{ marginInline: "35vw" }}>
-        <VisionText
-          sx={{ textAlign: "center", fontSize: "1.5vw", marginBottom: "2vh" }}
-        >
-          Our Vision
-        </VisionText>
-        <AssistantText sx={{ fontSize: "1.25em", marginBottom: "2vh" }}>
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-          ab illo inventore veritatis et quasi architecto beatae vitae dicta
-          sunt explicabo. Nemo enim v
-        </AssistantText>
-        <Button
-          variant="contained"
+      <Box
+        sx={{
+          marginInline: "15vw",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Box
           sx={{
-            borderRadius: 0,
-            textTransform: "none",
-            fontFamily: inriaSerif.style.fontFamily,
-            fontSize: "0.9vw",
-            boxShadow: 0,
+            margin: "0 auto", // Center the text horizontally
+            maxWidth: "400px", // Keep the maxWidth as specified
           }}
         >
-          Learn More
-        </Button>
+          <VisionText sx={{ fontSize: "1.5em", marginBottom: "2vh" }}>
+            Our Vision
+          </VisionText>
+          <AssistantText
+            sx={{
+              fontSize: "1.25em",
+              marginBottom: "2vh",
+            }}
+          >
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+            quae ab illo inventore veritatis et quasi architecto beatae vitae
+            dicta sunt explicabo. Nemo enim v
+          </AssistantText>
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: 0,
+              textTransform: "none",
+              fontFamily: inriaSerif.style.fontFamily,
+              fontSize: "0.9vw",
+              boxShadow: 0,
+            }}
+          >
+            Learn More
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
