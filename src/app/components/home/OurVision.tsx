@@ -15,7 +15,7 @@ const AssistantText = styled(Typography)(({ theme }) => ({
 
 const OurVision = () => {
   return (
-    <Box marginBlock={"20vh"}>
+    <Box marginBlock={"10vh"}>
       <Box sx={{ marginInline: "35vw" }}>
         <VisionText
           sx={{ textAlign: "center", fontSize: "1.5vw", marginBottom: "2vh" }}
