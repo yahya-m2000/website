@@ -22,7 +22,7 @@ const OurVision = () => {
         >
           Our Vision
         </VisionText>
-        <AssistantText sx={{ fontSize: "0.9vw", marginBottom: "2vh" }}>
+        <AssistantText sx={{ fontSize: "1.25em", marginBottom: "2vh" }}>
           Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
           ab illo inventore veritatis et quasi architecto beatae vitae dicta
