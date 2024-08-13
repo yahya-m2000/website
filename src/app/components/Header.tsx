@@ -24,31 +24,33 @@ const Header = () => {
   const theme = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [initialWindowWidth, setInitialWindowWidth] = useState(
-    window.innerWidth
-  );
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [initialWindowWidth, setInitialWindowWidth] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
-    const handleResize = () => {
+    if (typeof window !== "undefined") {
+      // This code will only run in the browser
+      setInitialWindowWidth(window.innerWidth);
       setWindowWidth(window.innerWidth);
-      console.log("Window resized. Current windowWidth:", window.innerWidth);
-    };
 
-    window.addEventListener("resize", handleResize);
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+        console.log("Window resized. Current windowWidth:", window.innerWidth);
+      };
 
-    console.log("Initial window width set to:", initialWindowWidth);
+      window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [initialWindowWidth]);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
+  }, []);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  const isMobile = windowWidth <= 1024; // Set your breakpoint for mobile view
+  const isMobile = windowWidth <= initialWindowWidth * 0.7; // Set your breakpoint for mobile view
 
   console.log("Current windowWidth:", windowWidth);
   console.log("Initial windowWidth:", initialWindowWidth);
