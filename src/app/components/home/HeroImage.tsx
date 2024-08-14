@@ -33,6 +33,7 @@ const HeroImage = () => {
           width: "100%",
           height: "100%",
           backgroundColor: "rgba(0, 0, 0, 0.75)", // Dark overlay with 50% opacity
+          backdropFilter: "blur(4px)",
           zIndex: 1,
         }}
       />
