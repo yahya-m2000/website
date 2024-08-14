@@ -4,12 +4,12 @@ import { Box, Button, Typography, styled } from "@mui/material";
 import { assistant, inriaSerif } from "@/app/fonts";
 
 const VisionText = styled(Typography)(({ theme }) => ({
-  color: theme.palette.primary.main,
+  color: "black",
   fontFamily: inriaSerif.style.fontFamily,
 }));
 
 const AssistantText = styled(Typography)(({ theme }) => ({
-  color: theme.palette.primary.main,
+  color: "black",
   fontFamily: assistant.style.fontFamily,
 }));
 
@@ -29,7 +29,14 @@ const OurVision = () => {
             maxWidth: "400px", // Keep the maxWidth as specified
           }}
         >
-          <VisionText sx={{ fontSize: "1.5em", marginBottom: "2vh" }}>
+          <VisionText
+            sx={{
+              fontSize: "2.5em",
+              marginBottom: "2vh",
+              fontWeight: 700,
+              textAlign: "center",
+            }}
+          >
             Our Vision
           </VisionText>
           <AssistantText
@@ -49,7 +56,8 @@ const OurVision = () => {
               borderRadius: 0,
               textTransform: "none",
               fontFamily: inriaSerif.style.fontFamily,
-              fontSize: "0.9vw",
+              fontWeight: 300,
+              fontSize: "1em",
               boxShadow: 0,
             }}
           >
