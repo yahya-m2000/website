@@ -2,6 +2,7 @@
 import { Box, useTheme, styled, Typography, Button } from "@mui/material";
 import React from "react";
 import { assistant, inriaSerif } from "@/app/fonts";
+import { Height } from "@mui/icons-material";
 
 const VisionText = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.contrastText,
@@ -26,13 +27,13 @@ const WhoWeAre = () => {
       <Box
         sx={{
           position: "relative",
-          height: "80vh", // Adjust according to your design
+          height: "60vh", // Adjust according to your design
           backgroundImage: `url(${whoWeAreImage})`, // Use a template literal to set the background image
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+
           //   borderBottom: `2.5vh solid ${theme.palette.primary.main}`, // Use theme color for border
         }}
       >
@@ -55,30 +56,47 @@ const WhoWeAre = () => {
             position: "relative",
             zIndex: 2, // Ensure the text is on top of the overlay
             marginLeft: "15vw",
+            maxWidth: "800px", // Keep the maxWidth as specified
           }}
         >
-          <VisionText sx={{ fontSize: "1.5em", marginBottom: "2vh" }}>
+          <VisionText sx={{ fontSize: "2.5em", marginBottom: "2vh" }}>
             Who we are
           </VisionText>
-          <AssistantText sx={{ fontSize: "1em", marginBottom: "2vh" }}>
+          <AssistantText sx={{ fontSize: "1.25em", marginBottom: "2vh" }}>
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
             accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
             quae ab illo inventore veritatis et quasi architecto beatae vitae
             dicta sunt explicabo. Nemo enim v
           </AssistantText>
           <Button
-            variant="contained"
+            variant="outlined"
             sx={{
               borderRadius: 0,
               textTransform: "none",
               fontFamily: inriaSerif.style.fontFamily,
               fontSize: "1em",
               boxShadow: 0,
+              color: "white",
             }}
           >
             Learn More
           </Button>
         </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flex: 1,
+          justifyContent: "flex-end",
+        }}
+      >
+        <Box
+          sx={{
+            height: "20vh",
+            width: "15vw",
+            backgroundColor: theme.palette.primary.main,
+          }}
+        ></Box>
       </Box>
     </Box>
   );

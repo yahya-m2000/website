@@ -86,7 +86,7 @@ const Header = () => {
         backdropFilter: "blur(2px)",
         borderBottom: isScrolled
           ? ""
-          : `0.5vh solid ${theme.palette.primary.main}`,
+          : `0.25vh solid ${theme.palette.primary.main}`,
         transition: "all 0.3s ease-in-out",
         padding: "0 2vw",
       }}

@@ -2,36 +2,15 @@
 import { Box, useTheme, styled, Typography, Button } from "@mui/material";
 import React from "react";
 import { assistant, inriaSerif } from "@/app/fonts";
-
-// Styled component for the percentage block
-const PercentageBlock = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  margin: "1vw", // Adjust margin for spacing between blocks
-}));
-
-const PercentageText = styled(Typography)(({ theme }) => ({
-  fontFamily: assistant.style.fontFamily,
-  fontSize: "4em",
-  margin: 0,
-  color: theme.palette.primary.main,
-}));
-
-const SubtitleText = styled(Typography)(({ theme }) => ({
-  fontFamily: assistant.style.fontFamily,
-  fontSize: "1em",
-  color: theme.palette.primary.main,
-}));
+import { Height } from "@mui/icons-material";
 
 const VisionText = styled(Typography)(({ theme }) => ({
-  color: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
   fontFamily: inriaSerif.style.fontFamily,
 }));
 
 const AssistantText = styled(Typography)(({ theme }) => ({
-  color: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
   fontFamily: assistant.style.fontFamily,
   maxWidth: "50%", // Adjust the width as needed to control text wrapping
   wordWrap: "break-word", // Ensure long words are wrapped properly
@@ -44,17 +23,18 @@ const OurMission = () => {
     "https://images.pexels.com/photos/955395/pexels-photo-955395.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
 
   return (
-    <Box>
+    <Box sx={{}}>
       <Box
         sx={{
           position: "relative",
-          height: "80vh", // Adjust according to your design
+          height: "60vh", // Adjust according to your design
           backgroundImage: `url(${whoWeAreImage})`, // Use a template literal to set the background image
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+
+          //   borderBottom: `2.5vh solid ${theme.palette.primary.main}`, // Use theme color for border
         }}
       >
         {/* Overlay */}
@@ -65,75 +45,57 @@ const OurMission = () => {
             left: 0,
             width: "100%",
             height: "100%",
-            backgroundColor: "rgba(255, 255, 255, 0.75)", // Light overlay with 75% opacity
+            backgroundColor: "rgba(0, 0, 0, 0.75)", // Dark overlay with 75% opacity
             zIndex: 1,
           }}
         />
 
-        {/* Parent Flexbox Container */}
+        {/* Text and Button Container */}
         <Box
           sx={{
             position: "relative",
-            zIndex: 2, // Ensure the content is on top of the overlay
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            // backgroundColor: "blue",
+            zIndex: 2, // Ensure the text is on top of the overlay
+            marginLeft: "15vw",
+            maxWidth: "800px", // Keep the maxWidth as specified
           }}
         >
-          {/* Percentage Grid Container */}
-          <Box
+          <VisionText sx={{ fontSize: "2.5em", marginBottom: "2vh" }}>
+            Our Mission
+          </VisionText>
+          <AssistantText sx={{ fontSize: "1.25em", marginBottom: "2vh" }}>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+            quae ab illo inventore veritatis et quasi architecto beatae vitae
+            dicta sunt explicabo. Nemo enim v
+          </AssistantText>
+          <Button
+            variant="outlined"
             sx={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)", // Create a 2x2 grid
-              gridTemplateRows: "repeat(2, auto)",
-              gap: "2vw", // Adjust gap between grid items
-              marginRight: "4vw", // Add space between the grid and the text container
+              borderRadius: 0,
+              textTransform: "none",
+              fontFamily: inriaSerif.style.fontFamily,
+              fontSize: "1em",
+              boxShadow: 0,
+              color: "white",
             }}
           >
-            <PercentageBlock>
-              <PercentageText>24%</PercentageText>
-              <SubtitleText>Increase over 1 year</SubtitleText>
-            </PercentageBlock>
-            <PercentageBlock>
-              <PercentageText>24%</PercentageText>
-              <SubtitleText>Increase over 1 year</SubtitleText>
-            </PercentageBlock>
-            <PercentageBlock>
-              <PercentageText>24%</PercentageText>
-              <SubtitleText>Increase over 1 year</SubtitleText>
-            </PercentageBlock>
-            <PercentageBlock>
-              <PercentageText>24%</PercentageText>
-              <SubtitleText>Increase over 1 year</SubtitleText>
-            </PercentageBlock>
-          </Box>
-
-          {/* Who We Are Container */}
-          <Box>
-            <VisionText sx={{ fontSize: "1.5em", marginBottom: "2vh" }}>
-              Our Mission
-            </VisionText>
-            <AssistantText sx={{ fontSize: "1em", marginBottom: "2vh" }}>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo. Nemo enim v
-            </AssistantText>
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: 0,
-                textTransform: "none",
-                fontFamily: inriaSerif.style.fontFamily,
-                fontSize: "1em",
-                boxShadow: 0,
-              }}
-            >
-              Learn More
-            </Button>
-          </Box>
+            Learn More
+          </Button>
         </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flex: 1,
+        }}
+      >
+        <Box
+          sx={{
+            height: "20vh",
+            width: "15vw",
+            backgroundColor: theme.palette.primary.main,
+          }}
+        ></Box>
       </Box>
     </Box>
   );
