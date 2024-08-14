@@ -57,10 +57,10 @@ const WhoWeAre = () => {
             marginLeft: "15vw",
           }}
         >
-          <VisionText sx={{ fontSize: "1.5vw", marginBottom: "2vh" }}>
+          <VisionText sx={{ fontSize: "1.5em", marginBottom: "2vh" }}>
             Who we are
           </VisionText>
-          <AssistantText sx={{ fontSize: "0.9vw", marginBottom: "2vh" }}>
+          <AssistantText sx={{ fontSize: "1em", marginBottom: "2vh" }}>
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
             accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
             quae ab illo inventore veritatis et quasi architecto beatae vitae
@@ -72,7 +72,7 @@ const WhoWeAre = () => {
               borderRadius: 0,
               textTransform: "none",
               fontFamily: inriaSerif.style.fontFamily,
-              fontSize: "0.9vw",
+              fontSize: "1em",
               boxShadow: 0,
             }}
           >

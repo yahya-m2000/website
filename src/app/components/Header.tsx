@@ -15,7 +15,7 @@ import Image from "next/image";
 // Styled component for NavItem with media queries
 const NavItem = styled(Typography)(({ theme }) => ({
   fontFamily: inriaSerif.style.fontFamily,
-  fontSize: "0.9em",
+  fontSize: "1em",
   marginInline: theme.spacing(4),
   cursor: "pointer",
   whiteSpace: "nowrap", // Prevent text from wrapping
@@ -84,7 +84,9 @@ const Header = () => {
           : "rgba(0, 0, 0, 0.25)",
         color: isScrolled ? "black" : theme.palette.primary.contrastText,
         backdropFilter: "blur(2px)",
-        borderBottom: `0.5vh solid ${theme.palette.primary.main}`,
+        borderBottom: isScrolled
+          ? ""
+          : `0.5vh solid ${theme.palette.primary.main}`,
         transition: "all 0.3s ease-in-out",
         padding: "0 2vw",
       }}
@@ -161,10 +163,36 @@ const Header = () => {
           onClick={toggleDrawer}
           sx={{
             color: isScrolled ? "black" : theme.palette.primary.contrastText,
+            position: "relative",
+            zIndex: 2, // Ensure the hamburger icon is above other elements
           }}
         >
           <MenuIcon />
         </IconButton>
+
+        <Box
+          sx={
+            {
+              // position: "absolute", // Position the logo absolutely
+              // left: "50%", // Center the logo horizontally
+              // transform: "translateX(-50%)", // Adjust position to account for 50% width
+              // width: "5em",
+              // height: "5em",
+            }
+          }
+        >
+          <Image
+            src={require("../assets/images/logo.png")}
+            layout="fill"
+            objectFit="contain"
+            alt="Logo"
+            style={{
+              filter: isScrolled ? "invert(1)" : "invert(0)",
+              paddingBlock: "1vh",
+            }}
+          />
+        </Box>
+
         <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
           <Box
             sx={{
@@ -214,26 +242,6 @@ const Header = () => {
             </NavItem>
           </Box>
         </Drawer>
-
-        <Box
-          sx={{
-            position: "relative",
-            width: "20em",
-            height: "4em",
-            display: "flex",
-            flex: 1,
-          }}
-        >
-          <Image
-            src={require("../assets/images/logo.png")}
-            layout="fill"
-            objectFit="contain"
-            alt="Logo"
-            style={{
-              filter: isScrolled ? "invert(1)" : "invert(0)",
-            }}
-          />
-        </Box>
       </MobileNavContainer>
     </Box>
   );

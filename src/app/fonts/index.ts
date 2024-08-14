@@ -6,7 +6,10 @@ import {
   Assistant,
 } from "next/font/google";
 
-export const inriaSerif = Inria_Serif({ subsets: ["latin"], weight: "300" });
+export const inriaSerif = Inria_Serif({
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+});
 export const juliusSansOne = Julius_Sans_One({
   subsets: ["latin"],
   weight: "400",

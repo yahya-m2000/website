@@ -14,14 +14,14 @@ const PercentageBlock = styled(Box)(({ theme }) => ({
 
 const PercentageText = styled(Typography)(({ theme }) => ({
   fontFamily: assistant.style.fontFamily,
-  fontSize: "4vw",
+  fontSize: "4em",
   margin: 0,
   color: theme.palette.primary.main,
 }));
 
 const SubtitleText = styled(Typography)(({ theme }) => ({
   fontFamily: assistant.style.fontFamily,
-  fontSize: "0.9vw",
+  fontSize: "1em",
   color: theme.palette.primary.main,
 }));
 
@@ -111,10 +111,10 @@ const OurMission = () => {
 
           {/* Who We Are Container */}
           <Box>
-            <VisionText sx={{ fontSize: "1.5vw", marginBottom: "2vh" }}>
-              Who we are
+            <VisionText sx={{ fontSize: "1.5em", marginBottom: "2vh" }}>
+              Our Mission
             </VisionText>
-            <AssistantText sx={{ fontSize: "0.9vw", marginBottom: "2vh" }}>
+            <AssistantText sx={{ fontSize: "1em", marginBottom: "2vh" }}>
               Sed ut perspiciatis unde omnis iste natus error sit voluptatem
               accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
               quae ab illo inventore veritatis et quasi architecto beatae vitae
@@ -126,7 +126,7 @@ const OurMission = () => {
                 borderRadius: 0,
                 textTransform: "none",
                 fontFamily: inriaSerif.style.fontFamily,
-                fontSize: "0.9vw",
+                fontSize: "1em",
                 boxShadow: 0,
               }}
             >

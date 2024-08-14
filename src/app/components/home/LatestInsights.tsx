@@ -6,7 +6,7 @@ import { assistant, inriaSerif } from "@/app/fonts";
 
 const Title = styled(Typography)(({ theme }) => ({
   fontFamily: inriaSerif.style.fontFamily,
-  fontSize: "2vw",
+  fontSize: "1.5em",
   marginBottom: "2vh",
   textAlign: "center",
   color: "black",
@@ -24,17 +24,17 @@ const PlaceholderCard = styled(Box)(({ theme }) => ({
 
 const PlaceholderText = styled(Typography)(({ theme }) => ({
   fontFamily: assistant.style.fontFamily,
-  fontSize: "1vw",
+  fontSize: "1em",
 }));
 
 const SubtitleText = styled(Typography)(({ theme }) => ({
   fontFamily: assistant.style.fontFamily,
-  fontSize: "0.8vw",
+  fontSize: "0.75em",
 }));
 
 const MoreNewsLink = styled(Button)(({ theme }) => ({
   fontFamily: assistant.style.fontFamily,
-  fontSize: "1vw",
+  fontSize: "0.75em",
   display: "flex",
   alignItems: "center",
   marginTop: "2vh",
