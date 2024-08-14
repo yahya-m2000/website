@@ -23,7 +23,7 @@ const OurMission = () => {
     "https://images.pexels.com/photos/955395/pexels-photo-955395.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
 
   return (
-    <Box sx={{}}>
+    <Box>
       <Box
         sx={{
           position: "relative",
@@ -33,6 +33,7 @@ const OurMission = () => {
           backgroundPosition: "center",
           display: "flex",
           alignItems: "center",
+          paddingBlock: "10vh",
 
           //   borderBottom: `2.5vh solid ${theme.palette.primary.main}`, // Use theme color for border
         }}
@@ -56,7 +57,7 @@ const OurMission = () => {
             position: "relative",
             zIndex: 2, // Ensure the text is on top of the overlay
             marginLeft: "15vw",
-            maxWidth: "800px", // Keep the maxWidth as specified
+            // maxWidth: "800px", // Keep the maxWidth as specified
           }}
         >
           <VisionText sx={{ fontSize: "2.5em", marginBottom: "2vh" }}>
