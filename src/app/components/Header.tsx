@@ -28,7 +28,7 @@ const NavContainer = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   height: "10vh",
   width: "100%",
-  [`@media (max-width: 1024px)`]: {
+  [`@media (max-width: 1200px)`]: {
     display: "none", // Hide on mobile view
   },
 }));
@@ -36,7 +36,7 @@ const NavContainer = styled(Box)(({ theme }) => ({
 // Mobile drawer toggle button container
 const MobileNavContainer = styled(Box)(({ theme }) => ({
   display: "none",
-  [`@media (max-width: 1024px)`]: {
+  [`@media (max-width: 1200px)`]: {
     display: "flex", // Show on mobile view
     alignItems: "center",
     justifyContent: "space-between",
