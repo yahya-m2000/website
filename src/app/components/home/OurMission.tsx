@@ -1,4 +1,3 @@
-// WhoWeAre.tsx
 "use client";
 import React from "react";
 import { Box, useTheme } from "@mui/material";
@@ -42,11 +41,27 @@ const WhoWeAre = () => {
             position: "relative",
             zIndex: 2,
             marginLeft: "15vw",
-            maxWidth: "800px", // Keep the maxWidth as specified
+            maxWidth: "800px",
+            padding: "0 15px", // Add padding for mobile
+            [theme.breakpoints.down("sm")]: {
+              marginLeft: "5vw", // Reduce margin on smaller screens
+              maxWidth: "90%", // Adjust the max-width on smaller screens
+              padding: "0 10px", // Add padding for small screens
+            },
           }}
         >
           <VisionText>Our Mission</VisionText>
-          <AssistantText>
+          <AssistantText
+            sx={{
+              lineHeight: 1.5, // Adjust line height
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+              fontSize: "1rem", // Adjust font size
+              [theme.breakpoints.down("sm")]: {
+                fontSize: "0.9rem", // Smaller font on mobile
+              },
+            }}
+          >
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
             accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
             quae ab illo inventore veritatis et quasi architecto beatae vitae
@@ -58,7 +73,6 @@ const WhoWeAre = () => {
       <Box
         sx={{
           display: "flex",
-          // justifyContent: "flex-end",
         }}
       >
         <Box
