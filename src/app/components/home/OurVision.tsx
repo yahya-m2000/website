@@ -1,4 +1,3 @@
-// OurVision.tsx
 "use client";
 import React from "react";
 import {
@@ -7,9 +6,11 @@ import {
   SectionText,
   StyledButton,
 } from "../StyledComponents";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 
 const OurVision = () => {
+  const theme = useTheme();
+
   return (
     <Container>
       <SectionTitle>Our Vision</SectionTitle>
@@ -17,9 +18,24 @@ const OurVision = () => {
         sx={{
           margin: "0 auto", // Center the text horizontally
           maxWidth: "400px", // Keep the maxWidth as specified
+          padding: "0 15px", // Add padding for mobile
+          [theme.breakpoints.down("sm")]: {
+            maxWidth: "90%", // Adjust the max-width on smaller screens
+            padding: "0 10px", // Add padding for small screens
+          },
         }}
       >
-        <SectionText>
+        <SectionText
+          sx={{
+            lineHeight: 1.5, // Adjust line height
+            wordWrap: "break-word",
+            overflowWrap: "break-word",
+            fontSize: "1rem", // Adjust font size
+            [theme.breakpoints.down("sm")]: {
+              fontSize: "0.9rem", // Smaller font on mobile
+            },
+          }}
+        >
           Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
           ab illo inventore veritatis et quasi architecto beatae vitae dicta
