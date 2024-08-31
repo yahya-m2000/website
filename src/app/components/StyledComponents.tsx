@@ -12,9 +12,10 @@ export const Container = styled(Box)(({ theme }) => ({
 
 // Placeholder Card Styling with Media Queries
 export const PlaceholderCard = styled(Box)(({ theme }) => ({
-  width: "200px",
-  height: "300px",
+  width: "50vw",
+  height: "40vh",
   backgroundColor: theme?.palette?.primary?.main || "grey",
+  // borderRadius: "1.5rem",
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
@@ -22,9 +23,8 @@ export const PlaceholderCard = styled(Box)(({ theme }) => ({
   transition: "transform 0.3s ease-in-out", // Transition for carousel effect
 
   // Media query for smaller screens
-  [theme.breakpoints.down(1024)]: {
+  [theme.breakpoints.down("md")]: {
     width: "100%",
-    height: "auto",
   },
 }));
 
@@ -36,7 +36,7 @@ export const CarouselButton = styled(Button)(({ theme }) => ({
   fontSize: "2rem",
   zIndex: 10,
   color: theme.palette.primary.contrastText,
-  backgroundColor: theme.palette.primary.main,
+  // backgroundColor: theme.palette.primary.main,
   borderRadius: "50%",
   padding: "0.5em",
   minWidth: "auto",
@@ -45,14 +45,16 @@ export const CarouselButton = styled(Button)(({ theme }) => ({
   },
 
   // Media query to hide buttons on larger screens
-  [theme.breakpoints.up(1024)]: {
-    display: "none",
-  },
+  // [theme.breakpoints.up("md")]: {
+  //   display: "none",
+  // },
 }));
 
 export const PlaceholderText = styled(Typography)(({ theme }) => ({
   fontFamily: assistant.style.fontFamily,
-  fontSize: "1em",
+  fontWeight: "600",
+  fontSize: "2.5em",
+  color: theme.palette.primary.contrastText
 }));
 
 export const SubtitleText = styled(Typography)(({ theme }) => ({
