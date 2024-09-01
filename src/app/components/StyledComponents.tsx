@@ -1,11 +1,12 @@
 // StyledComponents.tsx
 import { Box, Typography, Button, styled } from "@mui/material";
 import { assistant, inriaSerif } from "@/app/fonts";
+import zIndex from "@mui/material/styles/zIndex";
 
 // Container for sections
 export const Container = styled(Box)(({ theme }) => ({
-  marginBlock: "10vh",
-  marginInline: "15vw",
+  paddingBlock: "10vh",
+  paddingInline: "15vw",
   justifyContent: "center",
   alignItems: "center",
 }));
@@ -15,11 +16,9 @@ export const PlaceholderCard = styled(Box)(({ theme }) => ({
   width: "50vw",
   height: "40vh",
   backgroundColor: theme?.palette?.primary?.main || "grey",
-  // borderRadius: "1.5rem",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "flex-end",
-  padding: "1vh",
+ 
   transition: "transform 0.3s ease-in-out", // Transition for carousel effect
 
   // Media query for smaller screens
@@ -28,21 +27,31 @@ export const PlaceholderCard = styled(Box)(({ theme }) => ({
   },
 }));
 
+export const CardImage = styled(Box)(({ src }: { src: string }) => ({
+  width: "100%",
+  height: "100%",
+  position: "absolute",
+  zIndex: 0,
+  backgroundImage: `url(${src})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  filter: "brightness(0.7)", // Darken the image for better text contrast
+}));
+
 // Carousel Buttons
 export const CarouselButton = styled(Button)(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
+  // position: "absolute",
   transform: "translateY(-50%)",
   fontSize: "2rem",
   zIndex: 10,
   color: theme.palette.primary.contrastText,
   // backgroundColor: theme.palette.primary.main,
-  borderRadius: "50%",
+  // borderRadius: "50%",
   padding: "0.5em",
-  minWidth: "auto",
-  "&:hover": {
-    backgroundColor: theme.palette.primary.dark,
-  },
+  // minWidth: "auto",
+  // "&:hover": {
+  //   backgroundColor: theme.palette.primary.dark,
+  // },
 
   // Media query to hide buttons on larger screens
   // [theme.breakpoints.up("md")]: {
@@ -51,15 +60,19 @@ export const CarouselButton = styled(Button)(({ theme }) => ({
 }));
 
 export const PlaceholderText = styled(Typography)(({ theme }) => ({
-  fontFamily: assistant.style.fontFamily,
+  fontFamily: inriaSerif.style.fontFamily,
   fontWeight: "600",
-  fontSize: "2.5em",
-  color: theme.palette.primary.contrastText
+  fontSize: "2.5rem",
+  color: theme.palette.primary.contrastText,
+  zIndex: 1,
 }));
 
 export const SubtitleText = styled(Typography)(({ theme }) => ({
   fontFamily: assistant.style.fontFamily,
-  fontSize: "0.75em",
+  fontSize: "1.25rem",
+  color: theme.palette.primary.contrastText,
+  fontWeight: "300",
+  zIndex: 1,
 }));
 
 export const MoreNewsLink = styled(Button)(({ theme }) => ({
@@ -81,7 +94,7 @@ export const SectionTitle = styled(Typography)(({ theme }) => ({
   marginBottom: "2vh",
   fontFamily: inriaSerif.style.fontFamily,
   color: theme.palette.primary.main,
-  fontWeight: 700,
+  // fontWeight: 700,
 }));
 
 // Section Text
@@ -106,6 +119,7 @@ export const AssistantText = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.contrastText,
   fontFamily: assistant.style.fontFamily,
   fontSize: "1.25em",
+  fontWeight: "500",
   marginBottom: "2vh",
   maxWidth: "50%",
   wordWrap: "break-word",

@@ -56,7 +56,6 @@ const WhoWeAre = () => {
               lineHeight: 1.5, // Adjust line height
               wordWrap: "break-word",
               overflowWrap: "break-word",
-              fontSize: "1rem", // Adjust font size
               [theme.breakpoints.down("sm")]: {
                 fontSize: "0.9rem", // Smaller font on mobile
               },
@@ -76,13 +75,13 @@ const WhoWeAre = () => {
           justifyContent: "flex-end",
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             height: "20vh",
             width: "15vw",
             backgroundColor: theme.palette.primary.main,
           }}
-        />
+        /> */}
       </Box>
     </Box>
   );

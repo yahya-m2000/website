@@ -8,6 +8,7 @@ import WhoWeAre from "./components/home/WhoWeAre";
 import OurMission from "./components/home/OurMission";
 import LatestInsights from "./components/home/LatestInsights";
 import Footer from "./components/Footer";
+import LetsConnect from "./components/home/LetsConnect";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
         <WhoWeAre />
         <OurMission />
         <LatestInsights />
+        <LetsConnect/>
         <Footer />
       </Layout>
     </main>

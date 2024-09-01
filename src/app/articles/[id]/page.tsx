@@ -54,7 +54,7 @@ const ArticlePage = () => {
         {article.subtitle}
       </Typography>
       <Typography variant="caption" gutterBottom>
-        By {article.author} on {new Date(article.date).toDateString()}
+        {/* By {article.author} on {new Date(article.date).toDateString()} */}
       </Typography>
       <Box my={4}>
         {/* <Image
