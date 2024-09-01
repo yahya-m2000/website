@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Box, useTheme } from "@mui/material";
-import { VisionText, AssistantText, OutlinedButton } from "../StyledComponents";
+import { VisionText, AssistantText, OutlinedButton, StyledButton } from "../StyledComponents";
 
 const WhoWeAre = () => {
   const theme = useTheme();
@@ -30,7 +30,7 @@ const WhoWeAre = () => {
             left: 0,
             width: "100%",
             height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.75)",
+            backgroundColor: "rgba(255, 255, 255, 0.75)",
             zIndex: 1,
           }}
         />
@@ -50,13 +50,14 @@ const WhoWeAre = () => {
             },
           }}
         >
-          <VisionText>Our Mission</VisionText>
+          <VisionText sx={{color:theme.palette.primary.main}}>Our Mission</VisionText>
           <AssistantText
             sx={{
               lineHeight: 1.5, // Adjust line height
               wordWrap: "break-word",
               overflowWrap: "break-word",
-              fontSize: "1rem", // Adjust font size
+
+              color:theme.palette.primary.main,
               [theme.breakpoints.down("sm")]: {
                 fontSize: "0.9rem", // Smaller font on mobile
               },
@@ -67,7 +68,7 @@ const WhoWeAre = () => {
             quae ab illo inventore veritatis et quasi architecto beatae vitae
             dicta sunt explicabo. Nemo enim v
           </AssistantText>
-          <OutlinedButton variant="outlined">Learn More</OutlinedButton>
+          <StyledButton variant="contained">Learn More</StyledButton>
         </Box>
       </Box>
       <Box
@@ -75,13 +76,6 @@ const WhoWeAre = () => {
           display: "flex",
         }}
       >
-        <Box
-          sx={{
-            height: "20vh",
-            width: "15vw",
-            backgroundColor: theme.palette.primary.main,
-          }}
-        />
       </Box>
     </Box>
   );
