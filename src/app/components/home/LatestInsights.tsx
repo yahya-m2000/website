@@ -81,7 +81,7 @@ const LatestInsights = () => {
       }}
     >
 
-      <SectionTitle sx={{ color: theme.palette.text.primary, textAlign: "center" }}>Latest Insights</SectionTitle>
+      <SectionTitle sx={{ color: theme.palette.text.primary, textAlign: "center", paddingBlockEnd: "2vh"}}>Latest Insights</SectionTitle>
       {/* <CardImage src={logoBackground} /> */}
       <Box
         sx={{
@@ -177,9 +177,9 @@ const LatestInsights = () => {
         </Box>
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      {/* <Box sx={{ display: "flex", justifyContent: "center" }}>
         <StyledButton variant="contained">View All</StyledButton>
-      </Box>
+      </Box> */}
     </Container>
   );
 };

@@ -3,9 +3,10 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
 import { assistant, rozha_One } from "@/app/fonts";
+import Image from "next/image";
 
 const FooterContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: theme?.palette?.common?.black || "#000000",
+  backgroundColor: theme?.palette?.secondary?.main || "#000000",
   color: theme?.palette?.common?.white || "#ffffff",
   padding: "3vh 5vw",
   display: "flex",
@@ -80,7 +81,16 @@ const Footer = () => {
 
   return (
     <FooterContainer>
-      <LogoText>THE EASTERN TRADE GROUP</LogoText>
+     <Box sx={{ width: "25rem", height: "auto", marginBottom: "2vh" }}>
+        <Image
+          src={require("../assets/images/logo.png")}
+          layout="responsive"
+          width={500} // Adjust this as necessary
+          height={500} // Adjust this as necessary
+          objectFit="contain"
+          alt="Logo"
+        />
+      </Box>
       <LinksContainer>
         <LinkBox>
           <FooterLink>Placeholder</FooterLink>
