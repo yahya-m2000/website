@@ -14,7 +14,7 @@ const HeroImage = () => {
     <Box
       sx={{
         position: "relative",
-        height: "60vh", // Adjust according to your design
+        height: "90vh", // Adjust according to your design
         backgroundImage: `url(${bgImage})`, // Use a template literal to set the background image
         backgroundSize: "cover",
         backgroundPosition: "center",

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Box, useTheme } from "@mui/material";
-import { VisionText, AssistantText, OutlinedButton, StyledButton } from "../StyledComponents";
+import { OutlinedButton, StyledButton, SectionTitle, SectionText } from "../style";
 
 const WhoWeAre = () => {
   const theme = useTheme();
@@ -20,6 +20,7 @@ const WhoWeAre = () => {
           backgroundPosition: "center",
           display: "flex",
           alignItems: "center",
+          justifyContent: "flex-start"
         }}
       >
         {/* Overlay */}
@@ -41,7 +42,7 @@ const WhoWeAre = () => {
             position: "relative",
             zIndex: 2,
             marginLeft: "15vw",
-            maxWidth: "800px",
+            maxWidth: "400px",
             padding: "0 15px", // Add padding for mobile
             [theme.breakpoints.down("sm")]: {
               marginLeft: "5vw", // Reduce margin on smaller screens
@@ -50,14 +51,14 @@ const WhoWeAre = () => {
             },
           }}
         >
-          <VisionText sx={{color:theme.palette.primary.main}}>Our Mission</VisionText>
-          <AssistantText
+          <SectionTitle sx={{ color:theme.palette.text.primary}}>Our Mission</SectionTitle>
+          <SectionText
             sx={{
               lineHeight: 1.5, // Adjust line height
               wordWrap: "break-word",
               overflowWrap: "break-word",
 
-              color:theme.palette.primary.main,
+              color:theme.palette.text.primary,
               [theme.breakpoints.down("sm")]: {
                 fontSize: "0.9rem", // Smaller font on mobile
               },
@@ -67,7 +68,7 @@ const WhoWeAre = () => {
             accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
             quae ab illo inventore veritatis et quasi architecto beatae vitae
             dicta sunt explicabo. Nemo enim v
-          </AssistantText>
+          </SectionText>
           <StyledButton variant="contained">Learn More</StyledButton>
         </Box>
       </Box>

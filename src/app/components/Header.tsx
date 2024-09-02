@@ -11,14 +11,14 @@ import {
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { inriaSerif } from "../fonts";
 import Image from "next/image";
+import Link from "next/link";
 
-// Styled component for NavItem with media queries
 const NavItem = styled(Typography)(({ theme }) => ({
   fontFamily: inriaSerif.style.fontFamily,
   fontSize: "1em",
-  marginInline: theme.spacing(4),
+  paddingInline: theme.spacing(4),
   cursor: "pointer",
-  whiteSpace: "nowrap", // Prevent text from wrapping
+  whiteSpace: "nowrap",
 }));
 
 // Container for desktop and mobile navigation
@@ -37,7 +37,7 @@ const NavContainer = styled(Box)(({ theme }) => ({
 const MobileNavContainer = styled(Box)(({ theme }) => ({
   display: "none",
   [`@media (max-width: 1200px)`]: {
-    display: "flex", // Show on mobile view
+    display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
@@ -81,42 +81,47 @@ const Header = () => {
         zIndex: 3,
         backgroundColor: isScrolled
           ? "rgba(255, 255, 255, 0.9)"
-          : "rgba(0, 0, 0, 0.25)",
-        color: isScrolled ? "black" : theme.palette.primary.contrastText,
+          : "rgba(0, 0, 0, 0)",
         backdropFilter: "blur(2px)",
-        borderBottom: isScrolled
-          ? ""
-          : `0.25vh solid ${theme.palette.primary.main}`,
         transition: "all 0.3s ease-in-out",
         padding: "0 2vw",
       }}
     >
       <NavContainer>
         <Box sx={{ display: "flex", alignItems: "center" }}>
+          {/* <Link href="/aboutus" passHref> */}
           <NavItem
             variant="h6"
             sx={{
-              color: isScrolled ? "black" : theme.palette.primary.contrastText,
+              color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary,
             }}
           >
             About Us
           </NavItem>
-          <NavItem
-            variant="h6"
-            sx={{
-              color: isScrolled ? "black" : theme.palette.primary.contrastText,
-            }}
-          >
-            Our Vision
-          </NavItem>
-          <NavItem
-            variant="h6"
-            sx={{
-              color: isScrolled ? "black" : theme.palette.primary.contrastText,
-            }}
-          >
-            News
-          </NavItem>
+          {/* </Link> */}
+
+          <Link href="/ourvision" passHref>
+            <NavItem
+
+              variant="h6"
+              sx={{
+                color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary,
+              }}
+            >
+              Our Vision
+            </NavItem>
+          </Link>
+          <Link href="/news" passHref>
+            <NavItem
+
+              variant="h6"
+              sx={{
+                color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary,
+              }}
+            >
+              News
+            </NavItem>
+          </Link>
         </Box>
         <Box>
           <Image
@@ -127,34 +132,43 @@ const Header = () => {
             style={{
               filter: isScrolled ? "invert(1)" : "invert(0)",
               paddingBlock: "1vh",
-            }} // Invert color for dark background
+            }}
           />
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", height: "10vh" }}>
-          <NavItem
-            variant="h6"
-            sx={{
-              color: isScrolled ? "black" : theme.palette.primary.contrastText,
-            }}
-          >
-            Services
-          </NavItem>
-          <NavItem
-            variant="h6"
-            sx={{
-              color: isScrolled ? "black" : theme.palette.primary.contrastText,
-            }}
-          >
-            Placeholder
-          </NavItem>
-          <NavItem
-            variant="h6"
-            sx={{
-              color: isScrolled ? "black" : theme.palette.primary.contrastText,
-            }}
-          >
-            Contact
-          </NavItem>
+          <Link href="/services" passHref>
+            <NavItem
+
+              variant="h6"
+              sx={{
+                color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary,
+              }}
+            >
+              Services
+            </NavItem>
+          </Link>
+          <Link href="/placeholder" passHref>
+            <NavItem
+
+              variant="h6"
+              sx={{
+                color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary,
+              }}
+            >
+              Placeholder
+            </NavItem>
+          </Link>
+          <Link href="/contact" passHref>
+            <NavItem
+
+              variant="h6"
+              sx={{
+                color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary,
+              }}
+            >
+              Contact
+            </NavItem>
+          </Link>
         </Box>
       </NavContainer>
 
@@ -162,25 +176,14 @@ const Header = () => {
         <IconButton
           onClick={toggleDrawer}
           sx={{
-            color: isScrolled ? "black" : theme.palette.primary.contrastText,
-            position: "relative",
+            color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary, position: "relative",
             zIndex: 2, // Ensure the hamburger icon is above other elements
           }}
         >
           <MenuIcon />
         </IconButton>
 
-        <Box
-          sx={
-            {
-              // position: "absolute", // Position the logo absolutely
-              // left: "50%", // Center the logo horizontally
-              // transform: "translateX(-50%)", // Adjust position to account for 50% width
-              // width: "5em",
-              // height: "5em",
-            }
-          }
-        >
+        <Box>
           <Image
             src={require("../assets/images/logo.png")}
             layout="fill"
@@ -198,48 +201,67 @@ const Header = () => {
             sx={{
               width: 250,
               padding: "2vh",
+              paddingBlock: "4vh",
               backgroundColor: theme.palette.background.default,
               height: "100%",
               display: "flex",
               flexDirection: "column",
             }}
           >
-            <NavItem
-              variant="h6"
-              sx={{ color: "black", marginBottom: theme.spacing(3) }}
-            >
-              About Us
-            </NavItem>
-            <NavItem
-              variant="h6"
-              sx={{ color: "black", marginBottom: theme.spacing(3) }}
-            >
-              Our Vision
-            </NavItem>
-            <NavItem
-              variant="h6"
-              sx={{ color: "black", marginBottom: theme.spacing(3) }}
-            >
-              News
-            </NavItem>
-            <NavItem
-              variant="h6"
-              sx={{ color: "black", marginBottom: theme.spacing(3) }}
-            >
-              Services
-            </NavItem>
-            <NavItem
-              variant="h6"
-              sx={{ color: "black", marginBottom: theme.spacing(3) }}
-            >
-              Placeholder
-            </NavItem>
-            <NavItem
-              variant="h6"
-              sx={{ color: "black", marginBottom: theme.spacing(3) }}
-            >
-              Contact
-            </NavItem>
+            <Link href="/aboutus" passHref>
+              <NavItem
+
+                variant="h6"
+                sx={{ color: theme.palette.text.primary, marginBottom: theme.spacing(3) }}
+              >
+                About Us
+              </NavItem>
+            </Link>
+            <Link href="/ourvision" passHref>
+              <NavItem
+
+                variant="h6"
+                sx={{ color: theme.palette.text.primary, marginBottom: theme.spacing(3) }}
+              >
+                Our Vision
+              </NavItem>
+            </Link>
+            <Link href="/news" passHref>
+              <NavItem
+
+                variant="h6"
+                sx={{ color: theme.palette.text.primary, marginBottom: theme.spacing(3) }}
+              >
+                News
+              </NavItem>
+            </Link>
+            <Link href="/services" passHref>
+              <NavItem
+
+                variant="h6"
+                sx={{ color: theme.palette.text.primary, marginBottom: theme.spacing(3) }}
+              >
+                Services
+              </NavItem>
+            </Link>
+            <Link href="/placeholder" passHref>
+              <NavItem
+
+                variant="h6"
+                sx={{ color: theme.palette.text.primary, marginBottom: theme.spacing(3) }}
+              >
+                Placeholder
+              </NavItem>
+            </Link>
+            <Link href="/contact" passHref>
+              <NavItem
+
+                variant="h6"
+                sx={{ color: theme.palette.text.primary, marginBottom: theme.spacing(3) }}
+              >
+                Contact
+              </NavItem>
+            </Link>
           </Box>
         </Drawer>
       </MobileNavContainer>
@@ -248,3 +270,4 @@ const Header = () => {
 };
 
 export default Header;
+

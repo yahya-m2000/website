@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Box, useTheme } from "@mui/material";
-import { VisionText, AssistantText, OutlinedButton } from "../StyledComponents";
+import { OutlinedButton, SectionTitle, SectionText } from "../style";
 
 const WhoWeAre = () => {
   const theme = useTheme();
@@ -41,7 +41,7 @@ const WhoWeAre = () => {
             position: "relative",
             zIndex: 2,
             marginLeft: "15vw",
-            maxWidth: "800px",
+            maxWidth: "400px",
             padding: "0 15px", // Add padding for mobile
             [theme.breakpoints.down("sm")]: {
               marginLeft: "5vw", // Reduce margin on smaller screens
@@ -50,9 +50,10 @@ const WhoWeAre = () => {
             },
           }}
         >
-          <VisionText>Who we are</VisionText>
-          <AssistantText
+          <SectionTitle sx={{color: theme.palette.text.secondary}}>Who we are</SectionTitle>
+          <SectionText
             sx={{
+              color: theme.palette.text.secondary,
               lineHeight: 1.5, // Adjust line height
               wordWrap: "break-word",
               overflowWrap: "break-word",
@@ -65,7 +66,7 @@ const WhoWeAre = () => {
             accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
             quae ab illo inventore veritatis et quasi architecto beatae vitae
             dicta sunt explicabo. Nemo enim v
-          </AssistantText>
+          </SectionText>
           <OutlinedButton variant="outlined">Learn More</OutlinedButton>
         </Box>
       </Box>

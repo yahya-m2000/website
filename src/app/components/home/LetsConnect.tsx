@@ -1,18 +1,42 @@
 "use client"
 import React from 'react'
-import { SectionText, SectionTitle, StyledButton } from '../StyledComponents'
-import { Container } from '@mui/material'
+import { SectionText, SectionTitle, StyledButton } from '../style'
+import { Box, Container } from '@mui/material'
+import theme from '@/app/theme'
 
 
 const LetsConnect = () => {
     return (
-        <Container sx={{flex: 1, display: "flex", flexDirection: "column",alignItems: "center", marginBottom: "10vh"}}>
-            <SectionTitle>Lets Connect</SectionTitle>
-            <SectionText >
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-            </SectionText>
-            <StyledButton variant='contained'>Connect here</StyledButton>
+        <Container sx={{paddingBlockEnd: "10vh", paddingBlockStart: "5vh"}}>
+            <SectionTitle align='center'>Lets Connect</SectionTitle>
+            <Box
+                sx={{
+                    margin: "0 auto", // Center the text horizontally
+                    maxWidth: "400px", // Keep the maxWidth as specified
+                    padding: "0 15px", // Add padding for mobile
+                    [theme.breakpoints.down("sm")]: {
+                        maxWidth: "90%", // Adjust the max-width on smaller screens
+                        padding: "0 10px", // Add padding for small screens
+                    },
+                }}
+            >
+                <SectionText
+                    sx={{
+                        lineHeight: 1.5, // Adjust line height
+                        wordWrap: "break-word",
+                        overflowWrap: "break-word",
+                        [theme.breakpoints.down("sm")]: {
+                            fontSize: "0.9rem", // Smaller font on mobile
+                        },
+                    }}
+                >
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                    accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
+                    ab illo inventore veritatis et quasi architecto beatae vitae dicta
+                    sunt explicabo. Nemo enim v
+                </SectionText>
+                <StyledButton variant="contained">Connect Here</StyledButton>
+            </Box>
         </Container>
     )
 }
