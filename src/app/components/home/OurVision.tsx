@@ -5,15 +5,15 @@ import {
   SectionTitle,
   SectionText,
   StyledButton,
-} from "../StyledComponents";
-import { Box, useTheme } from "@mui/material";
+} from "../style";
+import { Box } from "@mui/material";
+import theme from "@/app/theme";
 
 const OurVision = () => {
-  const theme = useTheme();
 
   return (
-    <Container>
-      <SectionTitle>Our Vision</SectionTitle>
+    <Container >
+      <SectionTitle sx={{textAlign: "center"}}>Our Vision</SectionTitle>
       <Box
         sx={{
           margin: "0 auto", // Center the text horizontally
@@ -30,7 +30,6 @@ const OurVision = () => {
             lineHeight: 1.5, // Adjust line height
             wordWrap: "break-word",
             overflowWrap: "break-word",
-            fontSize: "1rem", // Adjust font size
             [theme.breakpoints.down("sm")]: {
               fontSize: "0.9rem", // Smaller font on mobile
             },

@@ -1,8 +1,8 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme"; // Adjust the import path as necessary
 import Header from "./components/Header";
 import HeroImage from "./components/home/HeroImage";
-import Layout from "./layout";
+import Layout from "./components/Layout";
 import OurVision from "./components/home/OurVision";
 import WhoWeAre from "./components/home/WhoWeAre";
 import OurMission from "./components/home/OurMission";
@@ -12,17 +12,18 @@ import LetsConnect from "./components/home/LetsConnect";
 
 export default function Home() {
   return (
-    <main>
-      <Layout>
-        <Header />
-        <HeroImage />
-        <OurVision />
-        <WhoWeAre />
-        <OurMission />
-        <LatestInsights />
-        <LetsConnect/>
-        <Footer />
-      </Layout>
-    </main>
+
+        <Layout>
+      <main>
+          <Header />
+          <HeroImage />
+          <OurVision />
+          <WhoWeAre />
+          <OurMission />
+          <LatestInsights />
+          <LetsConnect />
+          <Footer />
+      </main>
+        </Layout>
   );
 }

@@ -4,6 +4,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#B51E32", // Dark color
+      contrastText: "#FFFFFF"
     },
     secondary: {
       main: "#2373EA", // Blue color
@@ -13,7 +14,7 @@ const theme = createTheme({
       paper: "#000000", // Background color for paper components
     },
     text: {
-      primary: "#000000", // Black text color for primary text
+      primary: "#1E1E1E", // Black text color for primary text
       secondary: "#FFFFFF", // Grey text color for secondary text
       disabled: "#bdbdbd", // Light grey color for disabled text
     },
