@@ -66,7 +66,7 @@ export const SectionTitle = styled(Typography)(({ theme }) => ({
 
 export const SectionText = styled(Typography)(({ theme }) => ({
   fontSize: "1.25em",
-  fontWeight: "500",
+  fontWeight: "300",
   marginBottom: "2vh",
   fontFamily: assistant.style.fontFamily,
   color: theme.palette.text.primary

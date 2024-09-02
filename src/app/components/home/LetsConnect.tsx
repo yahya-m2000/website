@@ -8,7 +8,8 @@ import theme from '@/app/theme'
 const LetsConnect = () => {
     return (
         <Container sx={{paddingBlockEnd: "10vh", paddingBlockStart: "5vh"}}>
-            <SectionTitle align='center'>Lets Connect</SectionTitle>
+            {/*  eslint-disable-next-line react/no-unescaped-entities */}
+            <SectionTitle align='center'>Let's Connect</SectionTitle>
             <Box
                 sx={{
                     margin: "0 auto", // Center the text horizontally
@@ -35,7 +36,7 @@ const LetsConnect = () => {
                     ab illo inventore veritatis et quasi architecto beatae vitae dicta
                     sunt explicabo. Nemo enim v
                 </SectionText>
-                <StyledButton variant="contained">Connect Here</StyledButton>
+                <StyledButton variant="contained">Contact Us</StyledButton>
             </Box>
         </Container>
     )

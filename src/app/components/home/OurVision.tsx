@@ -12,7 +12,7 @@ import theme from "@/app/theme";
 const OurVision = () => {
 
   return (
-    <Container >
+    <Container sx={{paddingBlock: "10vh"}}>
       <SectionTitle sx={{textAlign: "center"}}>Our Vision</SectionTitle>
       <Box
         sx={{

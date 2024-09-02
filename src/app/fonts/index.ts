@@ -15,4 +15,4 @@ export const juliusSansOne = Julius_Sans_One({
   weight: "400",
 });
 export const rozha_One = Rozha_One({ subsets: ["latin"], weight: "400" });
-export const assistant = Assistant({ subsets: ["latin"], weight: "200" });
+export const assistant = Assistant({ subsets: ["latin"], weight: ["200", "300", "400", "500", "600", "700", "800"] });

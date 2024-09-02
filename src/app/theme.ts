@@ -7,7 +7,7 @@ const theme = createTheme({
       contrastText: "#FFFFFF"
     },
     secondary: {
-      main: "#2373EA", // Blue color
+      main: "#1E1E1E", // Blue color
     },
     background: {
       default: "#ffffff", // White color for general background
