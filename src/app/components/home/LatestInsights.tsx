@@ -1,28 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { Box, useTheme, useMediaQuery } from "@mui/material";
-import {
-  SectionTitle,
-  CarouselButton,
-  CardImage,
-  Container,
-  StyledButton,
-  LargeCard,
-  CardTitleText,
-  CardSubtitleText,
-} from "../style";
-import logoBackground from '@/app/assets/images/logo_background_left.png';
-
-
-
+import { Box, useTheme } from "@mui/material";
+import { SectionTitle, CarouselButton, Container } from "../style";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import Card from "../ui/Cards";
 
-// Mock Data for Insights
 const mockInsights = [
   {
     title: "Insight 1",
     subtitle: "Subtitle 1",
-    image: "https://via.placeholder.com/600x400", // Replace with actual image URL
+    image: "https://via.placeholder.com/600x400",
   },
   {
     title: "Insight 2",
@@ -47,9 +34,6 @@ const mockInsights = [
 ];
 
 const LatestInsights = () => {
-  const theme = useTheme();
-  // const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  // const itemsToShow = isSmallScreen ? 1 : 3;
   const totalItems = mockInsights.length;
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -74,112 +58,53 @@ const LatestInsights = () => {
   };
 
   return (
-    <Container
-      sx={{
-        overflow: "hidden",
+    <Container sx={{ overflow: "hidden" }}>
+      <SectionTitle className="text-text-primary text-center pb-[2vh]">
+        Latest Insights
+      </SectionTitle>
 
-      }}
-    >
-
-      <SectionTitle sx={{ color: theme.palette.text.primary, textAlign: "center", paddingBlockEnd: "2vh"}}>Latest Insights</SectionTitle>
-      {/* <CardImage src={logoBackground} /> */}
-      <Box
-        sx={{
-          position: "relative",
-          height: "40vh", // Adjust height as needed
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginBottom: "2vh"
-        }}
-      >
+      <Box className="relative h-[40vh] flex justify-center items-center mb-[2vh]">
         <CarouselButton
           onClick={handlePrev}
-          sx={{ position: "absolute", left: "1rem", zIndex: 2 }}
+          className="absolute left-[1rem] z-20"
         >
-          <ArrowBackIos sx={{color: theme.palette.primary.contrastText, fontSize: "2rem"}}/>
+          <ArrowBackIos className="text-primary-contrast text-2xl" />
         </CarouselButton>
         <CarouselButton
           onClick={handleNext}
-          sx={{ position: "absolute", right: "1rem", zIndex: 2 }}
+          className="absolute right-[1rem] z-20"
         >
-          <ArrowForwardIos sx={{color: theme.palette.primary.contrastText, fontSize: "2rem"}}/>
+          <ArrowForwardIos className="text-primary-contrast text-2xl" />
         </CarouselButton>
 
-        <Box
-          sx={{
-            position: "relative",
-            width: "100%",
-            height: "100%",
-          }}
-        >
+        <Box className="relative w-full h-full">
           {mockInsights.map((insight, index) => {
             const isFocused = index === currentIndex;
 
             return (
               <Box
                 key={index}
-                sx={{
-                  transform: `translateX(calc(${getTranslateValue(index)}% - 50%)) scale(${isFocused ? 1 : 0.8})`,
-                  opacity: isFocused ? 1 : 0.5,
-                  transition: "transform 0.5s ease, opacity 0.5s ease",
-                  position: "absolute",
-                  top: "0",
-                  left: "50%",
-                  transformOrigin: "center",
+                className={`absolute top-0 left-1/2 transform-gpu ${
+                  isFocused ? "scale-100 opacity-100" : "scale-80 opacity-50"
+                } transition-transform duration-500 ease-in-out`}
+                style={{
+                  transform: `translateX(calc(${getTranslateValue(
+                    index
+                  )}% - 50%))`,
                   width: "50vw",
                 }}
               >
-                <LargeCard
-                  sx={{
-                    position: "relative",
-                    overflow: "hidden",
-                    ...(isFocused && {
-                      "&:hover": {
-                        "&::after": {
-                          width: "100%",
-                        },
-                      },
-                    }),
-                    "&::after": {
-                      content: '""',
-                      position: "absolute",
-                      bottom: 0,
-                      left: 0,
-                      width: 0,
-                      height: "4px", // Thickness of the bottom border
-                      backgroundColor: theme.palette.primary.main, // Color of the border
-                      zIndex: 1,
-                      transition: "width 0.3s ease-in-out", // Smooth transition
-                    },
-                  }}
-                >
-                  <CardImage src={insight.image} sx={{}} />
-                  {/* empty space */}
-                  <Box sx={{ flex: 3, zIndex: 1 }} />
-
-                  <Box
-                    sx={{
-                      flex: 1,
-                      zIndex: 1,
-                      padding: "2rem",
-                      background: "linear-gradient(transparent, rgba(0, 0, 0, 0.7))", // Vignette effect
-                    }}
-                  >
-                    <CardTitleText>{insight.title}</CardTitleText>
-                    <CardSubtitleText>{insight.subtitle}</CardSubtitleText>
-                  </Box>
-                </LargeCard>
+                <Card
+                  title={insight.title}
+                  subtitle={insight.subtitle}
+                  backgroundImage={insight.image}
+                  isFocused={isFocused} // Pass isFocused to the Card component
+                />
               </Box>
             );
           })}
-
         </Box>
       </Box>
-
-      {/* <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <StyledButton variant="contained">View All</StyledButton>
-      </Box> */}
     </Container>
   );
 };

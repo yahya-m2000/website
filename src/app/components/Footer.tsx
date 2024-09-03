@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Box, Typography, useTheme } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
@@ -18,14 +18,6 @@ const FooterContainer = styled(Box)(({ theme }) => ({
     flexDirection: "column",
     justifyContent: "space-between",
     textAlign: "left",
-  },
-}));
-
-const LogoText = styled(Typography)(({ theme }) => ({
-  fontFamily: rozha_One.style.fontFamily,
-  fontSize: "2.5em",
-  [`@media (min-width: 1200px)`]: {
-    marginBottom: "0",
   },
 }));
 
@@ -54,7 +46,6 @@ const FooterLink = styled(Typography)(({ theme }) => ({
   },
 }));
 
-// Adding a border only when the screen width is less than 1200px
 const LinkBox = styled(Box)(({ theme }) => ({
   // width: "100%",
   paddingInline: "5vw",
@@ -81,7 +72,7 @@ const Footer = () => {
 
   return (
     <FooterContainer>
-     <Box sx={{ width: "25rem", height: "auto", marginBottom: "2vh" }}>
+      <Box className="w-[25rem] h-auto mb-[2vh]">
         <Image
           src={require("../assets/images/logo.png")}
           layout="responsive"

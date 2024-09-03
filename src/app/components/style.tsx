@@ -12,16 +12,6 @@ export const Container = styled(Box)(({ theme }) => ({
 }));
 
 
-export const CardImage = styled(Box)(({ src }: { src: string }) => ({
-  width: "100%",
-  height: "100%",
-  position: "absolute",
-  zIndex: 0,
-  backgroundImage: `url(${src})`,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  filter: "brightness(0.7)", // Darken the image for better text contrast
-}));
 
 // Carousel Buttons
 export const CarouselButton = styled(Button)(({ theme }) => ({
@@ -40,18 +30,6 @@ export const CarouselButton = styled(Button)(({ theme }) => ({
   },
   "&:visited": {
     backgroundColor: "transparent", // Ensure transparency for visited state
-  },
-}));
-
-export const MoreNewsLink = styled(Button)(({ theme }) => ({
-  fontFamily: assistant.style.fontFamily,
-  fontSize: "0.75em",
-  display: "flex",
-  alignItems: "center",
-  marginTop: "2vh",
-  textTransform: "none",
-  "& .MuiButton-startIcon": {
-    marginRight: "0.5vw",
   },
 }));
 
@@ -119,4 +97,15 @@ export const CardSubtitleText = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.contrastText,
   fontWeight: "300",
   zIndex: 1,
+}));
+
+export const CardImage = styled(Box)(({ src }: { src: string }) => ({
+  width: "100%",
+  height: "100%",
+  position: "absolute",
+  zIndex: 0,
+  backgroundImage: `url(${src})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  filter: "brightness(0.7)", // Darken the image for better text contrast
 }));

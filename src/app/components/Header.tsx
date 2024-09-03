@@ -13,40 +13,67 @@ import { inriaSerif } from "../fonts";
 import Image from "next/image";
 import Link from "next/link";
 
-const NavItem = styled(Typography)(({ theme }) => ({
-  fontFamily: inriaSerif.style.fontFamily,
-  fontSize: "1em",
-  paddingInline: theme.spacing(4),
-  cursor: "pointer",
-  whiteSpace: "nowrap",
-}));
-
-// Container for desktop and mobile navigation
 const NavContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   height: "10vh",
   width: "100%",
-  [`@media (max-width: 1200px)`]: {
-    display: "none", // Hide on mobile view
+  padding: "0 2vw",
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  zIndex: 100,
+  backgroundColor: theme.palette.background.default,
+  backdropFilter: "blur(2px)",
+  transition: "all 0.3s ease-in-out",
+
+  [`@media (max-width: 2000px)`]: {
+    flexDirection: "row-reverse",
   },
 }));
 
-// Mobile drawer toggle button container
-const MobileNavContainer = styled(Box)(({ theme }) => ({
-  display: "none",
-  [`@media (max-width: 1200px)`]: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-    height: "10vh",
-  },
+const NavItem = styled(Typography)(({ theme }) => ({
+  fontFamily: inriaSerif.style.fontFamily,
+  fontSize: "1em",
+  paddingInline: theme.spacing(4),
+  cursor: "pointer",
+  whiteSpace: "nowrap",
+  color: theme.palette.text.primary,
 }));
+
+type NavItemLinkProps = {
+  href: string;
+  label: string;
+  isScrolled: boolean;
+  onClick?: () => void; // Optional click handler
+};
+
+const NavItemLink: React.FC<NavItemLinkProps> = ({
+  href,
+  label,
+  isScrolled,
+  onClick,
+}) => {
+  const theme = useTheme();
+  return (
+    <Link href={href} passHref>
+      <NavItem
+        onClick={onClick}
+        sx={{
+          color: isScrolled
+            ? theme.palette.text.primary
+            : theme.palette.text.secondary,
+        }}
+      >
+        {label}
+      </NavItem>
+    </Link>
+  );
+};
 
 const Header = () => {
-  const theme = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -58,216 +85,82 @@ const Header = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
-  };
+  const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
 
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        zIndex: 3,
-        backgroundColor: isScrolled
-          ? "rgba(255, 255, 255, 0.9)"
-          : "rgba(0, 0, 0, 0)",
-        backdropFilter: "blur(2px)",
-        transition: "all 0.3s ease-in-out",
-        padding: "0 2vw",
-      }}
+    <NavContainer
+      className={`${
+        isScrolled ? "bg-[rgba(255,255,255,0.9)]" : "bg-[rgba(0,0,0,0)]"
+      }`}
     >
-      <NavContainer>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          {/* <Link href="/aboutus" passHref> */}
-          <NavItem
-            variant="h6"
-            sx={{
-              color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary,
-            }}
-          >
-            About Us
-          </NavItem>
-          {/* </Link> */}
+      <Box className="hidden lg:flex items-center h-[10vh]">
+        <NavItemLink label="About Us" href="/aboutus" isScrolled={isScrolled} />
+        <NavItemLink
+          label="Our Vision"
+          href="/ourvision"
+          isScrolled={isScrolled}
+        />
+        <NavItemLink label="News" href="/news" isScrolled={isScrolled} />
+      </Box>
 
-          <Link href="/ourvision" passHref>
-            <NavItem
-
-              variant="h6"
-              sx={{
-                color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary,
-              }}
-            >
-              Our Vision
-            </NavItem>
-          </Link>
-          <Link href="/news" passHref>
-            <NavItem
-
-              variant="h6"
-              sx={{
-                color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary,
-              }}
-            >
-              News
-            </NavItem>
-          </Link>
-        </Box>
-        <Box>
-          <Image
-            src={require("../assets/images/logo.png")}
-            layout="fill"
-            objectFit="contain"
-            alt="Logo"
-            style={{
-              filter: isScrolled ? "invert(1)" : "invert(0)",
-              paddingBlock: "1vh",
-            }}
-          />
-        </Box>
-        <Box sx={{ display: "flex", alignItems: "center", height: "10vh" }}>
-          <Link href="/services" passHref>
-            <NavItem
-
-              variant="h6"
-              sx={{
-                color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary,
-              }}
-            >
-              Services
-            </NavItem>
-          </Link>
-          <Link href="/placeholder" passHref>
-            <NavItem
-
-              variant="h6"
-              sx={{
-                color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary,
-              }}
-            >
-              Placeholder
-            </NavItem>
-          </Link>
-          <Link href="/contact" passHref>
-            <NavItem
-
-              variant="h6"
-              sx={{
-                color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary,
-              }}
-            >
-              Contact
-            </NavItem>
-          </Link>
-        </Box>
-      </NavContainer>
-
-      <MobileNavContainer>
-        <IconButton
-          onClick={toggleDrawer}
-          sx={{
-            color: isScrolled ? theme.palette.text.primary : theme.palette.text.secondary, position: "relative",
-            zIndex: 2, // Ensure the hamburger icon is above other elements
+      <Box>
+        <Image
+          src={require("../assets/images/logo.png")}
+          layout="fill"
+          objectFit="contain"
+          alt="Logo"
+          style={{
+            filter: isScrolled ? "invert(1)" : "invert(0)",
+            paddingBlock: "1vh",
+            zIndex: -1,
           }}
-        >
-          <MenuIcon />
-        </IconButton>
+        />
+      </Box>
 
-        <Box>
-          <Image
-            src={require("../assets/images/logo.png")}
-            layout="fill"
-            objectFit="contain"
-            alt="Logo"
-            style={{
-              filter: isScrolled ? "invert(1)" : "invert(0)",
-              paddingBlock: "1vh",
-            }}
-          />
+      <Box className="hidden lg:flex items-center h-[10vh]">
+        <NavItemLink
+          label="Services"
+          href="/services"
+          isScrolled={isScrolled}
+        />
+        <NavItemLink
+          label="Placeholder"
+          href="/placeholder"
+          isScrolled={isScrolled}
+        />
+        <NavItemLink label="Contact" href="/contact" isScrolled={isScrolled} />
+      </Box>
+
+      <IconButton
+        onClick={toggleDrawer}
+        className={`${
+          isScrolled ? "text-black" : "text-white"
+        } flex lg:hidden z-2`}
+      >
+        <MenuIcon />
+      </IconButton>
+
+      <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
+        <Box className="w-[250px] p-[4vh_2vh] bg-white h-full flex flex-col">
+          {[
+            { href: "/aboutus", label: "About Us" },
+            { href: "/ourvision", label: "Our Vision" },
+            { href: "/news", label: "News" },
+            { href: "/services", label: "Services" },
+            { href: "/placeholder", label: "Placeholder" },
+            { href: "/contact", label: "Contact" },
+          ].map((item) => (
+            <Link href={item.href} passHref key={item.label}>
+              <NavItem className="mb-6">{item.label}</NavItem>
+            </Link>
+          ))}
         </Box>
-
-        <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
-          <Box
-            sx={{
-              width: 250,
-              padding: "2vh",
-              paddingBlock: "4vh",
-              backgroundColor: theme.palette.background.default,
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Link href="/aboutus" passHref>
-              <NavItem
-
-                variant="h6"
-                sx={{ color: theme.palette.text.primary, marginBottom: theme.spacing(3) }}
-              >
-                About Us
-              </NavItem>
-            </Link>
-            <Link href="/ourvision" passHref>
-              <NavItem
-
-                variant="h6"
-                sx={{ color: theme.palette.text.primary, marginBottom: theme.spacing(3) }}
-              >
-                Our Vision
-              </NavItem>
-            </Link>
-            <Link href="/news" passHref>
-              <NavItem
-
-                variant="h6"
-                sx={{ color: theme.palette.text.primary, marginBottom: theme.spacing(3) }}
-              >
-                News
-              </NavItem>
-            </Link>
-            <Link href="/services" passHref>
-              <NavItem
-
-                variant="h6"
-                sx={{ color: theme.palette.text.primary, marginBottom: theme.spacing(3) }}
-              >
-                Services
-              </NavItem>
-            </Link>
-            <Link href="/placeholder" passHref>
-              <NavItem
-
-                variant="h6"
-                sx={{ color: theme.palette.text.primary, marginBottom: theme.spacing(3) }}
-              >
-                Placeholder
-              </NavItem>
-            </Link>
-            <Link href="/contact" passHref>
-              <NavItem
-
-                variant="h6"
-                sx={{ color: theme.palette.text.primary, marginBottom: theme.spacing(3) }}
-              >
-                Contact
-              </NavItem>
-            </Link>
-          </Box>
-        </Drawer>
-      </MobileNavContainer>
-    </Box>
+      </Drawer>
+    </NavContainer>
   );
 };
 
 export default Header;
-

@@ -1,24 +1,16 @@
 "use client";
 import React from "react";
-import {
-  Container,
-  SectionTitle,
-  SectionText,
-  StyledButton,
-} from "../style";
+import { Container, SectionTitle, SectionText, StyledButton } from "../style";
 import { Box } from "@mui/material";
 import theme from "@/app/theme";
 
 const OurVision = () => {
-
   return (
-    <Container sx={{paddingBlock: "10vh"}}>
-      <SectionTitle sx={{textAlign: "center"}}>Our Vision</SectionTitle>
+    <Container className="py-[10vh]">
+      <SectionTitle className="text-center">Our Vision</SectionTitle>
       <Box
+        className="mx-auto max-w-[400px] px-[15px]"
         sx={{
-          margin: "0 auto", // Center the text horizontally
-          maxWidth: "400px", // Keep the maxWidth as specified
-          padding: "0 15px", // Add padding for mobile
           [theme.breakpoints.down("sm")]: {
             maxWidth: "90%", // Adjust the max-width on smaller screens
             padding: "0 10px", // Add padding for small screens
@@ -26,12 +18,10 @@ const OurVision = () => {
         }}
       >
         <SectionText
+          className="leading-relaxed break-words"
           sx={{
-            lineHeight: 1.5, // Adjust line height
-            wordWrap: "break-word",
-            overflowWrap: "break-word",
             [theme.breakpoints.down("sm")]: {
-              fontSize: "0.9rem", // Smaller font on mobile
+              fontSize: "1.2rem", // Smaller font on mobile
             },
           }}
         >
