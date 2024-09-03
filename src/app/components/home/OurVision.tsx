@@ -6,25 +6,11 @@ import theme from "@/app/theme";
 
 const OurVision = () => {
   return (
-    <Container className="py-[10vh]">
+    <Container className="flex  h-[500px] justify-center flex-col">
+      {/*  eslint-disable-next-line react/no-unescaped-entities */}
       <SectionTitle className="text-center">Our Vision</SectionTitle>
-      <Box
-        className="mx-auto max-w-[400px] px-[15px]"
-        sx={{
-          [theme.breakpoints.down("sm")]: {
-            maxWidth: "90%", // Adjust the max-width on smaller screens
-            padding: "0 10px", // Add padding for small screens
-          },
-        }}
-      >
-        <SectionText
-          className="leading-relaxed break-words"
-          sx={{
-            [theme.breakpoints.down("sm")]: {
-              fontSize: "1.2rem", // Smaller font on mobile
-            },
-          }}
-        >
+      <Box className="mx-auto max-w-[400px] px-[15px] sm:max-w-[50%] sm:px-[10px]">
+        <SectionText className="leading-[1.5] break-words">
           Sed ut perspiciatis unde omnis iste natus error sit voluptatem
           accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
           ab illo inventore veritatis et quasi architecto beatae vitae dicta

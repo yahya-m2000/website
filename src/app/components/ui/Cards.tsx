@@ -4,7 +4,7 @@ import { inriaSerif, assistant } from "@/app/fonts";
 
 const CardContainer = styled(Box)(({ theme }) => ({
   width: "50vw",
-  height: "40vh",
+  height: "400px",
   backgroundColor: theme?.palette?.primary?.main || "grey",
   display: "flex",
   flexDirection: "column",
