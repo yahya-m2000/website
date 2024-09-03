@@ -12,56 +12,17 @@ const WhoWeAre = () => {
   return (
     <Box>
       <Box
-        sx={{
-          position: "relative",
-          height: "60vh",
+        className="relative h-[60vh] bg-cover bg-center flex items-center justify-start"
+        style={{
           backgroundImage: `url(${whoWeAreImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          display: "flex",
-          alignItems: "center",
         }}
       >
-        {/* Overlay */}
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.75)",
-            zIndex: 1,
-          }}
-        />
-
-        {/* Text and Button Container */}
-        <Box
-          sx={{
-            position: "relative",
-            zIndex: 2,
-            marginLeft: "15vw",
-            maxWidth: "400px",
-            padding: "0 15px", // Add padding for mobile
-            [theme.breakpoints.down("sm")]: {
-              marginLeft: "5vw", // Reduce margin on smaller screens
-              maxWidth: "90%", // Adjust the max-width on smaller screens
-              padding: "0 10px", // Add padding for small screens
-            },
-          }}
-        >
-          <SectionTitle sx={{color: theme.palette.text.secondary}}>Who we are</SectionTitle>
-          <SectionText
-            sx={{
-              color: theme.palette.text.secondary,
-              lineHeight: 1.5, // Adjust line height
-              wordWrap: "break-word",
-              overflowWrap: "break-word",
-              [theme.breakpoints.down("sm")]: {
-                fontSize: "0.9rem", // Smaller font on mobile
-              },
-            }}
-          >
+        <Box className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-75 z-[10]" />
+        <Box className={`relative z-20 ml-[15vw] max-w-[400px] px-[15px]`}>
+          <SectionTitle sx={{ color: theme.palette.text.secondary }}>
+            Who we are
+          </SectionTitle>
+          <SectionText className="leading-[1.5] break-words text-text-secondary">
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
             accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
             quae ab illo inventore veritatis et quasi architecto beatae vitae
@@ -70,20 +31,7 @@ const WhoWeAre = () => {
           <OutlinedButton variant="outlined">Learn More</OutlinedButton>
         </Box>
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-        }}
-      >
-        {/* <Box
-          sx={{
-            height: "20vh",
-            width: "15vw",
-            backgroundColor: theme.palette.primary.main,
-          }}
-        /> */}
-      </Box>
+      <Box className="flex justify-end"></Box>
     </Box>
   );
 };
