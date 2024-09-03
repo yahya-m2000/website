@@ -12,7 +12,7 @@ const WhoWeAre = () => {
   return (
     <Box>
       <Box
-        className="relative h-[60vh] bg-cover bg-center flex items-center justify-start"
+        className="relative h-[500px] bg-cover bg-center flex items-center justify-start"
         style={{
           backgroundImage: `url(${whoWeAreImage})`,
         }}

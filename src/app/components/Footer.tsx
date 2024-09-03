@@ -37,7 +37,7 @@ const LinksContainer = styled(Box)(({ theme }) => ({
 
 const FooterLink = styled(Typography)(({ theme }) => ({
   fontFamily: assistant.style.fontFamily,
-  fontSize: "1em",
+  fontSize: "1rem",
   marginBlock: "1vh",
   color: theme?.palette?.common?.white || "#ffffff",
   marginBottom: "1vh",

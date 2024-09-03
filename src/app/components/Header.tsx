@@ -17,9 +17,7 @@ const NavContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  height: "10vh",
-  width: "100%",
-  padding: "0 2vw",
+  height: "100px",
   position: "fixed",
   top: 0,
   left: 0,
@@ -30,7 +28,7 @@ const NavContainer = styled(Box)(({ theme }) => ({
   transition: "all 0.3s ease-in-out",
 
   [`@media (max-width: 2000px)`]: {
-    flexDirection: "row-reverse",
+    flexDirection: "row",
   },
 }));
 
@@ -96,11 +94,19 @@ const Header = () => {
         isScrolled ? "bg-[rgba(255,255,255,0.9)]" : "bg-[rgba(0,0,0,0)]"
       }`}
     >
-      <Box className="hidden lg:flex items-center h-[10vh]">
+      <IconButton
+        onClick={toggleDrawer}
+        className={`${
+          isScrolled ? "text-black" : "text-white"
+        } flex lg:hidden z-2 pl-[4vw]`}
+      >
+        <MenuIcon />
+      </IconButton>
+      <Box className="hidden lg:flex items-center h-[100px]">
         <NavItemLink label="About Us" href="/aboutus" isScrolled={isScrolled} />
         <NavItemLink
-          label="Our Vision"
-          href="/ourvision"
+          label="Services"
+          href="/services"
           isScrolled={isScrolled}
         />
         <NavItemLink label="News" href="/news" isScrolled={isScrolled} />
@@ -114,7 +120,7 @@ const Header = () => {
           alt="Logo"
           style={{
             filter: isScrolled ? "invert(1)" : "invert(0)",
-            paddingBlock: "1vh",
+            paddingBlock: "16px",
             zIndex: -1,
           }}
         />
@@ -122,26 +128,17 @@ const Header = () => {
 
       <Box className="hidden lg:flex items-center h-[10vh]">
         <NavItemLink
-          label="Services"
-          href="/services"
+          label="Insights"
+          href="/insights"
           isScrolled={isScrolled}
         />
         <NavItemLink
-          label="Placeholder"
-          href="/placeholder"
+          label="Projects"
+          href="/projects"
           isScrolled={isScrolled}
         />
         <NavItemLink label="Contact" href="/contact" isScrolled={isScrolled} />
       </Box>
-
-      <IconButton
-        onClick={toggleDrawer}
-        className={`${
-          isScrolled ? "text-black" : "text-white"
-        } flex lg:hidden z-2`}
-      >
-        <MenuIcon />
-      </IconButton>
 
       <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
         <Box className="w-[250px] p-[4vh_2vh] bg-white h-full flex flex-col">

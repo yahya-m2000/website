@@ -58,12 +58,12 @@ const LatestInsights = () => {
   };
 
   return (
-    <Container sx={{ overflow: "hidden" }}>
-      <SectionTitle className="text-text-primary text-center pb-[2vh]">
+    <Box className="h-[540px]">
+      <SectionTitle className="text-text-primary text-center py-[40px]">
         Latest Insights
       </SectionTitle>
 
-      <Box className="relative h-[40vh] flex justify-center items-center mb-[2vh]">
+      <Box className="relative h-[425px] flex justify-center items-center">
         <CarouselButton
           onClick={handlePrev}
           className="absolute left-[1rem] z-20"
@@ -77,7 +77,7 @@ const LatestInsights = () => {
           <ArrowForwardIos className="text-primary-contrast text-2xl" />
         </CarouselButton>
 
-        <Box className="relative w-full h-full">
+        <Box>
           {mockInsights.map((insight, index) => {
             const isFocused = index === currentIndex;
 
@@ -105,7 +105,7 @@ const LatestInsights = () => {
           })}
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
 

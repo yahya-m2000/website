@@ -6,12 +6,9 @@ import zIndex from "@mui/material/styles/zIndex";
 // Container for sections
 export const Container = styled(Box)(({ theme }) => ({
   paddingBlock: "5vh",
-  // paddingInline: "15vw",
   justifyContent: "center",
   alignItems: "center",
 }));
-
-
 
 // Carousel Buttons
 export const CarouselButton = styled(Button)(({ theme }) => ({
@@ -36,20 +33,19 @@ export const CarouselButton = styled(Button)(({ theme }) => ({
 /* TEXT COMPONENTS */
 
 export const SectionTitle = styled(Typography)(({ theme }) => ({
-  fontSize: "2.5em",
+  fontSize: "2.5rem",
   fontFamily: inriaSerif.style.fontFamily,
   fontWeight: 700,
-  color: theme.palette.text.primary
+  color: theme.palette.text.primary,
 }));
 
 export const SectionText = styled(Typography)(({ theme }) => ({
-  fontSize: "1.25em",
+  fontSize: "1.25rem",
   fontWeight: "300",
   marginBottom: "2vh",
   fontFamily: assistant.style.fontFamily,
-  color: theme.palette.text.primary
+  color: theme.palette.text.primary,
 }));
-
 
 /* BUTTON COMPONENTS */
 
@@ -58,14 +54,13 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   textTransform: "none",
   fontFamily: inriaSerif.style.fontFamily,
   fontWeight: 300,
-  fontSize: "1em",
+  fontSize: "1rem",
 }));
 
 export const OutlinedButton = styled(StyledButton)(({ theme }) => ({
   color: "white",
   border: "1px solid white",
 }));
-
 
 /* CARD COMPONENT */
 
@@ -75,7 +70,7 @@ export const LargeCard = styled(Box)(({ theme }) => ({
   backgroundColor: theme?.palette?.primary?.main || "grey",
   display: "flex",
   flexDirection: "column",
- 
+
   transition: "transform 0.3s ease-in-out", // Transition for carousel effect
 
   // Media query for smaller screens
