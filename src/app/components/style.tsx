@@ -5,7 +5,7 @@ import zIndex from "@mui/material/styles/zIndex";
 
 // Container for sections
 export const Container = styled(Box)(({ theme }) => ({
-  paddingBlock: "5vh",
+  paddingBlock: "6vh",
   justifyContent: "center",
   alignItems: "center",
 }));
@@ -45,6 +45,7 @@ export const SectionText = styled(Typography)(({ theme }) => ({
   marginBottom: "2vh",
   fontFamily: assistant.style.fontFamily,
   color: theme.palette.text.primary,
+  textAlign: "justify",
 }));
 
 /* BUTTON COMPONENTS */
