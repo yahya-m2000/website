@@ -33,6 +33,8 @@ module.exports = {
         warning: theme.palette.warning.main,
         info: theme.palette.info.main,
         success: theme.palette.success.main,
+        "black-transparent": "rgba(0, 0, 0, 0.5)",
+        "white-transparent": "rgba(255, 255, 255, 0.7)",
       },
     },
   },

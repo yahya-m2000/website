@@ -1,13 +1,15 @@
 "use client";
 import React from "react";
-import { Container, SectionText, SectionTitle } from "../style";
+import { Container, SectionText, SectionTitle, StyledButton } from "../style";
 import { Box } from "@mui/material";
 import clsx from "clsx";
+import Link from "next/link";
 
 type ParagraphProps = {
   title: string;
   text: string;
   image?: string;
+  buttonUrl?: string;
   isReversed?: boolean;
   isCentered?: boolean;
 };
@@ -18,10 +20,12 @@ const Paragraph: React.FC<ParagraphProps> = ({
   image,
   isReversed = false,
   isCentered = false,
+  buttonUrl,
 }) => {
   return (
     <Container
-      className={clsx("lg:flex flex-wrap h-auto px-[12vw] justify-between ", {
+      className={clsx("lg:flex flex-wrap h-auto px-[12vw] justify-between", {
+        "lg:flex-col md:flex-col sm:flex-col flex-col": buttonUrl && isCentered,
         "lg:flex-row-reverse": isReversed,
         "lg:flex-row": !isReversed,
         "md:flex-col-reverse": true, // Ensure flex-column for medium screens
@@ -56,6 +60,11 @@ const Paragraph: React.FC<ParagraphProps> = ({
           )}
           style={{ backgroundImage: `url(${image})` }}
         />
+      )}
+      {buttonUrl && (
+        <Link href={buttonUrl}>
+          <StyledButton variant="contained">Learn More</StyledButton>
+        </Link>
       )}
     </Container>
   );

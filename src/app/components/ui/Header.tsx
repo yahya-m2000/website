@@ -40,6 +40,7 @@ const NavItem = styled(Typography)(({ theme }) => ({
   cursor: "pointer",
   whiteSpace: "nowrap",
   color: theme.palette.text.primary,
+  textShadow: "1px 3px 6px rgba(0, 0, 0, 0.5)",
 }));
 
 type NavItemLinkProps = {
@@ -99,7 +100,7 @@ const Header = () => {
   return (
     <NavContainer
       className={`${
-        isScrolled ? "bg-[rgba(255,255,255,0.9)]" : "bg-[rgba(0,0,0,0.25)]"
+        isScrolled ? "bg-[rgba(255,255,255,0.9)]" : "bg-[rgba(0,0,0,0.5)]"
       }`}
     >
       <IconButton

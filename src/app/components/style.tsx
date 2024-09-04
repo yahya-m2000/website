@@ -26,7 +26,7 @@ export const CarouselButton = styled(Button)(({ theme }) => ({
     outline: "none", // Remove any default focus outline
   },
   "&:visited": {
-    backgroundColor: "transparent", // Ensure transparency for visited state
+    backgroundColor: "transparent",
   },
 }));
 
