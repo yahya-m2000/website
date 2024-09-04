@@ -74,7 +74,7 @@ const Footer = () => {
     <FooterContainer>
       <Box className="w-[25rem] h-auto mb-[2vh]">
         <Image
-          src={require("../assets/images/logo.png")}
+          src={require("../../assets/images/logo.png")}
           layout="responsive"
           width={500} // Adjust this as necessary
           height={500} // Adjust this as necessary

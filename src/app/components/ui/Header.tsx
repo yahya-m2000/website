@@ -9,9 +9,10 @@ import {
   Drawer,
 } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
-import { inriaSerif } from "../fonts";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // Importing usePathname
+import { inriaSerif } from "@/app/fonts";
 
 const NavContainer = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -46,6 +47,7 @@ type NavItemLinkProps = {
   label: string;
   isScrolled: boolean;
   onClick?: () => void; // Optional click handler
+  ignoreScroll?: boolean; // New prop to ignore scroll logic
 };
 
 const NavItemLink: React.FC<NavItemLinkProps> = ({
@@ -53,6 +55,7 @@ const NavItemLink: React.FC<NavItemLinkProps> = ({
   label,
   isScrolled,
   onClick,
+  ignoreScroll = false, // Defaults to false
 }) => {
   const theme = useTheme();
   return (
@@ -60,9 +63,10 @@ const NavItemLink: React.FC<NavItemLinkProps> = ({
       <NavItem
         onClick={onClick}
         sx={{
-          color: isScrolled
-            ? theme.palette.text.primary
-            : theme.palette.text.secondary,
+          color:
+            ignoreScroll || isScrolled
+              ? theme.palette.text.primary
+              : theme.palette.text.secondary,
         }}
       >
         {label}
@@ -74,6 +78,7 @@ const NavItemLink: React.FC<NavItemLinkProps> = ({
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const pathname = usePathname(); // Get the current path using usePathname
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,10 +93,13 @@ const Header = () => {
 
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
 
+  // Determine if we're on the home page
+  const isHomePage = pathname === "/";
+
   return (
     <NavContainer
       className={`${
-        isScrolled ? "bg-[rgba(255,255,255,0.9)]" : "bg-[rgba(0,0,0,0)]"
+        isScrolled ? "bg-[rgba(255,255,255,0.9)]" : "bg-[rgba(0,0,0,0.25)]"
       }`}
     >
       <IconButton
@@ -112,21 +120,28 @@ const Header = () => {
         <NavItemLink label="News" href="/news" isScrolled={isScrolled} />
       </Box>
 
-      <Box>
+      <Link href="/">
         <Image
-          src={require("../assets/images/logo.png")}
-          layout="fill"
+          src={require("../../assets/images/logo.png")}
           objectFit="contain"
           alt="Logo"
           style={{
             filter: isScrolled ? "invert(1)" : "invert(0)",
-            paddingBlock: "16px",
+            paddingBlock: "8px",
+            width: "275px",
+            paddingInline: "16px",
             zIndex: -1,
           }}
         />
-      </Box>
+      </Link>
+      <IconButton
+        onClick={toggleDrawer}
+        className={`${
+          isScrolled ? "text-black" : "text-white"
+        } flex lg:hidden z-2 pl-[4vw]`}
+      />
 
-      <Box className="hidden lg:flex items-center h-[10vh]">
+      <Box className="hidden lg:flex items-center h-[100px]">
         <NavItemLink
           label="Insights"
           href="/insights"
@@ -147,7 +162,7 @@ const Header = () => {
             { href: "/ourvision", label: "Our Vision" },
             { href: "/news", label: "News" },
             { href: "/services", label: "Services" },
-            { href: "/placeholder", label: "Placeholder" },
+            { href: "/projects", label: "Projects" },
             { href: "/contact", label: "Contact" },
           ].map((item) => (
             <Link href={item.href} passHref key={item.label}>

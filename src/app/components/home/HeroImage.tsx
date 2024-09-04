@@ -9,7 +9,7 @@ const bgImage =
 const HeroImage = () => {
   return (
     <Box
-      className="relative h-[90vh] bg-cover bg-center flex items-center justify-center border-b-[2.5vh] border-primary"
+      className="relative h-[75vh] bg-cover bg-center flex items-center justify-center border-b-[2.5vh] border-primary"
       style={{
         backgroundImage: `url(${bgImage})`,
       }}
