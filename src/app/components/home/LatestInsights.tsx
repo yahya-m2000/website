@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { Box, useTheme } from "@mui/material";
-import { SectionTitle, CarouselButton, Container } from "../style";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import Card from "../ui/Cards";
+import { Box } from "@mui/material";
+import { SectionTitle } from "../style";
+import HorizontalCarousel from "../ui/HorizontalCarousel";
 
 const mockInsights = [
   {
@@ -47,13 +46,13 @@ const LatestInsights = () => {
 
   const getTranslateValue = (index: number) => {
     if (index === currentIndex) {
-      return 0; // Center the current card
+      return 0;
     } else if (index === (currentIndex - 1 + totalItems) % totalItems) {
-      return -100; // Move the previous card to the left
+      return -100;
     } else if (index === (currentIndex + 1) % totalItems) {
-      return 100; // Move the next card to the right
+      return 100;
     } else {
-      return index < currentIndex ? -200 : 200; // Move out-of-focus cards out of frame
+      return index < currentIndex ? -200 : 200;
     }
   };
 
@@ -63,48 +62,13 @@ const LatestInsights = () => {
         Latest Insights
       </SectionTitle>
 
-      <Box className="relative h-[425px] flex justify-center items-center">
-        <CarouselButton
-          onClick={handlePrev}
-          className="absolute left-[1rem] z-20"
-        >
-          <ArrowBackIos className="text-primary-contrast text-2xl" />
-        </CarouselButton>
-        <CarouselButton
-          onClick={handleNext}
-          className="absolute right-[1rem] z-20"
-        >
-          <ArrowForwardIos className="text-primary-contrast text-2xl" />
-        </CarouselButton>
-
-        <Box>
-          {mockInsights.map((insight, index) => {
-            const isFocused = index === currentIndex;
-
-            return (
-              <Box
-                key={index}
-                className={`absolute top-0 left-1/2 transform-gpu ${
-                  isFocused ? "scale-100 opacity-100" : "scale-80 opacity-50"
-                } transition-transform duration-500 ease-in-out`}
-                style={{
-                  transform: `translateX(calc(${getTranslateValue(
-                    index
-                  )}% - 50%))`,
-                  width: "50vw",
-                }}
-              >
-                <Card
-                  title={insight.title}
-                  subtitle={insight.subtitle}
-                  backgroundImage={insight.image}
-                  isFocused={isFocused} // Pass isFocused to the Card component
-                />
-              </Box>
-            );
-          })}
-        </Box>
-      </Box>
+      <HorizontalCarousel
+        items={mockInsights}
+        currentIndex={currentIndex}
+        handlePrev={handlePrev}
+        handleNext={handleNext}
+        getTranslateValue={getTranslateValue}
+      />
     </Box>
   );
 };
