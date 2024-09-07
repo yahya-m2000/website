@@ -5,9 +5,13 @@ import zIndex from "@mui/material/styles/zIndex";
 
 // Container for sections
 export const Container = styled(Box)(({ theme }) => ({
-  paddingBlock: "6vh",
-  justifyContent: "center",
-  alignItems: "center",
+  display: "flex",
+  flex: 1,
+  flexDirection: "column",
+  paddingBlock: "10vh",
+  paddingInline: "10vh",
+  // maxWidth: "1200px", // Set a maximum width for the content
+  // margin: "0 auto", // Center the container horizontally
 }));
 
 // Carousel Buttons
@@ -34,8 +38,8 @@ export const CarouselButton = styled(Button)(({ theme }) => ({
 
 export const SectionTitle = styled(Typography)(({ theme }) => ({
   fontSize: "2.5rem",
-  fontFamily: inriaSerif.style.fontFamily,
-  fontWeight: 700,
+  fontFamily: assistant.style.fontFamily,
+  fontWeight: 800,
   color: theme.palette.text.primary,
 }));
 

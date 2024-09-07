@@ -1,12 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
-import Layout from "@/app/components/ui/Layout";
-import Header from "@/app/components/ui/Header";
-import HeaderBackground from "@/app/components/aboutus/HeaderBackground";
-import Paragraph from "@/app/components/ui/Paragraph";
-import Footer from "@/app/components/ui/Footer";
-import HorizontalCarousel from "@/app/components/ui/HorizontalCarousel";
+
+import {
+  Layout,
+  Footer,
+  Header,
+  HorizontalCarousel,
+  Paragraph,
+} from "@/app/components/ui";
+import HeaderBackground from "@/app/components/about/HeaderBackground";
 
 const mockProjects = [
   {
@@ -35,7 +38,7 @@ const mockProjects = [
     image: "https://via.placeholder.com/600x400",
   },
 ];
-const AboutUs = () => {
+const About = () => {
   const totalItems = mockProjects.length;
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -91,4 +94,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default About;

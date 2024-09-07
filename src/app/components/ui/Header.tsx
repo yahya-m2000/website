@@ -1,5 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   Typography,
   Box,
@@ -9,170 +11,178 @@ import {
   Drawer,
 } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation"; // Importing usePathname
-import { inriaSerif } from "@/app/fonts";
+import { assistant } from "@/app/fonts";
+import clsx from "clsx";
+import { useScroll } from "@/app/context/ScrollContext";
 
-const NavContainer = styled(Box)(({ theme }) => ({
+const navLinks = [
+  { href: "/about", label: "About" },
+  { href: "/mission", label: "Our Mission" },
+  { href: "/insights", label: "Insights" },
+  { href: "/projects", label: "Projects" },
+  { href: "/services", label: "Services" },
+  { href: "/contact", label: "Contact" },
+];
+
+const drawerLinks = [
+  { href: "/about", label: "About" },
+  { href: "/mission", label: "Our Mission" },
+  { href: "/insights", label: "Insights" },
+  { href: "/projects", label: "Projects" },
+  { href: "/services", label: "Services" },
+  { href: "/contact", label: "Contact" },
+];
+
+type NavLinkProps = {
+  href: string;
+  label: string;
+  scrolled: boolean;
+  onClick?: () => void;
+  overrideScrollStyle?: boolean;
+};
+
+type EasternTradeGroupLogoProps = {
+  scrolled: boolean;
+};
+
+// styled
+const Navbar = styled(Box)(({ theme }) => ({
   display: "flex",
-  alignItems: "center",
   justifyContent: "space-between",
-  height: "100px",
+  alignContent: "center",
+  // paddingInline: "8vw",
+  paddingBlock: "1vh",
+  height: "auto",
+  alignItems: "end",
   position: "fixed",
   top: 0,
   left: 0,
   right: 0,
   zIndex: 100,
-  backgroundColor: theme.palette.background.default,
   backdropFilter: "blur(2px)",
   transition: "all 0.3s ease-in-out",
-
-  [`@media (max-width: 2000px)`]: {
-    flexDirection: "row",
-  },
+  borderBottom: `0.5px solid ${theme.palette.divider}`,
 }));
 
-const NavItem = styled(Typography)(({ theme }) => ({
-  fontFamily: inriaSerif.style.fontFamily,
-  fontSize: "1em",
-  paddingInline: theme.spacing(4),
+const NavLinkText = styled(Typography)(({ theme }) => ({
+  fontFamily: assistant.style.fontFamily,
+  fontSize: "1.25rem",
+  fontWeight: "200",
   cursor: "pointer",
   whiteSpace: "nowrap",
   color: theme.palette.text.primary,
-  textShadow: "1px 3px 6px rgba(0, 0, 0, 0.5)",
 }));
 
-type NavItemLinkProps = {
-  href: string;
-  label: string;
-  isScrolled: boolean;
-  onClick?: () => void; // Optional click handler
-  ignoreScroll?: boolean; // New prop to ignore scroll logic
-};
-
-const NavItemLink: React.FC<NavItemLinkProps> = ({
+const NavLink: React.FC<NavLinkProps> = ({
   href,
   label,
-  isScrolled,
+  scrolled,
   onClick,
-  ignoreScroll = false, // Defaults to false
+  overrideScrollStyle = false,
 }) => {
-  const theme = useTheme();
   return (
     <Link href={href} passHref>
-      <NavItem
+      <NavLinkText
         onClick={onClick}
-        sx={{
-          color:
-            ignoreScroll || isScrolled
-              ? theme.palette.text.primary
-              : theme.palette.text.secondary,
+        className={clsx(
+          "font-light text-lg cursor-pointer ml-[1vw] text-center transition-all",
+          {
+            "text-text-primary hover:font-semibold":
+              overrideScrollStyle || scrolled,
+            "text-text-secondary hover:font-semibold":
+              !scrolled && !overrideScrollStyle,
+          }
+        )}
+        style={{
+          minWidth: "120px",
+          whiteSpace: "nowrap",
         }}
       >
         {label}
-      </NavItem>
+      </NavLinkText>
     </Link>
   );
 };
 
-const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const pathname = usePathname(); // Get the current path using usePathname
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-      setIsScrolled(scrollTop > (60 * window.innerHeight) / 100);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
-
-  // Determine if we're on the home page
-  const isHomePage = pathname === "/";
-
+const EasternTradeGroupLogo: React.FC<EasternTradeGroupLogoProps> = ({
+  scrolled,
+}) => {
   return (
-    <NavContainer
-      className={`${
-        isScrolled ? "bg-[rgba(255,255,255,0.9)]" : "bg-[rgba(0,0,0,0.5)]"
-      }`}
-    >
-      <IconButton
-        onClick={toggleDrawer}
-        className={`${
-          isScrolled ? "text-black" : "text-white"
-        } flex lg:hidden z-2 pl-[4vw]`}
-      >
-        <MenuIcon />
-      </IconButton>
-      <Box className="hidden lg:flex items-center h-[100px]">
-        <NavItemLink label="About Us" href="/aboutus" isScrolled={isScrolled} />
-        <NavItemLink
-          label="Services"
-          href="/services"
-          isScrolled={isScrolled}
-        />
-        <NavItemLink label="News" href="/news" isScrolled={isScrolled} />
-      </Box>
-
+    <Box className="flex items-center xl:justify-normal lg:justify-center  md:justify-center sm:justify-center justify-center xl:flex-0 lg:flex-1 md:flex-1 sm:flex-1 flex-1">
       <Link href="/">
         <Image
           src={require("../../assets/images/logo.png")}
           objectFit="contain"
           alt="Logo"
           style={{
-            filter: isScrolled ? "invert(1)" : "invert(0)",
-            paddingBlock: "8px",
-            width: "275px",
-            paddingInline: "16px",
-            zIndex: -1,
+            filter: scrolled ? "invert(1)" : "invert(0)",
+            transition: "width 0.5s ease, filter 0.3s ease",
           }}
+          className={clsx(
+            "py-[10px] px-[16px] w-[100px] lg:w-[200px] xl:w-[275px]",
+            {
+              "py-[10px] px-[16px] w-[100px] lg:w-[125px] xl:w-[125px]":
+                scrolled,
+            }
+          )}
         />
       </Link>
+    </Box>
+  );
+};
+
+const Header = () => {
+  const { scrolled, nearBottom } = useScroll();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => setDrawerOpen(!drawerOpen);
+
+  return (
+    <Navbar
+      className={clsx("xl:px[10vw] lg:px[8vw] md:px[6vw] sm:px[6vw] px-[6vw]", {
+        "bg-[rgba(255,255,255,0.9)] h-[auto] xl:px-[6vw] md:px-[4vw] sm:px-[4vw] px-[4vw]":
+          scrolled && !nearBottom,
+        "bg-[rgba(255,255,255,0.9)] h-[auto] lg:px-[6vw] -translate-y-full":
+          nearBottom,
+        "bg-[rgba(0,0,0,0)] ": !scrolled && !nearBottom,
+      })}
+    >
+      <EasternTradeGroupLogo scrolled={scrolled} />
+
+      {/* Updated: Navigation links container */}
+      <Box className="hidden xl:flex items-end h-[100px]  flex-grow-0">
+        {navLinks.map((item) => (
+          <NavLink
+            key={item.href}
+            href={item.href}
+            label={item.label}
+            scrolled={scrolled}
+          />
+        ))}
+      </Box>
+
       <IconButton
         onClick={toggleDrawer}
         className={`${
-          isScrolled ? "text-black" : "text-white"
-        } flex lg:hidden z-2 pl-[4vw]`}
-      />
+          scrolled ? "text-black" : "text-white"
+        } absolute left-4 top-[50%] translate-y-[-50%] z-2 xl:hidden`}
+        sx={{
+          transform: nearBottom ? "translateY(-100%)" : "translateY(0)",
+        }}
+      >
+        <MenuIcon />
+      </IconButton>
 
-      <Box className="hidden lg:flex items-center h-[100px]">
-        <NavItemLink
-          label="Insights"
-          href="/insights"
-          isScrolled={isScrolled}
-        />
-        <NavItemLink
-          label="Projects"
-          href="/projects"
-          isScrolled={isScrolled}
-        />
-        <NavItemLink label="Contact" href="/contact" isScrolled={isScrolled} />
-      </Box>
-
-      <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer}>
+      <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
         <Box className="w-[250px] p-[4vh_2vh] bg-white h-full flex flex-col">
-          {[
-            { href: "/aboutus", label: "About Us" },
-            { href: "/ourvision", label: "Our Vision" },
-            { href: "/news", label: "News" },
-            { href: "/services", label: "Services" },
-            { href: "/projects", label: "Projects" },
-            { href: "/contact", label: "Contact" },
-          ].map((item) => (
-            <Link href={item.href} passHref key={item.label}>
-              <NavItem className="mb-6">{item.label}</NavItem>
+          {drawerLinks.map((item) => (
+            <Link href={item.href} passHref key={item.href}>
+              <NavLinkText className="mb-6">{item.label}</NavLinkText>
             </Link>
           ))}
         </Box>
       </Drawer>
-    </NavContainer>
+    </Navbar>
   );
 };
 

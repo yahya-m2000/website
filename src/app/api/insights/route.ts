@@ -1,4 +1,4 @@
-// app/api/articles/route.ts
+// app/api/insights/route.ts
 import { NextResponse } from "next/server";
 import { fetchEntries } from "@/app/lib/contentful";
 
