@@ -2,11 +2,12 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import { CarouselButton } from "../style"; // Assuming this is defined in your styles
-import Card from "../ui/Cards"; // Assuming the Card component is here
+import { CarouselButton } from "../style";
+import Card from "./Card";
+import Spacer from "./Spacer";
 
 type HorizontalCarouselProps = {
-  items: { title: string; subtitle: string; image: string }[]; // Array of items
+  items: { title: string; subtitle: string; image: string }[];
   currentIndex: number;
   handlePrev: () => void;
   handleNext: () => void;
@@ -22,6 +23,7 @@ const HorizontalCarousel: React.FC<HorizontalCarouselProps> = ({
 }) => {
   return (
     <Box className="flex relative h-[400px] justify-center items-center bg-slate-400">
+      {/* <Spacer /> */}
       <Box className="flex flex-1 justify-center items-center">
         <CarouselButton
           onClick={handlePrev}
@@ -58,7 +60,7 @@ const HorizontalCarousel: React.FC<HorizontalCarouselProps> = ({
                 title={item.title}
                 subtitle={item.subtitle}
                 backgroundImage={item.image}
-                isFocused={isFocused} // Pass isFocused to the Card component
+                isFocused={isFocused}
               />
             </Box>
           );

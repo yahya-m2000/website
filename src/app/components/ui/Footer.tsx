@@ -2,20 +2,19 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { styled } from "@mui/system";
 import React from "react";
-import { assistant, rozha_One } from "@/app/fonts";
+import { assistant } from "@/app/fonts";
 import Image from "next/image";
+import { Container } from "../style";
 
 const FooterContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: theme?.palette?.secondary?.main || "#000000",
-  color: theme?.palette?.common?.white || "#ffffff",
-  padding: "3vh 5vw",
   display: "flex",
+  flex: 1,
+  color: theme?.palette?.common?.white || "#ffffff",
   flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
   textAlign: "center",
-  [`@media (min-width: 1200px)`]: {
-    flexDirection: "column",
+  [theme.breakpoints.up("lg")]: {
+    flexDirection: "row", // Changed to row for larger screens
+    alignItems: "center",
     justifyContent: "space-between",
     textAlign: "left",
   },
@@ -24,11 +23,9 @@ const FooterContainer = styled(Box)(({ theme }) => ({
 const LinksContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
   marginInline: "2vw",
   marginBottom: "2vh",
-  [`@media (min-width: 1200px)`]: {
+  [theme.breakpoints.up("lg")]: {
     flexDirection: "row",
     justifyContent: "space-around",
     marginBottom: "0",
@@ -41,16 +38,15 @@ const FooterLink = styled(Typography)(({ theme }) => ({
   marginBlock: "1vh",
   color: theme?.palette?.common?.white || "#ffffff",
   marginBottom: "1vh",
-  [`@media (min-width: 1200px)`]: {
+  [theme.breakpoints.up("lg")]: {
     marginBottom: "0",
   },
 }));
 
 const LinkBox = styled(Box)(({ theme }) => ({
-  // width: "100%",
   paddingInline: "5vw",
   paddingBottom: "2vh",
-  [`@media (max-width: 1199px)`]: {
+  [theme.breakpoints.down("lg")]: {
     borderBottom: `1px solid ${theme?.palette?.common?.white || "#ffffff"}`,
     paddingBottom: "2vh",
     marginBottom: "2vh",
@@ -62,7 +58,7 @@ const CopyrightText = styled(Typography)(({ theme }) => ({
   fontSize: "1em",
   color: theme?.palette?.common?.white || "#ffffff",
   marginTop: "2vh",
-  [`@media (min-width: 1200px)`]: {
+  [theme.breakpoints.up("lg")]: {
     marginTop: "0",
   },
 }));
@@ -71,38 +67,41 @@ const Footer = () => {
   const theme = useTheme();
 
   return (
-    <FooterContainer>
-      <Box className="w-[25rem] h-auto mb-[2vh]">
-        <Image
-          src={require("../../assets/images/logo.png")}
-          layout="responsive"
-          width={500} // Adjust this as necessary
-          height={500} // Adjust this as necessary
-          objectFit="contain"
-          alt="Logo"
-        />
+    <Container className="bg-background-paper py-[5vh]">
+      <FooterContainer>
+        <Box className="w-[100px] h-[100px] flex justify-center items-center mx-auto lg:mx-0">
+          <Image
+            src={require("../../assets/images/logo.png")}
+            layout="responsive"
+            width={100}
+            height={100}
+            alt="Logo"
+          />
+        </Box>
+        <LinksContainer>
+          <LinkBox>
+            <FooterLink>Placeholder</FooterLink>
+            <FooterLink>Placeholder</FooterLink>
+            <FooterLink>Placeholder</FooterLink>
+          </LinkBox>
+          <LinkBox>
+            <FooterLink>Placeholder</FooterLink>
+            <FooterLink>Placeholder</FooterLink>
+            <FooterLink>Placeholder</FooterLink>
+          </LinkBox>
+          <LinkBox>
+            <FooterLink>Placeholder</FooterLink>
+            <FooterLink>Placeholder</FooterLink>
+          </LinkBox>
+        </LinksContainer>
+      </FooterContainer>
+      <Box className="flex flex-1 row-auto justify-between align-middle items-center">
+        <CopyrightText>
+          Copyright © 2024 The Eastern Trade Group LLC
+        </CopyrightText>
+        <Box className="w-[100px] h-[20px] border-primary-contrast border-[2px]" />
       </Box>
-      <LinksContainer>
-        <LinkBox>
-          <FooterLink>Placeholder</FooterLink>
-          <FooterLink>Placeholder</FooterLink>
-          <FooterLink>Placeholder</FooterLink>
-        </LinkBox>
-        <LinkBox>
-          <FooterLink>Placeholder</FooterLink>
-          <FooterLink>Placeholder</FooterLink>
-          <FooterLink>Placeholder</FooterLink>
-        </LinkBox>
-        <LinkBox>
-          <FooterLink>Placeholder</FooterLink>
-          <FooterLink>Placeholder</FooterLink>
-          <FooterLink>Placeholder</FooterLink>
-        </LinkBox>
-      </LinksContainer>
-      <CopyrightText>
-        Copyright © 2024 The Eastern Trade Group LLC
-      </CopyrightText>
-    </FooterContainer>
+    </Container>
   );
 };
 

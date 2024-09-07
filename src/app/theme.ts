@@ -30,6 +30,7 @@ const theme = createTheme({
     success: {
       main: "#66bb6a", // Green color for success messages
     },
+    divider: "rgba(128, 128, 128, 1)",
   },
   typography: {
     fontFamily: ["Inria Serif", "Julius Sans One", "Lateef"].join(","),

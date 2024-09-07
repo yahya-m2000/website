@@ -24,7 +24,7 @@ const Paragraph: React.FC<ParagraphProps> = ({
 }) => {
   return (
     <Container
-      className={clsx("lg:flex flex-wrap h-auto px-[12vw] justify-between", {
+      className={clsx("lg:flex flex-wrap h-auto justify-between", {
         "lg:flex-col md:flex-col sm:flex-col flex-col": buttonUrl && isCentered,
         "lg:flex-row-reverse": isReversed,
         "lg:flex-row": !isReversed,
@@ -32,13 +32,17 @@ const Paragraph: React.FC<ParagraphProps> = ({
       })}
     >
       <Box
-        className={clsx("flex-1", {
+        className={clsx("flex-[0.66]", {
           "lg:ml-12": isReversed && !isCentered,
           "lg:mr-12": !isReversed && !isCentered,
           "lg:mx-auto": isCentered, // Ensure centered text for centered content
         })}
       >
-        <SectionTitle className={clsx({ "text-center": isCentered })}>
+        <SectionTitle
+          className={clsx("font-extrabold text-[1.5rem]", {
+            "text-center": isCentered,
+          })}
+        >
           {title}
         </SectionTitle>
         <SectionText
@@ -53,18 +57,13 @@ const Paragraph: React.FC<ParagraphProps> = ({
       {image && (
         <Box
           className={clsx(
-            "flex-1 h-[300px] lg:h-[400px] md:h-[200px] sm:h-[300px] bg-cover bg-center items-center justify-center",
+            "flex-[0.33] h-auto bg-cover bg-center items-center justify-center",
             {
               "w-full md:w-full lg:w-[50%]": true, // Ensure image takes full width on small and medium screens
             }
           )}
           style={{ backgroundImage: `url(${image})` }}
         />
-      )}
-      {buttonUrl && (
-        <Link href={buttonUrl}>
-          <StyledButton variant="contained">Learn More</StyledButton>
-        </Link>
       )}
     </Container>
   );

@@ -1,3 +1,4 @@
+// lib/contentful.ts
 import { createClient } from "contentful";
 
 const client = createClient({
@@ -17,12 +18,20 @@ export async function fetchEntries(contentType: string) {
   }
 }
 
-export async function fetchEntry(entryId: string) {
+export async function fetchEntryBySlug(contentType: string, slug: string) {
   try {
-    const entry = await client.getEntry(entryId);
-    return entry.fields;
+    const entries = await client.getEntries({
+      content_type: contentType,
+      "fields.slug": slug,
+      limit: 1,
+    });
+    if (entries.items.length > 0) {
+      return entries.items[0].fields;
+    } else {
+      throw new Error("Entry not found");
+    }
   } catch (error) {
-    console.error("Error fetching entry:", error);
+    console.error("Error fetching entry by slug:", error);
     throw error;
   }
 }
