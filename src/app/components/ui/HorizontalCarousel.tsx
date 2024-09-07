@@ -58,7 +58,7 @@ const HorizontalCarousel: React.FC<HorizontalCarouselProps> = ({
             >
               <Card
                 title={item.title}
-                subtitle={item.subtitle}
+                tag={item.subtitle}
                 backgroundImage={item.image}
                 isFocused={isFocused}
               />
