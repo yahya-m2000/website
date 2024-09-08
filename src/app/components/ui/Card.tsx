@@ -1,7 +1,5 @@
 "use client";
 import React from "react";
-import { Box } from "@mui/material";
-import clsx from "clsx"; // Optional for conditional classes
 
 const placeholderImage = "https://via.placeholder.com/600x400";
 

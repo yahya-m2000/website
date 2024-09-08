@@ -39,8 +39,8 @@ const HeroImage: React.FC<HeroImageProps> = ({
   body,
   author,
   date,
-  url,
-  onClick,
+  // url,
+  // onClick,
 }) => {
   const { scrolled } = useScroll();
 
