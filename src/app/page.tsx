@@ -1,9 +1,6 @@
-import Image from "next/image";
-import { Card, Footer, Header, Layout, Paragraph } from "@/components/ui";
+import { Footer, Header, Layout, Paragraph } from "@/components/ui";
 import FeaturedInsights from "./components/home/FeaturedInsights";
 import HeroImage from "./components/home/HeroImage";
-import { Typography } from "@mui/material";
-
 import bgImage from "@/assets/images/home_background.jpg"; // Ensure this path is correct
 
 export default function Home() {

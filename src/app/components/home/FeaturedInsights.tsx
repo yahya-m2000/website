@@ -54,7 +54,7 @@ const mockInsights = [
 ];
 
 const FeaturedInsights = () => {
-  const [itemsToShow, setItemsToShow] = useState(9);
+  const [itemsToShow] = useState(9);
 
   return (
     <div className="bg-gray-150">

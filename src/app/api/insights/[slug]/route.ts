@@ -2,10 +2,7 @@
 import { NextResponse } from "next/server";
 import { fetchEntryBySlug } from "@/lib/contentful";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { slug: string } }
-) {
+export async function GET({ params }: { params: { slug: string } }) {
   try {
     const entry = await fetchEntryBySlug("article", params.slug); // Using slug
     return NextResponse.json(entry);
