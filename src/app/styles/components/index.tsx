@@ -1,21 +1,17 @@
 // StyledComponents.tsx
 import { Box, Typography, Button, styled } from "@mui/material";
 import { assistant, inriaSerif } from "@/fonts/index";
-import zIndex from "@mui/material/styles/zIndex";
 
 // Container for sections
-export const Container = styled(Box)(({ theme }) => ({
+export const Container = styled(Box)(({ }) => ({
   display: "flex",
   flex: 1,
   flexDirection: "column",
-  // paddingBlock: "10vh",
-  // paddingInline: "10vh",
-  // maxWidth: "1200px", // Set a maximum width for the content
-  // margin: "0 auto", // Center the container horizontally
+
 }));
 
 // Carousel Buttons
-export const CarouselButton = styled(Button)(({ theme }) => ({
+export const CarouselButton = styled(Button)(({  }) => ({
   transform: "translateY(-50%)",
   zIndex: 10,
   backgroundColor: "transparent", // Initial background color
@@ -54,7 +50,7 @@ export const SectionText = styled(Typography)(({ theme }) => ({
 
 /* BUTTON COMPONENTS */
 
-export const StyledButton = styled(Button)(({ theme }) => ({
+export const StyledButton = styled(Button)(({ }) => ({
   borderRadius: 0,
   textTransform: "none",
   fontFamily: inriaSerif.style.fontFamily,
@@ -62,7 +58,7 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   fontSize: "1rem",
 }));
 
-export const OutlinedButton = styled(StyledButton)(({ theme }) => ({
+export const OutlinedButton = styled(StyledButton)(({ }) => ({
   color: "white",
   border: "1px solid white",
 }));

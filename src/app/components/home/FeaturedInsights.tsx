@@ -1,9 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Container, SectionText, SectionTitle } from "@/styles/index";
+import React, { useState } from "react";
 import { Card } from "../ui";
-import { Box, Typography } from "@mui/material";
-import theme from "../../theme";
 
 const mockInsights = [
   {

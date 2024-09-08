@@ -13,7 +13,6 @@ declare global {
 
   type CardProps = {
     title: string;
-    theme?: any;
     tag: string;
     backgroundImage?: string;
     isFocused?: boolean;
@@ -21,7 +20,7 @@ declare global {
   };
   type HeroImageProps = {
     title: string;
-    backgroundImage: any;
+    backgroundImage: image;
     tag: string;
     body: string;
     author: string;
