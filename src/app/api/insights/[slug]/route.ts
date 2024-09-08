@@ -1,6 +1,6 @@
 // app/api/insights/[slug]/route.ts
 import { NextResponse } from "next/server";
-import { fetchEntryBySlug } from "@/app/lib/contentful";
+import { fetchEntryBySlug } from "@/lib/contentful";
 
 export async function GET(
   request: Request,
