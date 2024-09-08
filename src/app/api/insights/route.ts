@@ -1,6 +1,6 @@
 // app/api/insights/route.ts
 import { NextResponse } from "next/server";
-import { fetchEntries } from "@/app/lib/contentful";
+import { fetchEntries } from "@/lib/contentful";
 
 export async function GET() {
   try {
