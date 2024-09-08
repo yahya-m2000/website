@@ -1,92 +1,83 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Container, SectionTitle } from "../style";
+import { Container, SectionText, SectionTitle } from "@/styles/index";
 import { Card } from "../ui";
-import { Box } from "@mui/material";
-import theme from "@/app/theme";
-
-type Props = {};
+import { Box, Typography } from "@mui/material";
+import theme from "../../theme";
 
 const mockInsights = [
   {
-    title: "Insight 1",
-    subtitle: "Subtitle 1",
-    image: "https://via.placeholder.com/600x400",
+    title: "Understanding AI Ethics",
+    subtitle: "The ethical challenges of AI technology",
+    image:
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?fit=crop&w=600&q=80",
   },
   {
-    title: "Insight 2",
-    subtitle: "Subtitle 2",
-    image: "https://via.placeholder.com/600x400",
+    title: "Sustainable Architecture",
+    subtitle: "Eco-friendly designs shaping our future",
+    image:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?fit=crop&w=600&q=80",
   },
   {
-    title: "Insight 3",
-    subtitle: "Subtitle 3",
-    image: "https://via.placeholder.com/600x400",
+    title: "Blockchain Beyond Bitcoin",
+    subtitle: "How blockchain is revolutionizing industries",
+    image:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?fit=crop&w=600&q=80",
   },
   {
-    title: "Insight 4",
-    subtitle: "Subtitle 4",
-    image: "https://via.placeholder.com/600x400",
+    title: "The Future of Remote Work",
+    subtitle: "Adapting to a hybrid workforce",
   },
   {
-    title: "Insight 5",
-    subtitle: "Subtitle 5",
-    image: "https://via.placeholder.com/600x400",
+    title: "Electric Vehicles: A Growing Trend",
+    subtitle: "The rise of EVs and their environmental impact",
   },
   {
-    title: "Insight 6",
-    subtitle: "Subtitle 6",
-    image: "https://via.placeholder.com/600x400",
+    title: "Space Exploration in the 21st Century",
+    subtitle: "Private companies leading the new space race",
   },
   {
-    title: "Insight 7",
-    subtitle: "Subtitle 7",
-    image: "https://via.placeholder.com/600x400",
+    title: "Green Energy Solutions",
+    subtitle: "The shift towards renewable energy sources",
+    image:
+      "https://images.unsplash.com/photo-1503428593586-e225b39bddfe?fit=crop&w=600&q=80",
   },
   {
-    title: "Insight 8",
-    subtitle: "Subtitle 8",
-    image: "https://via.placeholder.com/600x400",
+    title: "The Rise of Smart Cities",
+    subtitle: "Technology transforming urban landscapes",
+    image:
+      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?fit=crop&w=600&q=80",
   },
   {
-    title: "Insight 9",
-    subtitle: "Subtitle 9",
-    image: "https://via.placeholder.com/600x400",
+    title: "Healthcare Innovations in 2024",
+    subtitle: "Cutting-edge tech reshaping the medical field",
+    image:
+      "https://images.unsplash.com/photo-1581091012184-9720b8b9a681?fit=crop&w=600&q=80",
   },
 ];
 
-const FeaturedInsights = (props: Props) => {
+const FeaturedInsights = () => {
   const [itemsToShow, setItemsToShow] = useState(9);
 
-  useEffect(() => {
-    const updateItemsToShow = () => {
-      const width = window.innerWidth;
-
-      if (width >= theme.breakpoints.values.lg) {
-        setItemsToShow(9); // xl or lg screens, show all 9
-      } else if (width >= theme.breakpoints.values.md) {
-        setItemsToShow(6); // md or sm screens, show 6
-      } else {
-        setItemsToShow(4); // xs screens, show 3
-      }
-    };
-
-    // Set the initial value based on window size
-    updateItemsToShow();
-
-    // Add event listener for window resize
-    window.addEventListener("resize", updateItemsToShow);
-
-    // Cleanup event listener on component unmount
-    return () => window.removeEventListener("resize", updateItemsToShow);
-  }, []);
-
   return (
-    <Container className="py-[5vh]">
-      <SectionTitle className="pb-[4vh] text-4xl font-bold">
-        Featured Insights
-      </SectionTitle>
-      <Box className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 w-full">
+    <div className="bg-gray-150">
+      {/* Header */}
+      <div className="flex xl:justify-between md:justify-between justify-center items-center ">
+        {/* SectionTitle */}
+        <h2
+          className={`xl:text-4xl  md:text-4xl text-3xl font-extrabold font-assistant text-black leading-tight`}
+        >
+          Featured Insights
+        </h2>
+
+        {/* SectionText */}
+        <p className="hidden xl:block md:block text-lg font-bold text-gray-500">
+          SEE ALL
+        </p>
+      </div>
+
+      {/* Content Grid */}
+      <div className="p-0 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10   w-full">
         {mockInsights.slice(0, itemsToShow).map((insight, index) => (
           <Card
             key={index}
@@ -95,8 +86,8 @@ const FeaturedInsights = (props: Props) => {
             backgroundImage={insight.image}
           />
         ))}
-      </Box>
-    </Container>
+      </div>
+    </div>
   );
 };
 

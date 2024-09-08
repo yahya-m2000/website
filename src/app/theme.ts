@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#B51E32",
+      main: "#174AAB",
       contrastText: "#FFFFFF",
     },
     secondary: {
@@ -32,8 +32,15 @@ const theme = createTheme({
     },
     divider: "rgba(128, 128, 128, 1)",
   },
-  typography: {
-    fontFamily: ["Inria Serif", "Julius Sans One", "Lateef"].join(","),
+
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
+    },
   },
 });
 

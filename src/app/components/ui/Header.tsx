@@ -1,20 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Typography,
-  Box,
-  useTheme,
-  styled,
-  IconButton,
-  Drawer,
-} from "@mui/material";
+import { IconButton, Drawer } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
-import { assistant } from "@/app/fonts";
 import clsx from "clsx";
-import { useScroll } from "@/app/context/ScrollContext";
+import { useScroll } from "@/context/ScrollContext";
 
+// Define navigation links
 const navLinks = [
   { href: "/about", label: "About" },
   { href: "/mission", label: "Our Mission" },
@@ -33,101 +26,59 @@ const drawerLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-type NavLinkProps = {
-  href: string;
-  label: string;
-  scrolled: boolean;
-  onClick?: () => void;
-  overrideScrollStyle?: boolean;
-};
-
-type EasternTradeGroupLogoProps = {
-  scrolled: boolean;
-};
-
-// styled
-const Navbar = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignContent: "center",
-  // paddingInline: "8vw",
-  paddingBlock: "1vh",
-  height: "auto",
-  alignItems: "end",
-  position: "fixed",
-  top: 0,
-  left: 0,
-  right: 0,
-  zIndex: 100,
-  backdropFilter: "blur(2px)",
-  transition: "all 0.3s ease-in-out",
-  borderBottom: `0.5px solid ${theme.palette.divider}`,
-}));
-
-const NavLinkText = styled(Typography)(({ theme }) => ({
-  fontFamily: assistant.style.fontFamily,
-  fontSize: "1.25rem",
-  fontWeight: "200",
-  cursor: "pointer",
-  whiteSpace: "nowrap",
-  color: theme.palette.text.primary,
-}));
-
+// Navigation link component
 const NavLink: React.FC<NavLinkProps> = ({
   href,
   label,
   scrolled,
   onClick,
-  overrideScrollStyle = false,
 }) => {
   return (
     <Link href={href} passHref>
-      <NavLinkText
+      <p
         onClick={onClick}
         className={clsx(
-          "font-light text-lg cursor-pointer ml-[1vw] text-center transition-all",
+          "font-assistant font-light text-lg cursor-pointer ml-[1vw] text-center whitespace-nowrap",
           {
-            "text-text-primary hover:font-semibold":
-              overrideScrollStyle || scrolled,
-            "text-text-secondary hover:font-semibold":
-              !scrolled && !overrideScrollStyle,
+            "text-secondary hover:text-primary hover:underline decoration-primary":
+              scrolled,
+            "text-white hover:text-white hover:underline hover:font-bold decoration-white":
+              !scrolled,
           }
         )}
-        style={{
-          minWidth: "120px",
-          whiteSpace: "nowrap",
-        }}
+        style={{ minWidth: "120px" }}
       >
         {label}
-      </NavLinkText>
+      </p>
     </Link>
   );
 };
 
+// Logo component
 const EasternTradeGroupLogo: React.FC<EasternTradeGroupLogoProps> = ({
   scrolled,
 }) => {
   return (
-    <Box className="flex items-center xl:justify-normal lg:justify-center  md:justify-center sm:justify-center justify-center xl:flex-0 lg:flex-1 md:flex-1 sm:flex-1 flex-1">
+    <div className="flex items-center xl:justify-start lg:justify-center md:justify-center sm:justify-center justify-center xl:flex-0 lg:flex-1 md:flex-1 sm:flex-1 flex-1">
       <Link href="/">
         <Image
           src={require("../../assets/images/logo.png")}
           objectFit="contain"
           alt="Logo"
-          style={{
-            filter: scrolled ? "invert(1)" : "invert(0)",
-            transition: "width 0.5s ease, filter 0.3s ease",
-          }}
           className={clsx(
-            "py-[10px] px-[16px] w-[100px] lg:w-[200px] xl:w-[275px]",
+            "py-[10px] px-[8px] w-[150px] lg:w-[200px] xl:w-[200px] transition-transform duration-300 ease-in-out hover:scale-105",
             {
-              "py-[10px] px-[16px] w-[100px] lg:w-[125px] xl:w-[125px]":
+              "py-[10px] px-[16px] w-[150px] lg:w-[150px] xl:w-[175px]":
                 scrolled,
             }
           )}
+          style={{
+            filter: scrolled ? "invert(1)" : "invert(0)",
+            transition: "all 0.3s ease",
+          }}
         />
       </Link>
-    </Box>
+    </div>
   );
 };
 
@@ -138,19 +89,20 @@ const Header = () => {
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
   return (
-    <Navbar
-      className={clsx("xl:px[10vw] lg:px[8vw] md:px[6vw] sm:px[6vw] px-[6vw]", {
-        "bg-[rgba(255,255,255,0.9)] h-[auto] xl:px-[6vw] md:px-[4vw] sm:px-[4vw] px-[4vw]":
-          scrolled && !nearBottom,
-        "bg-[rgba(255,255,255,0.9)] h-[auto] lg:px-[6vw] -translate-y-full":
-          nearBottom,
-        "bg-[rgba(0,0,0,0)] ": !scrolled && !nearBottom,
-      })}
+    <header
+      className={clsx(
+        "flex justify-between content-center py-[1vh] items-end fixed top-0 left-0 right-0 z-[100] backdrop-blur-[4px] border-b-white-transparent border-b-[0.5px] transition-all duration-300 ease-in-out ",
+        {
+          "bg-[rgba(255,255,255,1)] h-auto": scrolled && !nearBottom,
+          "bg-[rgba(255,255,255,1)] h-auto -translate-y-full": nearBottom,
+          "bg-[rgba(0,0,0,0)] ": !scrolled && !nearBottom,
+        }
+      )}
     >
       <EasternTradeGroupLogo scrolled={scrolled} />
 
-      {/* Updated: Navigation links container */}
-      <Box className="hidden xl:flex items-end h-[100px]  flex-grow-0">
+      {/* Navigation links */}
+      <div className="hidden xl:flex items-end h-[100px] flex-grow-0">
         {navLinks.map((item) => (
           <NavLink
             key={item.href}
@@ -159,8 +111,9 @@ const Header = () => {
             scrolled={scrolled}
           />
         ))}
-      </Box>
+      </div>
 
+      {/* Drawer for mobile */}
       <IconButton
         onClick={toggleDrawer}
         className={`${
@@ -174,15 +127,15 @@ const Header = () => {
       </IconButton>
 
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
-        <Box className="w-[250px] p-[4vh_2vh] bg-white h-full flex flex-col">
+        <div className="w-[250px] p-[4vh_4vh] bg-white h-full flex flex-col">
           {drawerLinks.map((item) => (
             <Link href={item.href} passHref key={item.href}>
-              <NavLinkText className="mb-6">{item.label}</NavLinkText>
+              <p className="mb-6 font-semibold">{item.label}</p>
             </Link>
           ))}
-        </Box>
+        </div>
       </Drawer>
-    </Navbar>
+    </header>
   );
 };
 

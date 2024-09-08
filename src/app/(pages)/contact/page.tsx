@@ -1,15 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
-
 import {
-  Layout,
   Footer,
   Header,
   HorizontalCarousel,
+  Layout,
   Paragraph,
-} from "@/app/components/ui";
-import HeaderBackground from "@/app/components/about/HeaderBackground";
+} from "@/components/ui";
+import HeaderBackground from "@/components/about/HeaderBackground";
 
 const mockProjects = [
   {

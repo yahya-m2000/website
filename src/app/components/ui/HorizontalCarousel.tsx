@@ -2,17 +2,8 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import { CarouselButton } from "../style";
+import { CarouselButton } from "@/styles/index";
 import Card from "./Card";
-import Spacer from "./Spacer";
-
-type HorizontalCarouselProps = {
-  items: { title: string; subtitle: string; image: string }[];
-  currentIndex: number;
-  handlePrev: () => void;
-  handleNext: () => void;
-  getTranslateValue: (index: number) => number;
-};
 
 const HorizontalCarousel: React.FC<HorizontalCarouselProps> = ({
   items,

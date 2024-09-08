@@ -1,6 +1,6 @@
 // StyledComponents.tsx
 import { Box, Typography, Button, styled } from "@mui/material";
-import { assistant, inriaSerif } from "@/app/fonts";
+import { assistant, inriaSerif } from "@/fonts/index";
 import zIndex from "@mui/material/styles/zIndex";
 
 // Container for sections
@@ -8,8 +8,8 @@ export const Container = styled(Box)(({ theme }) => ({
   display: "flex",
   flex: 1,
   flexDirection: "column",
-  paddingBlock: "10vh",
-  paddingInline: "10vh",
+  // paddingBlock: "10vh",
+  // paddingInline: "10vh",
   // maxWidth: "1200px", // Set a maximum width for the content
   // margin: "0 auto", // Center the container horizontally
 }));

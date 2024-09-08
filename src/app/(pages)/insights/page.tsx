@@ -9,9 +9,9 @@ import {
   CardMedia,
   CardContent,
 } from "@mui/material";
-import { Header, Layout } from "@/app/components/ui";
-import HeaderBackground from "@/app/components/about/HeaderBackground";
-import { SectionText, SectionTitle } from "@/app/components/style";
+import { Header, Layout } from "@/components/ui";
+import HeaderBackground from "@/components/about/HeaderBackground";
+import { SectionTitle, SectionText } from "@/styles/index";
 
 const Insights = () => {
   const [insights, setinsights] = useState<any[]>([]);
