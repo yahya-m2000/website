@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { assistant } from "@/fonts/index";
 
 // Footer component
 const Footer = () => {
