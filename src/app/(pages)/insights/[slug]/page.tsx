@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { Box, Typography, Container } from "@mui/material";
 import Image from "next/image";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { Header, Layout } from "@/app/components/ui";
+import { Header, Layout } from "@/components/ui";
 
 const InsightPage = () => {
   const [insight, setInsight] = useState<any>(null);

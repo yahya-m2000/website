@@ -1,59 +1,79 @@
 "use client";
-import Box from "@mui/material/Box";
-import { assistant } from "../../fonts";
-import { SectionText, SectionTitle } from "../style";
-import bgImage from "@/app/assets/images/home_background.jpg";
-import Spacer from "../ui/Spacer";
-import { useScroll } from "@/app/context/ScrollContext";
+import Image from "next/image";
 import clsx from "clsx";
+import { useScroll } from "@/context/ScrollContext";
 
-const HeroImage = () => {
-  const { scrolled } = useScroll(); // Use the scroll state
+// Reusable SectionText and SectionTitle Components using TailwindCSS
+const SectionText = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <p
+    className={`xl:text-lg lg:text-lg md:text-lg sm:text-base text-base font-light font-assistant text-white justify-start ${className}`}
+  >
+    {children}
+  </p>
+);
+
+const SectionTitle = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <h1
+    className={`xl:text-6xl lg:text-6xl md:text-6xl sm:text-5xl text-4xl font-extrabold font-assistant text-white leading-tight hover:underline " ${className}`}
+  >
+    {children}
+  </h1>
+);
+
+const HeroImage: React.FC<HeroImageProps> = ({
+  title,
+  tag,
+  backgroundImage,
+  body,
+  author,
+  date,
+  url,
+  onClick,
+}) => {
+  const { scrolled } = useScroll();
 
   return (
     <>
-      {/* Spacer that simulates header height */}
+      <div className="relative h-[90vh] flex items-center">
+        <Image
+          src={backgroundImage}
+          layout="fill"
+          objectFit="cover"
+          alt="Background"
+          className="absolute top-0 left-0 w-full h-full z-0"
+        />
 
-      <Box
-        className="relative h-[90vh] bg-cover bg-center flex items-center"
-        style={{
-          backgroundImage: `url(${bgImage.src})`,
-        }}
-      >
         {/* Overlay */}
-        <Box className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 z-1" />
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 z-1" />
 
         {/* Content */}
-        <Box
+        <div
           className={clsx(
-            "z-20 xl:ml-[10vw] lg:ml-[10vw] mx-[10vw] xl:w-[40vw] lg:w-[40vw] transition-all duration-500 ease-in-out",
+            "z-20 xl:w-[50vw] lg:w-[50vw] transition-all duration-300 ease-in-out",
             { "mt-[5vh]": !scrolled, "mt-[2vh]": scrolled }
           )}
         >
-          <SectionText className={`${assistant.className} text-white mb-0`}>
-            TAGS
-          </SectionText>
-          <SectionTitle
-            className={`${assistant.className} text-white text-5xl break-words py-[1vh]`}
-          >
-            This is a Placeholder Featured Insight
-          </SectionTitle>
-          <SectionText className={`${assistant.className} text-white mb-0`}>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-            quae ab illo inventore veritatis et quasi architecto beatae vitae
-            dicta sunt explicabo. Nemo enim v...
-          </SectionText>
-          <Box className="flex row-auto justify-between">
-            <SectionText className={`${assistant.className} text-white mb-0`}>
-              AUTHOR
-            </SectionText>
-            <SectionText className={`${assistant.className} text-white mb-0`}>
-              1 JANUARY 2025
-            </SectionText>
-          </Box>
-        </Box>
-      </Box>
+          <SectionText>{tag}</SectionText>
+          <SectionTitle>{title}</SectionTitle>
+          <SectionText className="mb-[1vh] md:w-[50vw]">{body}</SectionText>
+          <div className="flex p-0">
+            <SectionText className="mr-[4vw]">{author}</SectionText>
+            <SectionText>{date}</SectionText>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

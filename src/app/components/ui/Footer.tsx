@@ -1,75 +1,15 @@
 "use client";
-import { Box, Typography, useTheme } from "@mui/material";
-import { styled } from "@mui/system";
 import React from "react";
-import { assistant } from "@/app/fonts";
 import Image from "next/image";
-import { Container } from "../style";
+import { assistant } from "@/fonts/index";
 
-const FooterContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flex: 1,
-  color: theme?.palette?.common?.white || "#ffffff",
-  flexDirection: "column",
-  textAlign: "center",
-  [theme.breakpoints.up("lg")]: {
-    flexDirection: "row", // Changed to row for larger screens
-    alignItems: "center",
-    justifyContent: "space-between",
-    textAlign: "left",
-  },
-}));
-
-const LinksContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  marginInline: "2vw",
-  marginBottom: "2vh",
-  [theme.breakpoints.up("lg")]: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginBottom: "0",
-  },
-}));
-
-const FooterLink = styled(Typography)(({ theme }) => ({
-  fontFamily: assistant.style.fontFamily,
-  fontSize: "1rem",
-  marginBlock: "1vh",
-  color: theme?.palette?.common?.white || "#ffffff",
-  marginBottom: "1vh",
-  [theme.breakpoints.up("lg")]: {
-    marginBottom: "0",
-  },
-}));
-
-const LinkBox = styled(Box)(({ theme }) => ({
-  paddingInline: "5vw",
-  paddingBottom: "2vh",
-  [theme.breakpoints.down("lg")]: {
-    borderBottom: `1px solid ${theme?.palette?.common?.white || "#ffffff"}`,
-    paddingBottom: "2vh",
-    marginBottom: "2vh",
-  },
-}));
-
-const CopyrightText = styled(Typography)(({ theme }) => ({
-  fontFamily: assistant.style.fontFamily,
-  fontSize: "1em",
-  color: theme?.palette?.common?.white || "#ffffff",
-  marginTop: "2vh",
-  [theme.breakpoints.up("lg")]: {
-    marginTop: "0",
-  },
-}));
-
+// Footer component
 const Footer = () => {
-  const theme = useTheme();
-
   return (
-    <Container className="bg-background-paper py-[5vh]">
-      <FooterContainer>
-        <Box className="w-[100px] h-[100px] flex justify-center items-center mx-auto lg:mx-0">
+    <footer className="bg-background-paper">
+      <div className="py-0 flex flex-col text-center lg:flex-row lg:text-left items-center">
+        {/* Logo */}
+        <div className="flex justify-center items-center w-[200px] h-[200px]">
           <Image
             src={require("../../assets/images/logo.png")}
             layout="responsive"
@@ -77,31 +17,51 @@ const Footer = () => {
             height={100}
             alt="Logo"
           />
-        </Box>
-        <LinksContainer>
-          <LinkBox>
-            <FooterLink>Placeholder</FooterLink>
-            <FooterLink>Placeholder</FooterLink>
-            <FooterLink>Placeholder</FooterLink>
-          </LinkBox>
-          <LinkBox>
-            <FooterLink>Placeholder</FooterLink>
-            <FooterLink>Placeholder</FooterLink>
-            <FooterLink>Placeholder</FooterLink>
-          </LinkBox>
-          <LinkBox>
-            <FooterLink>Placeholder</FooterLink>
-            <FooterLink>Placeholder</FooterLink>
-          </LinkBox>
-        </LinksContainer>
-      </FooterContainer>
-      <Box className="flex flex-1 row-auto justify-between align-middle items-center">
-        <CopyrightText>
+        </div>
+
+        {/* Links */}
+        <div className="flex flex-col lg:flex-row justify-around mt-10 lg:mt-10 lg:ml-[5vw] lg:space-x-20">
+          <div className="flex flex-col items-center lg:items-start border-b lg:border-b-0 pb-4 lg:pb-0 lg:px-8">
+            <p className="text-white font-assistant text-lg mb-4">
+              Placeholder
+            </p>
+            <p className="text-white font-assistant text-lg mb-4">
+              Placeholder
+            </p>
+            <p className="text-white font-assistant text-lg mb-4">
+              Placeholder
+            </p>
+          </div>
+          <div className="flex flex-col items-center lg:items-start border-b lg:border-b-0 pb-4 lg:pb-0 lg:px-8">
+            <p className="text-white font-assistant text-lg mb-4">
+              Placeholder
+            </p>
+            <p className="text-white font-assistant text-lg mb-4">
+              Placeholder
+            </p>
+            <p className="text-white font-assistant text-lg mb-4">
+              Placeholder
+            </p>
+          </div>
+          <div className="flex flex-col items-center lg:items-start lg:px-8">
+            <p className="text-white font-assistant text-lg mb-4">
+              Placeholder
+            </p>
+            <p className="text-white font-assistant text-lg mb-4">
+              Placeholder
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Copyright section */}
+      <div className="flex flex-row justify-between items-center mt-6">
+        <p className="text-white font-assistant text-sm">
           Copyright © 2024 The Eastern Trade Group LLC
-        </CopyrightText>
-        <Box className="w-[100px] h-[20px] border-primary-contrast border-[2px]" />
-      </Box>
-    </Container>
+        </p>
+        <div className="w-[100px] h-[20px] border-[2px] border-white" />
+      </div>
+    </footer>
   );
 };
 

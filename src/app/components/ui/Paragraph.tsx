@@ -1,18 +1,7 @@
 "use client";
 import React from "react";
-import { Container, SectionText, SectionTitle, StyledButton } from "../style";
-import { Box } from "@mui/material";
 import clsx from "clsx";
 import Link from "next/link";
-
-type ParagraphProps = {
-  title: string;
-  text: string;
-  image?: string;
-  buttonUrl?: string;
-  isReversed?: boolean;
-  isCentered?: boolean;
-};
 
 const Paragraph: React.FC<ParagraphProps> = ({
   title,
@@ -23,49 +12,59 @@ const Paragraph: React.FC<ParagraphProps> = ({
   buttonUrl,
 }) => {
   return (
-    <Container
-      className={clsx("lg:flex flex-wrap h-auto justify-between", {
-        "lg:flex-col md:flex-col sm:flex-col flex-col": buttonUrl && isCentered,
-        "lg:flex-row-reverse": isReversed,
-        "lg:flex-row": !isReversed,
-        "md:flex-col-reverse": true, // Ensure flex-column for medium screens
-      })}
+    <div
+      className={clsx(
+        "flex-wrap h-auto justify-between pb-[10vh]",
+        {
+          "flex-col": buttonUrl && isCentered, // Stack content if centered
+          "lg:flex-row-reverse": isReversed, // Reverse layout if needed
+          "lg:flex-row": !isReversed,
+          "md:flex-col-reverse": true, // Always column reverse on medium screens
+        },
+        "lg:flex" // Ensure large screen uses flex-row or reversed rows
+      )}
     >
-      <Box
-        className={clsx("flex-[0.66]", {
-          "lg:ml-12": isReversed && !isCentered,
-          "lg:mr-12": !isReversed && !isCentered,
-          "lg:mx-auto": isCentered, // Ensure centered text for centered content
+      {/* Text Section */}
+      <div
+        className={clsx("flex-[0.66] p-0 ", {
+          "lg:ml-12": isReversed && !isCentered, // Left margin if reversed
+          "lg:mr-12": !isReversed && !isCentered, // Right margin if not reversed
+          "lg:mx-auto": isCentered, // Centered margins if content is centered
         })}
       >
-        <SectionTitle
-          className={clsx("font-extrabold text-[1.5rem]", {
-            "text-center": isCentered,
-          })}
+        <h2
+          className={clsx(
+            "font-extrabold font-assistant text-xl text-black mb-4", // Font size and primary color
+            {
+              "text-center": isCentered, // Center title if content is centered
+            }
+          )}
         >
           {title}
-        </SectionTitle>
-        <SectionText
-          className={clsx("", {
-            "mx-auto": isCentered,
-            "sm:max-w-full md:max-w-[50vw]": isCentered, // Max width adjustments for breakpoints
+        </h2>
+        <p
+          className={clsx("font-assistant text-base text-black", {
+            "mx-auto": isCentered, // Center text if content is centered
+            "sm:max-w-full md:max-w-[50vw]": isCentered, // Max width control on smaller screens
           })}
         >
           {text}
-        </SectionText>
-      </Box>
+        </p>
+      </div>
+
+      {/* Image Section */}
       {image && (
-        <Box
+        <div
           className={clsx(
-            "flex-[0.33] h-auto bg-cover bg-center items-center justify-center",
+            "flex-[0.33] p-0 h-auto bg-cover bg-center items-center justify-center",
             {
-              "w-full md:w-full lg:w-[50%]": true, // Ensure image takes full width on small and medium screens
+              "w-full p-0 md:w-full lg:w-[50%]": true, // Full width for small screens, 50% for large
             }
           )}
           style={{ backgroundImage: `url(${image})` }}
         />
       )}
-    </Container>
+    </div>
   );
 };
 
