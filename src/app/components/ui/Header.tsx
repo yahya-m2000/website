@@ -31,6 +31,7 @@ const NavLink: React.FC<NavLinkProps> = ({
   href,
   label,
   scrolled,
+  isDark,
   onClick,
 }) => {
   return (
@@ -41,9 +42,9 @@ const NavLink: React.FC<NavLinkProps> = ({
           "font-assistant font-light text-lg cursor-pointer ml-[1vw] text-center whitespace-nowrap",
           {
             "text-secondary hover:text-primary hover:underline decoration-primary":
-              scrolled,
+              scrolled && !isDark,
             "text-white hover:text-white hover:underline hover:font-bold decoration-white":
-              !scrolled,
+              !scrolled || isDark,
           }
         )}
         style={{ minWidth: "120px" }}
@@ -54,27 +55,27 @@ const NavLink: React.FC<NavLinkProps> = ({
   );
 };
 
-// Logo component
 const EasternTradeGroupLogo: React.FC<EasternTradeGroupLogoProps> = ({
   scrolled,
+  isDark,
 }) => {
   return (
-    <div className="flex items-center xl:justify-start lg:justify-center md:justify-center sm:justify-center justify-center xl:flex-0 lg:flex-1 md:flex-1 sm:flex-1 flex-1">
+    <div className="flex items-center lg:justify-start justify-center flex-1">
       <Link href="/">
         <Image
           src={require("../../assets/images/logo.png")}
           objectFit="contain"
           alt="Logo"
           className={clsx(
-            "py-[10px] px-[8px] w-[150px] lg:w-[200px] xl:w-[200px] transition-transform duration-300 ease-in-out hover:scale-105",
+            "transition-all duration-300 ease-in-out hover:scale-105",
             {
-              "py-[10px] px-[16px] w-[150px] lg:w-[150px] xl:w-[175px]":
-                scrolled,
+              "w-[90px] md:w-[100px]": scrolled,
+              "w-[90px] md:w-[125px]": !scrolled,
+              "invert-0": isDark || !scrolled,
             }
           )}
           style={{
-            filter: scrolled ? "invert(1)" : "invert(0)",
-            transition: "all 0.3s ease",
+            filter: scrolled && !isDark ? "invert(1)" : "invert(0)",
           }}
         />
       </Link>
@@ -82,7 +83,7 @@ const EasternTradeGroupLogo: React.FC<EasternTradeGroupLogoProps> = ({
   );
 };
 
-const Header = () => {
+const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
   const { scrolled, nearBottom } = useScroll();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -91,24 +92,27 @@ const Header = () => {
   return (
     <header
       className={clsx(
-        "flex justify-between content-center py-[1vh] items-end fixed top-0 left-0 right-0 z-[100] backdrop-blur-[4px] border-b-white-transparent border-b-[0.5px] transition-all duration-300 ease-in-out ",
+        "flex px-[2vw] lg:py-0 py-[2vh] justify-between  lg:pb-[2vh] items-end fixed top-0 left-0 right-0 z-[100] backdrop-blur-[4px] border-b-white-transparent border-b-[0.5px] transition-all duration-300 ease-in-out",
         {
-          "bg-[rgba(255,255,255,1)] h-auto": scrolled && !nearBottom,
-          "bg-[rgba(255,255,255,1)] h-auto -translate-y-full": nearBottom,
-          "bg-[rgba(0,0,0,0)] ": !scrolled && !nearBottom,
+          "bg-[rgba(0,0,0,0.5)] text-white": isDark, // Dark mode
+          "bg-[rgba(255,255,255,1)] text-black":
+            scrolled && !nearBottom && !isDark, // Light mode when scrolled
+          "bg-[rgba(0,0,0,0)] text-white": !scrolled && !isDark, // Light mode when not scrolled
+          "h-auto -translate-y-full": nearBottom,
         }
       )}
     >
-      <EasternTradeGroupLogo scrolled={scrolled} />
+      <EasternTradeGroupLogo scrolled={scrolled} isDark={isDark} />
 
       {/* Navigation links */}
-      <div className="hidden xl:flex items-end h-[100px] flex-grow-0">
+      <div className="hidden lg:flex items-end h-[100px] flex-grow-0">
         {navLinks.map((item) => (
           <NavLink
             key={item.href}
             href={item.href}
             label={item.label}
             scrolled={scrolled}
+            isDark={isDark} // Pass isDark to NavLink
           />
         ))}
       </div>
@@ -116,9 +120,10 @@ const Header = () => {
       {/* Drawer for mobile */}
       <IconButton
         onClick={toggleDrawer}
-        className={`${
-          scrolled ? "text-black" : "text-white"
-        } absolute left-4 top-[50%] translate-y-[-50%] z-2 xl:hidden`}
+        className={clsx(
+          "absolute left-4 top-[50%] translate-y-[-50%] z-2 lg:hidden",
+          { "text-white": isDark || !scrolled, "text-black": scrolled }
+        )}
         sx={{
           transform: nearBottom ? "translateY(-100%)" : "translateY(0)",
         }}

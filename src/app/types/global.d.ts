@@ -3,18 +3,21 @@ declare global {
     href: string;
     label: string;
     scrolled?: boolean;
+    isDark?: boolean;
     onClick?: () => void;
     overrideScrollStyle?: boolean;
   };
 
   type EasternTradeGroupLogoProps = {
     scrolled: boolean;
+    isDark?: boolean;
   };
 
   type CardProps = {
     title: string;
     tag: string;
     backgroundImage?: string;
+    isDark?: boolean;
     isFocused?: boolean;
     onClick?: () => void;
   };
