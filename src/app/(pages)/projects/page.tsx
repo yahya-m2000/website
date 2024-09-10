@@ -1,105 +1,89 @@
-// "use client";
-// import React, { useState } from "react";
-// import { Box, Typography } from "@mui/material";
+"use client";
+import React, { useState } from "react";
+import { Footer, Header, Layout } from "@/components/ui";
+import HeroImage from "@/components/ui/HeroImage";
+import SearchBar from "@/components/ui/SearchBar";
+import CardGrid from "@/components/ui/CardGrid";
+import bgImage from "@/assets/images/projects_background.png";
+import { mockInsights } from "@/assets/mockData/insights";
 
-// import {
-//   Layout,
-//   Footer,
-//   Header,
-//   HorizontalCarousel,
-//   Paragraph,
-// } from "@/app/components/ui";
-// import HeaderBackground from "@/app/components/about/HeaderBackground";
+export default function Projects() {
+  const [filteredInsights, setFilteredInsights] = useState(mockInsights);
+  const [loading, setLoading] = useState(false); // Add loading state
 
-// const mockProjects = [
-//   {
-//     title: "Project 1",
-//     subtitle: "Subtitle 1",
-//     image: "https://via.placeholder.com/600x400",
-//   },
-//   {
-//     title: "Project 2",
-//     subtitle: "Subtitle 2",
-//     image: "https://via.placeholder.com/600x400",
-//   },
-//   {
-//     title: "Project 3",
-//     subtitle: "Subtitle 3",
-//     image: "https://via.placeholder.com/600x400",
-//   },
-//   {
-//     title: "Project 4",
-//     subtitle: "Subtitle 4",
-//     image: "https://via.placeholder.com/600x400",
-//   },
-//   {
-//     title: "Project 5",
-//     subtitle: "Subtitle 5",
-//     image: "https://via.placeholder.com/600x400",
-//   },
-// ];
-// const Projects = () => {
-//   const totalItems = mockProjects.length;
-//   const [currentIndex, setCurrentIndex] = useState(0);
+  // Function to filter insights based on search term
+  const handleSearch = (term: string) => {
+    setLoading(true); // Start loading
 
-//   const handleNext = () => {
-//     setCurrentIndex((prevIndex) => (prevIndex + 1) % totalItems);
-//   };
+    setTimeout(() => {
+      if (term === "") {
+        setFilteredInsights(mockInsights); // Show all insights if no search term
+      } else {
+        const filtered = mockInsights.filter((insight) =>
+          insight.title.toLowerCase().includes(term.toLowerCase())
+        );
+        setFilteredInsights(filtered);
+      }
+      setLoading(false); // End loading
+    }, 1000); // Simulate network delay for loading
+  };
 
-//   const handlePrev = () => {
-//     setCurrentIndex((prevIndex) => (prevIndex - 1 + totalItems) % totalItems);
-//   };
-//   const getTranslateValue = (index: number) => {
-//     if (index === currentIndex) {
-//       return 0;
-//     } else if (index === (currentIndex - 1 + totalItems) % totalItems) {
-//       return -100;
-//     } else if (index === (currentIndex + 1) % totalItems) {
-//       return 100;
-//     } else {
-//       return index < currentIndex ? -200 : 200;
-//     }
-//   };
+  // Function to filter insights based on selected tag
+  const handleFilterByTag = (tag: string) => {
+    const filtered = mockInsights.filter((insight) =>
+      insight.tags.includes(tag)
+    );
+    setFilteredInsights(filtered);
+  };
 
-//   return (
-//     <Layout>
-//       <Header />
-//       <HeaderBackground text="Projects" />
-//       <Paragraph
-//         title="Our Story"
-//         text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et eum fugiat quo voluptas nulla pariatur?"
-//         image="https://via.placeholder.com/600x400"
-//       />
-//       <Paragraph
-//         title="Our Purpose"
-//         text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et eum fugiat quo voluptas nulla pariatur?"
-//         image="https://via.placeholder.com/600x400"
-//         isReversed={true}
-//       />
-//       <Paragraph
-//         title="Our Work"
-//         text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et eum fugiat quo voluptas nulla pariatur?"
-//         isCentered={true}
-//       />
-//       <HorizontalCarousel
-//         items={mockProjects}
-//         currentIndex={currentIndex}
-//         handlePrev={handlePrev}
-//         handleNext={handleNext}
-//         getTranslateValue={getTranslateValue}
-//       />
-//       <Box className="mt-[100px]" />
-//       <Footer />
-//     </Layout>
-//   );
-// };
+  return (
+    <Layout>
+      <main className="hide-scrollbar bg-black">
+        <Header isDark={true} />
+        <HeroImage
+          title={"Placeholder Featured Insight"}
+          backgroundImage={bgImage}
+          tag={"Technology"}
+          body="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim v..."
+          author={"Test"}
+          date={"01 January 2025"}
+        />
+        <div className="main">
+          <h3 className="font-assistant text-white text-3xl md:w-[40vw] justify-start">
+            We at the Eastern Trade Group believe in
+            <span className="font-extrabold"> innovation</span> and, more
+            importantly, the
+            <span className="font-extrabold"> innovators themselves.</span>
+          </h3>
+          <h3 className="pt-[4vh] font-extrabold font-assistant text-white text-3xl md:w-[40vw] justify-start">
+            Browse the work of our clients
+          </h3>
+        </div>
 
-// export default Projects;
+        {/* SearchBar Component */}
+        <SearchBar onSearch={handleSearch} onFilterByTag={handleFilterByTag} />
 
-import React from "react";
-
-const page = () => {
-  return <div>page</div>;
-};
-
-export default page;
+        {/* Display the filtered insights using the CardGrid component */}
+        <div className="main min-h-[20vh]">
+          {loading ? (
+            <p className="text-white text-lg">Loading...</p> // Display loading message
+          ) : filteredInsights.length > 0 ? (
+            <div
+              className="transition-opacity duration-500 ease-in-out"
+              style={{ opacity: loading ? 0 : 1 }}
+            >
+              <CardGrid
+                insights={filteredInsights}
+                itemsToShow={filteredInsights.length}
+                isDark={true}
+              />
+            </div>
+          ) : (
+            <p className="text-white text-lg">No results found.</p> // No results message
+          )}
+        </div>
+        <Footer isDark={true} />
+      </main>
+    </Layout>
+  );
+}

@@ -11,7 +11,7 @@ const theme = createTheme({
     },
     background: {
       default: "#ffffff", // White color for general background
-      paper: "#000000", // Background color for paper components
+      paper: "#F7EEEE", // Background color for paper components
     },
     text: {
       primary: "#1E1E1E", // Black text color for primary text

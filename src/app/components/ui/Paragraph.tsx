@@ -12,30 +12,26 @@ const Paragraph: React.FC<ParagraphProps> = ({
 }) => {
   return (
     <div
-      className={clsx(
-        "flex-wrap h-auto justify-between pb-[10vh]",
-        {
-          "flex-col": buttonUrl && isCentered, // Stack content if centered
-          "lg:flex-row-reverse": isReversed, // Reverse layout if needed
-          "lg:flex-row": !isReversed,
-          "md:flex-col-reverse": true, // Always column reverse on medium screens
-        },
-        "lg:flex" // Ensure large screen uses flex-row or reversed rows
-      )}
+      className={clsx("flex flex-wrap h-auto px-[4vw] py-[4vh]", {
+        "flex-col": buttonUrl && isCentered,
+        "lg:flex-row-reverse": isReversed,
+        "lg:flex-row": !isReversed,
+        "md:flex-col-reverse": true, // Always column reverse on medium screens
+      })}
     >
       {/* Text Section */}
       <div
-        className={clsx("flex-[0.66] p-0 ", {
-          "lg:ml-12": isReversed && !isCentered, // Left margin if reversed
-          "lg:mr-12": !isReversed && !isCentered, // Right margin if not reversed
+        className={clsx("flex-1", {
+          "lg:ml-12": isReversed && !isCentered,
+          "lg:mr-12": !isReversed && !isCentered,
           "lg:mx-auto": isCentered, // Centered margins if content is centered
         })}
       >
         <h2
           className={clsx(
-            "font-extrabold font-assistant text-xl text-black mb-4", // Font size and primary color
+            "font-extrabold font-assistant text-xl text-black mb-4",
             {
-              "text-center": isCentered, // Center title if content is centered
+              "text-center": isCentered,
             }
           )}
         >
@@ -43,8 +39,7 @@ const Paragraph: React.FC<ParagraphProps> = ({
         </h2>
         <p
           className={clsx("font-assistant text-base text-black", {
-            "mx-auto": isCentered, // Center text if content is centered
-            "sm:max-w-full md:max-w-[50vw]": isCentered, // Max width control on smaller screens
+            "mx-auto md:max-w-[50vw]": isCentered, // Center text with max width control
           })}
         >
           {text}
@@ -54,12 +49,7 @@ const Paragraph: React.FC<ParagraphProps> = ({
       {/* Image Section */}
       {image && (
         <div
-          className={clsx(
-            "flex-[0.33] p-0 h-auto bg-cover bg-center items-center justify-center",
-            {
-              "w-full p-0 md:w-full lg:w-[50%]": true, // Full width for small screens, 50% for large
-            }
-          )}
+          className="flex-[0.33] h-auto w-full lg:w-[50%] bg-cover bg-center"
           style={{ backgroundImage: `url(${image})` }}
         />
       )}

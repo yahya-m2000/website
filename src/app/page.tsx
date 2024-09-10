@@ -1,6 +1,6 @@
 import { Footer, Header, Layout, Paragraph } from "@/components/ui";
 import FeaturedInsights from "./components/home/FeaturedInsights";
-import HeroImage from "./components/home/HeroImage";
+import HeroImage from "./components/ui/HeroImage";
 import bgImage from "@/assets/images/home_background.jpg"; // Ensure this path is correct
 
 export default function Home() {
@@ -18,6 +18,7 @@ export default function Home() {
             dicta sunt explicabo. Nemo enim v..."
           author={"Test"}
           date={"01 January 2025"}
+          url="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
         />
         <FeaturedInsights />
         <Paragraph
@@ -27,7 +28,7 @@ export default function Home() {
           image="https://via.placeholder.com/600x400"
           isReversed={true}
         />
-        <Footer />
+        <Footer isDark={false} />
       </main>
     </Layout>
   );
