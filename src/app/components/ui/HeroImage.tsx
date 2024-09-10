@@ -12,7 +12,7 @@ const HeroImage: React.FC<HeroImageProps> = ({
   url,
 }) => {
   return (
-    <div className="relative h-[50vh] md:h-[80vh]">
+    <div className="relative h-[60vh] md:h-[80vh]">
       {/* Background Image */}
       <Image
         src={backgroundImage}
