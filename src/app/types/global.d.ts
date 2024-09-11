@@ -1,16 +1,12 @@
 declare global {
-  type NavLinkProps = {
+  type HeaderProps = {
     href: string;
-    label: string;
+    label?: string;
     scrolled?: boolean;
     isDark?: boolean;
     onClick?: () => void;
     overrideScrollStyle?: boolean;
-  };
-
-  type EasternTradeGroupLogoProps = {
-    scrolled: boolean;
-    isDark?: boolean;
+    noAnimations?: boolean;
   };
 
   type CardProps = {

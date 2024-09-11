@@ -1,79 +1,123 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import clsx from "clsx";
 
-const mockLinks = [
-  { title: "About Us", url: "/about" },
-  { title: "Our Mission", url: "/mission" },
-  { title: "Insights", url: "/insights" },
-  { title: "Projects", url: "/projects" },
-  { title: "Services", url: "/services" },
-  { title: "Contact", url: "/contact" },
-  { title: "Careers", url: "/careers" },
-  { title: "Press", url: "/press" },
-  { title: "Blog", url: "/blog" },
-  { title: "Privacy Policy", url: "/privacy-policy" },
-  { title: "Terms of Service", url: "/terms-of-service" },
+const footerSections = [
+  {
+    heading: "ABOUT US",
+    links: [
+      { title: "Our Mission", url: "/mission" },
+      { title: "Our Impact", url: "/impact" },
+      { title: "Leadership and Governance", url: "/leadership" },
+      { title: "Forum Statements", url: "/statements" },
+      { title: "Partners", url: "/partners" },
+      { title: "Sustainability at the Forum", url: "/sustainability" },
+      { title: "History", url: "/history" },
+      { title: "Careers", url: "/careers" },
+      { title: "Contact Us", url: "/contact" },
+    ],
+  },
+  {
+    heading: "EVENTS",
+    links: [
+      { title: "Events", url: "/events" },
+      { title: "Open Forum", url: "/open-forum" },
+    ],
+  },
+  {
+    heading: "MEDIA",
+    links: [
+      { title: "Press", url: "/press" },
+      { title: "Subscribe to our press releases", url: "/press-releases" },
+      { title: "Pictures", url: "/pictures" },
+    ],
+  },
+  {
+    heading: "MORE FROM THE GROUP",
+    links: [
+      { title: "Strategic Intelligence", url: "/strategic-intelligence" },
+      { title: "UpLink", url: "/uplink" },
+      { title: "Global Shapers", url: "/global-shapers" },
+      { title: "Young Global Leaders", url: "/young-global-leaders" },
+      { title: "Centre for the Fourth Industrial Revolution", url: "/cfir" },
+    ],
+  },
+  {
+    heading: "PARTNERS & MEMBERS",
+    links: [
+      { title: "Sign in", url: "/signin" },
+      { title: "Join Us", url: "/join" },
+    ],
+  },
+  {
+    heading: "LANGUAGE EDITIONS",
+    links: [
+      { title: "English", url: "/en" },
+      { title: "Español", url: "/es" },
+      { title: "中文", url: "/cn" },
+      { title: "日本語", url: "/jp" },
+    ],
+  },
 ];
 
 type FooterProps = {
   isDark?: boolean;
 };
 
-// Footer component
 const Footer: React.FC<FooterProps> = ({ isDark }) => {
-  // Divide mockLinks into columns of 3 links each
-  const groupedLinks = [];
-  for (let i = 0; i < mockLinks.length; i += 3) {
-    groupedLinks.push(mockLinks.slice(i, i + 3));
-  }
-
   return (
-    <footer className={clsx(isDark ? "bg-black" : "bg-background-paper")}>
-      <div className="main py-0 flex flex-col lg:flex-row lg:text-left items-center">
-        {/* Logo */}
-        <div className="flex justify-center items-center w-[200px] h-[200px]">
-          <Image
-            src={require("../../assets/images/logo.png")}
-            layout="responsive"
-            width={100}
-            height={100}
-            alt="Logo"
-            style={{
-              filter: isDark ? "invert(0)" : "invert(1)",
-            }}
-          />
-        </div>
-
-        {/* Links - Render as multiple columns */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 md:gap-x-12">
-          {/* Links */}
-          {mockLinks.map((group, index) => (
-            <div key={index} className="text-center md:text-left">
-              <a
-                href={group.url}
-                className={clsx(
-                  "font-assistant text-lg hover:underline",
-                  isDark ? "text-white" : "text-black"
-                )}
-              >
-                {group.title}
-              </a>
-            </div>
-          ))}
-        </div>
+    <footer
+      className={clsx(isDark ? "bg-black" : "bg-background-paper", "py-8")}
+    >
+      <div className="main grid grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Render each section */}
+        {footerSections.map((section, idx) => (
+          <div key={idx}>
+            {/* Section Heading */}
+            <h4
+              className={clsx(
+                "font-assistant font-bold uppercase text-lg mb-4",
+                isDark ? "text-white" : "text-black"
+              )}
+            >
+              {section.heading}
+            </h4>
+            {/* Section Links */}
+            <ul>
+              {section.links.map((link, linkIdx) => (
+                <li key={linkIdx} className="mb-2">
+                  <a
+                    href={link.url}
+                    className={clsx(
+                      "font-assistant text-base hover:underline",
+                      isDark ? "text-white" : "text-black"
+                    )}
+                  >
+                    {link.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
 
       {/* Copyright section */}
-      <div className="flex flex-row justify-between items-center mt-6">
+      <div className="flex font-assistant px-[4vw] justify-between items-center">
         <p
           className={clsx(
-            "font-assistant text-sm",
+            "font-assistant  text-sm",
             isDark ? "text-white" : "text-black"
           )}
         >
-          Copyright © 2024 The Eastern Trade Group LLC
+          Copyright © 2024 The Eastern Trade Group LLC. All rights reserved.{" "}
+          <a href="/privacy-policy" className="hover:underline font-bold">
+            Privacy Policy
+          </a>{" "}
+          and{" "}
+          <a href="/terms-of-service" className="hover:underline font-bold">
+            Terms of Use
+          </a>
         </p>
         <div
           className={clsx(
