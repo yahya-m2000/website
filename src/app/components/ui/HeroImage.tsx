@@ -11,21 +11,20 @@ const HeroImage: React.FC<HeroImageProps> = ({
   // url,
 }) => {
   return (
-    <div className="relative h-[60vh] md:h-[80vh]">
+    <div className="relative min-h-[70vh]">
       {/* Background Image */}
       <Image
         src={backgroundImage}
         layout="fill"
         objectFit="cover"
         alt="Background"
-        className="absolute inset-0 z-0"
       />
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent z-10" />
 
       {/* Content with absolute positioning to control placement */}
-      <div className="main absolute md:w-[54vw] md:bottom-[15vh] sm:bottom-[10vh] bottom-10 left-0 right-0 z-20">
+      <div className="main py-[10vh] flex absolute min-h-[70vh] items-end lg:w-[80vw] z-20">
         <div className="">
           {/* Tag and Download  <div className="flex justify-between items-center">
             <p className="base text-white">{tag}</p>
@@ -42,10 +41,10 @@ const HeroImage: React.FC<HeroImageProps> = ({
           </div> */}
 
           {/* Title */}
-          <h1 className="title text-white">{title}</h1>
+          <h1 className="title text-white ">{title}</h1>
 
           {/* Body Text */}
-          <p className="base text-white">{body}</p>
+          <p className="base text-white text-xl my-[2vh]">{body}</p>
 
           {/* Author and Date */}
           <div className="flex space-x-4 mt-2]">

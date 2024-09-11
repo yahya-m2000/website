@@ -24,14 +24,7 @@ const footerSections = [
       { title: "Open Forum", url: "/open-forum" },
     ],
   },
-  {
-    heading: "MEDIA",
-    links: [
-      { title: "Press", url: "/press" },
-      { title: "Subscribe to our press releases", url: "/press-releases" },
-      { title: "Pictures", url: "/pictures" },
-    ],
-  },
+
   {
     heading: "MORE FROM THE GROUP",
     links: [
@@ -40,6 +33,14 @@ const footerSections = [
       { title: "Global Shapers", url: "/global-shapers" },
       { title: "Young Global Leaders", url: "/young-global-leaders" },
       { title: "Centre for the Fourth Industrial Revolution", url: "/cfir" },
+    ],
+  },
+  {
+    heading: "MEDIA",
+    links: [
+      { title: "Press", url: "/press" },
+      { title: "Subscribe to our press releases", url: "/press-releases" },
+      { title: "Pictures", url: "/pictures" },
     ],
   },
   {
@@ -72,7 +73,13 @@ const Footer: React.FC<FooterProps> = ({ isDark }) => {
       <div className="main grid grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Render each section */}
         {footerSections.map((section, idx) => (
-          <div key={idx}>
+          <div
+            key={idx}
+            className={clsx(
+              idx === 0 ? "lg:row-span-2" : "", // First column spans 2 rows
+              idx === 2 ? "lg:row-span-2" : "" // Third column spans 2 rows
+            )}
+          >
             {/* Section Heading */}
             <h4
               className={clsx(
@@ -106,14 +113,14 @@ const Footer: React.FC<FooterProps> = ({ isDark }) => {
       <div className="flex font-assistant px-[4vw] justify-between items-center">
         <p
           className={clsx(
-            "font-assistant  text-sm",
+            "font-assistant text-sm",
             isDark ? "text-white" : "text-black"
           )}
         >
           Copyright © 2024 The Eastern Trade Group LLC. All rights reserved.{" "}
           <a href="/privacy-policy" className="hover:underline font-bold">
-            Privacy Policy
-          </a>{" "}
+            Privacy Policy{" "}
+          </a>
           and{" "}
           <a href="/terms-of-service" className="hover:underline font-bold">
             Terms of Use

@@ -16,16 +16,16 @@ body {
 
 @layer base {
   .main {
-    @apply px-[4vw] py-[4vh]; /* Apply Tailwind utilities here */
+    @apply px-[4vw] md:px-[10vw] lg:py-[4vh] md:py-[2vh] py-[1vh]; /* Apply Tailwind utilities here */
   }
   .container {
     @apply px-[2vw] py-[2vh]; /* Apply Tailwind utilities here */
   }
   .title {
-    @apply text-4xl lg:text-6xl md:text-5xl font-extrabold font-assistant;
+    @apply text-4xl lg:text-5xl md:text-5xl font-extrabold font-assistant;
   }
   .subheading {
-    @apply text-3xl lg:text-5xl md:text-4xl font-extrabold font-assistant;
+    @apply text-3xl lg:text-4xl md:text-4xl font-extrabold font-assistant;
   }
   .base {
     @apply text-base font-light font-assistant;

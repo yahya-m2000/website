@@ -9,7 +9,7 @@ export default function Home() {
       <main className="hide-scrollbar ">
         <Header noAnimations={false} />
         <HeroImage
-          title={"Placeholder Featured Insight"}
+          title={"Placeholder Featured Insight #1 Technology"}
           backgroundImage={bgImage}
           tag={"Technology"}
           body="Sed ut perspiciatis unde omnis iste natus error sit voluptatem

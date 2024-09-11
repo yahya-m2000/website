@@ -9,7 +9,7 @@ const tabData = [
     tabTitle: "Who we are",
     title: "Who we are",
     content:
-      "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium...",
+      "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim v Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim vSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim vSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim v Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim vSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim vSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim v Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim vSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim v",
     url: "who-we-are",
   },
   {
@@ -77,20 +77,20 @@ const Page = () => {
       {/* Wrapper for full-height page */}
       <div className="min-h-screen flex flex-col">
         <Header isDark={false} noAnimations={true} />
-        <main className="main flex-grow pt-[15vh]">
+        <div className="pt-[15vh]" />
+        <main className="main flex-grow min-h-screen h-auto pb-[15vh]">
           {/* Tabs and Content Section */}
-          <div className="flex flex-col md:flex-row md:items-baseline">
+          <div className="flex flex-row items-baseline">
             {/* Tabs Section */}
-            <div className="flex-[0.25]">
-              <h3 className="subheading mb-[2vh] hidden md:block">About us</h3>
-              <ul className="flex flex-row justify-between md:justify-start md:flex-col md:space-y-[2vh]">
+            <div className="flex-[0.25] pr-[4vw] md:pr-[0vw]">
+              <ul className="flex flex-col  justify-start space-y-[2vh]">
                 {tabData.map((tab) => (
                   <li
                     key={tab.id}
                     className={`cursor-pointer ${
                       selectedTab === tab.id
-                        ? "font-assistant font-bold md:text-2xl sm:text-base text-sm text-black"
-                        : "font-assistant font-regular md:text-xl sm:text-base text-sm text-gray-500"
+                        ? "font-assistant font-bold md:text-2xl text-base text-black"
+                        : "font-assistant font-regular md:text-xl text-base text-gray-500"
                     }`}
                     onClick={() => handleTabChange(tab.id)}
                   >
@@ -107,7 +107,6 @@ const Page = () => {
             </div>
           </div>
         </main>
-        {/* Footer is now always at the bottom */}
         <Footer />
       </div>
     </Layout>
