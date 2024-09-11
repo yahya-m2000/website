@@ -1,15 +1,14 @@
 "use client";
 import Image from "next/image";
-import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 
 const HeroImage: React.FC<HeroImageProps> = ({
   title,
-  tag,
+  // tag,
   backgroundImage,
   body,
   author,
   date,
-  url,
+  // url,
 }) => {
   return (
     <div className="relative h-[60vh] md:h-[80vh]">
