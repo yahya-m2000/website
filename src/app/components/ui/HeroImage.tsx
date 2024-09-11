@@ -28,8 +28,7 @@ const HeroImage: React.FC<HeroImageProps> = ({
       {/* Content with absolute positioning to control placement */}
       <div className="main absolute md:w-[54vw] md:bottom-[15vh] sm:bottom-[10vh] bottom-10 left-0 right-0 z-20">
         <div className="">
-          {/* Tag and Download */}
-          <div className="flex justify-between items-center">
+          {/* Tag and Download  <div className="flex justify-between items-center">
             <p className="base text-white">{tag}</p>
             <a
               href={url}
@@ -41,7 +40,7 @@ const HeroImage: React.FC<HeroImageProps> = ({
               </p>
               <FileDownloadOutlinedIcon className="text-white ml-2" />
             </a>
-          </div>
+          </div> */}
 
           {/* Title */}
           <h1 className="title text-white">{title}</h1>

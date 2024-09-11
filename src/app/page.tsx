@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <Layout>
       <main className="hide-scrollbar ">
-        <Header />
+        <Header noAnimations={false} />
         <HeroImage
           title={"Placeholder Featured Insight"}
           backgroundImage={bgImage}
