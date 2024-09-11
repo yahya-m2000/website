@@ -17,7 +17,7 @@ const Card: React.FC<CardProps> = ({
       className="py-0 w-auto h-auto flex flex-col cursor-pointer overflow-hidden "
     >
       {/* Card Image */}
-      <div className="w-[100%] h-auto overflow-hidden p-0">
+      <div className="w-[100%] h-auto overflow-hidden p-0 rounded-md">
         <div
           className={clsx(
             "w-full h-[33.3vh] bg-gray-500 bg-cover bg-center transform transition-transform duration-300 ease-in-out hover:scale-105",
