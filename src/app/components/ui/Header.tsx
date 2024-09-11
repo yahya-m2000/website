@@ -7,15 +7,16 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 import clsx from "clsx";
 import { useScroll } from "@/context/ScrollContext";
 
+// Corrected navLinks array without a trailing comma
 const navLinks = [
   { href: "/about", label: "About us" },
   { href: "/insights", label: "Insights" },
   { href: "/projects", label: "Projects" },
   { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
-  ,
 ];
 
+// Updated NavLink component
 const NavLink: React.FC<HeaderProps> = ({
   href,
   label,
@@ -32,7 +33,6 @@ const NavLink: React.FC<HeaderProps> = ({
     ? "text-black"
     : "text-white";
 
-  isDark && scrolled ? "text-white" : "text-black";
   const hoverColor = noAnimations
     ? "hover:underline"
     : isDark
@@ -80,6 +80,7 @@ const EasternTradeGroupLogo: React.FC<HeaderProps> = ({
   );
 };
 
+// Header component
 const Header: React.FC<{ isDark?: boolean; noAnimations?: boolean }> = ({
   isDark = false,
   noAnimations = false,
