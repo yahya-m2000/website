@@ -34,7 +34,7 @@ const Logo: React.FC<HeaderProps> = ({ isDark }) => {
           className={clsx(
             "transition-all duration-300 ease-in-out hover:scale-105 w-[125px] lg:w-[200px]",
             {
-              "filter invert-0": isDark,
+              invert: !isDark,
             }
           )}
         />
@@ -43,21 +43,15 @@ const Logo: React.FC<HeaderProps> = ({ isDark }) => {
   );
 };
 
-type DrawerToggleProps = {
-  isDark: boolean;
-  toggleDrawer: () => void;
-};
-
 const DrawerToggle: React.FC<DrawerToggleProps> = ({
   isDark,
   toggleDrawer,
 }) => {
   return (
-    <IconButton
-      onClick={toggleDrawer}
-      className={clsx("font-xl z-2 lg:hidden")}
-    >
-      <SortRounded className={clsx(isDark ? "text-white" : "text-black")} />
+    <IconButton onClick={toggleDrawer} className={clsx(" z-2 lg:hidden")}>
+      <SortRounded
+        className={clsx("font-4xl", isDark ? "text-white" : "text-black")}
+      />
     </IconButton>
   );
 };
@@ -72,7 +66,7 @@ const Header: React.FC<{
   return (
     <header
       className={clsx(
-        "main flex flex-row lg:flex-col justify-between lg-justify-normal absolute left-0 right-0 z-[100] border-b-white border-opacity-20 border-b-[0.5px]",
+        "main lg:py-[2vh] flex flex-row lg:flex-col justify-between lg-justify-normal absolute left-0 right-0 z-[100] border-b-white border-opacity-30 border-b-[1px]",
         {}
       )}
     >

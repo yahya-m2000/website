@@ -12,6 +12,7 @@ export const mockInsights = [
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?fit=crop&w=600&q=80",
     ],
     slug: "understanding-ai-ethics",
+    date: "1st January 2025 — 1 min read",
   },
   {
     title: "Sustainable Architecture",
@@ -25,6 +26,7 @@ export const mockInsights = [
       "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?fit=crop&w=600&q=80",
     ],
     slug: "sustainable-architecture",
+    date: "1st January 2025 — 1 min read",
   },
   {
     title: "Blockchain Beyond Bitcoin",
@@ -38,6 +40,7 @@ export const mockInsights = [
       "https://images.unsplash.com/photo-1503428593586-e225b39bddfe?fit=crop&w=600&q=80",
     ],
     slug: "blockchain-beyond-bitcoin",
+    date: "1st January 2025 — 1 min read",
   },
   {
     title: "The Future of Remote Work",
@@ -49,6 +52,7 @@ export const mockInsights = [
     body: "With remote work becoming more prevalent, companies must adapt to a hybrid workforce.",
     images: [],
     slug: "future-of-remote-work",
+    date: "1st January 2025 — 1 min read",
   },
   {
     title: "Electric Vehicles: A Growing Trend",
@@ -62,6 +66,7 @@ export const mockInsights = [
       "https://images.unsplash.com/photo-1581091012184-9720b8b9a681?fit=crop&w=600&q=80",
     ],
     slug: "electric-vehicles-growing-trend",
+    date: "1st January 2025 — 1 min read",
   },
   {
     title: "Space Exploration in the 21st Century",
@@ -73,6 +78,7 @@ export const mockInsights = [
     body: "Learn how private companies are taking over the space race and pushing the boundaries of space exploration.",
     images: [],
     slug: "space-exploration-21st-century",
+    date: "1st January 2025 — 1 min read",
   },
   {
     title: "Green Energy Solutions",
@@ -86,6 +92,7 @@ export const mockInsights = [
       "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?fit=crop&w=600&q=80",
     ],
     slug: "green-energy-solutions",
+    date: "1st January 2025 — 1 min read",
   },
   {
     title: "The Rise of Smart Cities",
@@ -99,6 +106,7 @@ export const mockInsights = [
       "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?fit=crop&w=600&q=80",
     ],
     slug: "rise-of-smart-cities",
+    date: "1st January 2025 — 1 min read",
   },
   {
     title: "Healthcare Innovations in 2024",
@@ -112,5 +120,6 @@ export const mockInsights = [
       "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?fit=crop&w=600&q=80",
     ],
     slug: "healthcare-innovations-2024",
+    date: "1st January 2025 — 1 min read",
   },
 ];

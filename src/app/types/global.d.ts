@@ -8,15 +8,36 @@ declare global {
     overrideScrollStyle?: boolean;
     noAnimations?: boolean;
   };
+  type DrawerToggleProps = {
+    isDark: boolean;
+    toggleDrawer: () => void;
+  };
 
   type CardProps = {
     title: string;
     tag: string;
+    body?: string;
+    date: string;
     backgroundImage?: string;
     isDark?: boolean;
     isFocused?: boolean;
     onClick?: () => void;
   };
+
+  type Insight = {
+    title: string;
+    subtitle: string;
+    image?: string;
+    body?: string;
+    date: string;
+  };
+
+  type CardGridProps = {
+    insights: Insight[];
+    itemsToShow: number;
+    isDark: boolean;
+  };
+
   type HeroImageProps = {
     title: string;
     backgroundImage: image;

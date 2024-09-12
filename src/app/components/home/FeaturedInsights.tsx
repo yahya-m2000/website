@@ -4,15 +4,16 @@ import CardGrid from "../ui/CardGrid";
 import { mockInsights } from "@/assets/mockData/insights";
 
 const FeaturedInsights = () => {
-  const [itemsToShow] = useState(9);
+  const [itemsToShow] = useState(5);
 
   return (
-    <div className="main py-[2vh] bg-gray-150">
+    <div className="main bg-background-paper">
       {/* Content Grid */}
       <CardGrid
         insights={mockInsights}
         itemsToShow={itemsToShow}
         isDark={false}
+        isHome={true}
       />
     </div>
   );
