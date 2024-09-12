@@ -5,7 +5,7 @@ import { mockCards } from "@/assets/mockData/cards";
 const TrendingCarousel = () => {
   return (
     <div className="main bg-background-paper py-[4vh]">
-      <h3 className="subheading">Trending News</h3>
+      <h3 className="subheading uppercase mb-[2vh]">Trending News</h3>
       <HorizontalCarousel cards={mockCards} isDark={false} />
     </div>
   );
