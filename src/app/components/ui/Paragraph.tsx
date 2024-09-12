@@ -32,7 +32,7 @@ const Paragraph: React.FC<ParagraphProps> = ({
       >
         <h2
           className={clsx(
-            "font-extrabold font-assistant text-xl text-black mb-4",
+            "font-extrabold uppercase font-assistant text-xl text-subtitle mb-4",
             {
               "text-center": isCentered,
             }

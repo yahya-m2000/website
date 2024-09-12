@@ -66,6 +66,7 @@ const config: Config = {
       },
       colors: {
         primary: theme.palette.primary.main,
+        subtitle: theme.palette.primary.light,
         "primary-contrast": theme.palette.primary.contrastText,
         secondary: theme.palette.secondary.main,
         "background-default": theme.palette.background.default,

@@ -33,16 +33,19 @@ const Card: React.FC<CardProps> = ({
 
       <div className="flex flex-1 flex-col justify-between z-10 px-[2vw] py-[4vh]">
         <div>
-          <p className="font-assistant text-gray-400 font-bold uppercase text-base mb-[5px]">
+          <p
+            className={clsx(
+              "font-assistant text-subtitle font-bold uppercase text-base mb-[5px]",
+              isDark ? "text-white" : "text-subtitle"
+            )}
+          >
             {tag}
           </p>
 
           <h3
             className={clsx(
-              "font-assistant font-bold text-2xl text-black mb-[5px] hover:text-primary hover:underline",
-              {
-                "text-white": isDark,
-              }
+              "font-assistant font-bold text-2xl mb-[5px] hover:underline",
+              isDark ? "text-white" : "text-black"
             )}
           >
             {title}
@@ -59,8 +62,8 @@ const Card: React.FC<CardProps> = ({
         {/* Date */}
         <p
           className={clsx(
-            "uppercase font-assistant text-black font-bold md:text-sm text-xs mt-[5px]",
-            isDark ? "text-white" : "text-black"
+            "uppercase font-assistant font-bold md:text-sm text-xs mt-[5px]",
+            isDark ? "text-white" : "text-subtitle"
           )}
         >
           {date}
