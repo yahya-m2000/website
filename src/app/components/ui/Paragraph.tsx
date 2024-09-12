@@ -22,7 +22,7 @@ const Paragraph: React.FC<ParagraphProps> = ({
       {/* Text Section */}
       <div
         className={clsx(
-          "flex flex-col md:flex-[0.66] flex-[1] justify-center md:items-start items-center",
+          "flex flex-col md:flex-[0.66] flex-[1] justify-center",
           {
             "lg:ml-12 ml-0": isReversed && !isCentered,
             "lg:mr-12 ml-0": !isReversed && !isCentered,
