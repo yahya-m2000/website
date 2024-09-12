@@ -55,12 +55,9 @@ const DrawerToggle: React.FC<DrawerToggleProps> = ({
   return (
     <IconButton
       onClick={toggleDrawer}
-      className={clsx(
-        "font-xl z-2 lg:hidden",
-        isDark ? "text-white" : "text-black"
-      )}
+      className={clsx("font-xl z-2 lg:hidden")}
     >
-      <SortRounded />
+      <SortRounded className={clsx(isDark ? "text-white" : "text-black")} />
     </IconButton>
   );
 };
