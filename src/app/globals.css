@@ -16,7 +16,7 @@ body {
 
 @layer base {
   .main {
-    @apply px-[4vw] md:px-[10vw] lg:py-[4vh] md:py-[2vh] py-[1vh]; /* Apply Tailwind utilities here */
+    @apply px-[4vw] md:px-[12vw] lg:py-[4vh] md:py-[2vh] py-[2vh]; /* Apply Tailwind utilities here */
   }
   .container {
     @apply px-[2vw] py-[2vh]; /* Apply Tailwind utilities here */

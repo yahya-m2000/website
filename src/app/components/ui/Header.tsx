@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { IconButton, Drawer } from "@mui/material";
-import { SortRounded } from "@mui/icons-material";
+import { Menu } from "@mui/icons-material";
 import clsx from "clsx";
 import { navigationData } from "@/lib/constants";
 
@@ -48,8 +48,8 @@ const DrawerToggle: React.FC<DrawerToggleProps> = ({
   toggleDrawer,
 }) => {
   return (
-    <IconButton onClick={toggleDrawer} className={clsx(" z-2 lg:hidden")}>
-      <SortRounded
+    <IconButton onClick={toggleDrawer} className={clsx(" z-2 block lg:hidden")}>
+      <Menu
         className={clsx("font-4xl", isDark ? "text-white" : "text-black")}
       />
     </IconButton>
