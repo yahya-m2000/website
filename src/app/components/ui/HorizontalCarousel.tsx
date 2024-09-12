@@ -7,11 +7,12 @@ import {
   ArrowBackIosRounded,
   ArrowForwardIosRounded,
 } from "@mui/icons-material";
+import clsx from "clsx";
 
 // Custom Previous Arrow
 const PrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <div
-    className="absolute top-[50%] left-[-30px] z-10 transform -translate-y-1/2 cursor-pointer hidden md:block" // Hidden on screens smaller than md
+    className="absolute top-[50%] left-[-50px] z-10 transform -translate-y-1/2 cursor-pointer hidden md:block" // Hidden on screens smaller than md
     onClick={onClick}
   >
     <ArrowBackIosRounded className="text-black hover:text-primary" />
@@ -21,7 +22,7 @@ const PrevArrow = ({ onClick }: { onClick?: () => void }) => (
 // Custom Next Arrow
 const NextArrow = ({ onClick }: { onClick?: () => void }) => (
   <div
-    className="absolute top-[50%] right-[-30px] z-10 transform -translate-y-1/2 cursor-pointer hidden md:block" // Hidden on screens smaller than md
+    className="absolute top-[50%] right-[-50px] z-10 transform -translate-y-1/2 cursor-pointer hidden md:block" // Hidden on screens smaller than md
     onClick={onClick}
   >
     <ArrowForwardIosRounded className="text-black hover:text-primary" />
@@ -36,29 +37,56 @@ const HorizontalCarousel: React.FC<{
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3, // Show 3 slides at a time
-    slidesToScroll: 3, // Scroll 3 slides at a time
-    arrows: true, // Add left and right arrows
-    prevArrow: <PrevArrow />, // Custom previous arrow
-    nextArrow: <NextArrow />, // Custom next arrow
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    arrows: true,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
+    customPaging: () => <div className="!hidden" />,
+    appendDots: (dots: React.ReactNode[]) => (
+      <div>
+        <ul className="flex justify-center space-x-5">
+          {dots.map((dot, index) => {
+            // Cast dots[index] to ReactElement to access props
+            const dotElement = dot as React.ReactElement | null;
+
+            return (
+              <li
+                key={index}
+                className={clsx(
+                  "scale-75 rounded-full cursor-pointer transition-all duration-300 ease-in-out transform",
+                  dotElement?.props?.className?.includes("slick-active")
+                    ? "bg-primary "
+                    : "bg-gray-300 hover:bg-primary scale-50"
+                )}
+              >
+                {dot}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    ),
+    dotsClass: "slick-dots custom-dots",
     responsive: [
       {
-        breakpoint: 1024, // Matches the tailwind md breakpoint (1024px)
+        breakpoint: 1024,
         settings: {
-          slidesToShow: 2, // Show 2 cards on medium screens
+          slidesToShow: 2,
           slidesToScroll: 2,
           infinite: true,
           dots: true,
-          arrows: false, // Disable arrows for smaller screens
+          arrows: false,
         },
       },
       {
-        breakpoint: 768, // Matches the tailwind sm breakpoint (768px)
+        breakpoint: 768,
         settings: {
-          slidesToShow: 1, // Show 1 card on small screens
+          slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 1,
-          arrows: false, // Disable arrows for smaller screens
+          dots: true,
+          arrows: false,
         },
       },
     ],
@@ -68,7 +96,7 @@ const HorizontalCarousel: React.FC<{
     <div className="horizontal-carousel w-full relative">
       <Slider {...settings}>
         {cards.map((card, index) => (
-          <div key={index} className="p-2">
+          <div key={index} className="px-[1vw] py-[1vh]">
             <Card
               title={card.title}
               tag={card.tag}

@@ -1,9 +1,8 @@
 export const navigationData = [
-  { href: "/about", label: "About us" },
   { href: "/insights", label: "Insights" },
   { href: "/projects", label: "Projects" },
   { href: "/services", label: "Services" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "About us" },
 ];
 
 export const footerData = [
