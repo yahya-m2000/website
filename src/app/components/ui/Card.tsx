@@ -7,6 +7,8 @@ const placeholderImage = "https://via.placeholder.com/600x400";
 const Card: React.FC<CardProps> = ({
   title,
   tag,
+  body,
+  date,
   backgroundImage,
   isDark,
   onClick,
@@ -14,44 +16,52 @@ const Card: React.FC<CardProps> = ({
   return (
     <div
       onClick={onClick}
-      className="py-0 w-auto h-auto flex flex-col cursor-pointer overflow-hidden "
+      className={clsx(
+        "w-auto lg:min-h-[500px] md:min-h-[500px] min-h-[100px] flex md:flex-col flex-row cursor-pointer overflow-hidden rounded-md transition-shadow duration-300 ease-in-out hover:shadow-lg",
+        isDark ? "bg-black border-2 border-gray-900" : "bg-white"
+      )}
     >
-      {/* Card Image */}
-      <div className="w-[100%] h-auto overflow-hidden p-0 rounded-md">
-        <div
-          className={clsx(
-            "w-full h-[33.3vh] bg-gray-500 bg-cover bg-center transform transition-transform duration-300 ease-in-out hover:scale-105",
-            {
-              "bg-white": isDark,
-            }
-          )}
-          style={{
-            backgroundImage: `url(${backgroundImage || placeholderImage})`,
-          }}
-        />
-      </div>
+      <div
+        className="md:w-full w-[100px] lg:min-h-[250px] md:min-h-[200px] min-h-[100px] bg-gray-500 bg-cover bg-center transform transition-transform duration-300 ease-in-out hover:scale-105 overflow-hidden"
+        style={{
+          backgroundImage: `url(${backgroundImage || placeholderImage})`,
+        }}
+      />
 
-      {/* Card Content */}
-      <div className="container flex-1 px-0 z-10">
-        {/* Card Tag */}
+      <div className="flex flex-1 flex-col justify-between z-10 px-[2vw] py-[4vh]">
+        <div>
+          <p className="font-assistant text-gray-400 font-bold uppercase text-base mb-[5px]">
+            {tag}
+          </p>
+
+          <h3
+            className={clsx(
+              "font-assistant font-bold text-2xl text-black mb-[5px] hover:text-primary hover:underline",
+              {
+                "text-white": isDark,
+              }
+            )}
+          >
+            {title}
+          </h3>
+          <p
+            className={clsx(
+              "font-assistant font-normal text-sm md:line-clamp-1",
+              isDark ? " text-white" : " text-black"
+            )}
+          >
+            {body}
+          </p>
+        </div>
+        {/* Date */}
         <p
           className={clsx(
-            "font-assistant text-gray-400 font-bold uppercase text-base my-[-1vh]"
+            "uppercase font-assistant text-black font-bold text-sm mt-[auto]",
+            isDark ? " text-white" : " text-black"
           )}
         >
-          {tag}
+          {date}
         </p>
-        {/* Card Title */}
-        <h3
-          className={clsx(
-            "font-assistant font-extrabold text-3xl text-black hover:text-primary hover:underline",
-            {
-              "text-white": isDark,
-            }
-          )}
-        >
-          {title}
-        </h3>
       </div>
     </div>
   );
