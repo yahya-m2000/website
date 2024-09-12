@@ -2,6 +2,9 @@ import { Footer, Header, Layout, Paragraph } from "@/components/ui";
 import FeaturedInsights from "./components/home/FeaturedInsights";
 import HeroImage from "./components/ui/HeroImage";
 import bgImage from "@/assets/images/home_background.jpg"; // Ensure this path is correct
+import { mockCards } from "./assets/mockData/cards";
+import HorizontalCarousel from "./components/ui/HorizontalCarousel";
+import TrendingCarousel from "./components/home/TrendingCarousel";
 
 export default function Home() {
   return (
@@ -28,6 +31,7 @@ export default function Home() {
           image="https://via.placeholder.com/600x400"
           // isReversed={true}
         />
+        <TrendingCarousel />
         <Footer isDark={false} />
       </main>
     </Layout>
