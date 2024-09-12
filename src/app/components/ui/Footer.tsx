@@ -1,65 +1,7 @@
 "use client";
 import React from "react";
 import clsx from "clsx";
-
-const footerSections = [
-  {
-    heading: "ABOUT US",
-    links: [
-      { title: "Our Mission", url: "/mission" },
-      { title: "Our Impact", url: "/impact" },
-      { title: "Leadership and Governance", url: "/leadership" },
-      { title: "Forum Statements", url: "/statements" },
-      { title: "Partners", url: "/partners" },
-      { title: "Sustainability at the Forum", url: "/sustainability" },
-      { title: "History", url: "/history" },
-      { title: "Careers", url: "/careers" },
-      { title: "Contact Us", url: "/contact" },
-    ],
-  },
-  {
-    heading: "EVENTS",
-    links: [
-      { title: "Events", url: "/events" },
-      { title: "Open Forum", url: "/open-forum" },
-    ],
-  },
-
-  {
-    heading: "MORE FROM THE GROUP",
-    links: [
-      { title: "Strategic Intelligence", url: "/strategic-intelligence" },
-      { title: "UpLink", url: "/uplink" },
-      { title: "Global Shapers", url: "/global-shapers" },
-      { title: "Young Global Leaders", url: "/young-global-leaders" },
-      { title: "Centre for the Fourth Industrial Revolution", url: "/cfir" },
-    ],
-  },
-  {
-    heading: "MEDIA",
-    links: [
-      { title: "Press", url: "/press" },
-      { title: "Subscribe to our press releases", url: "/press-releases" },
-      { title: "Pictures", url: "/pictures" },
-    ],
-  },
-  {
-    heading: "PARTNERS & MEMBERS",
-    links: [
-      { title: "Sign in", url: "/signin" },
-      { title: "Join Us", url: "/join" },
-    ],
-  },
-  {
-    heading: "LANGUAGE EDITIONS",
-    links: [
-      { title: "English", url: "/en" },
-      { title: "Español", url: "/es" },
-      { title: "中文", url: "/cn" },
-      { title: "日本語", url: "/jp" },
-    ],
-  },
-];
+import { footerData } from "@/lib/constants";
 
 type FooterProps = {
   isDark?: boolean;
@@ -71,13 +13,12 @@ const Footer: React.FC<FooterProps> = ({ isDark }) => {
       className={clsx(isDark ? "bg-black" : "bg-background-paper", "py-8")}
     >
       <div className="main grid grid-cols-2 lg:grid-cols-4 gap-8">
-        {/* Render each section */}
-        {footerSections.map((section, idx) => (
+        {footerData.map((section, idx) => (
           <div
             key={idx}
             className={clsx(
-              idx === 0 ? "lg:row-span-2" : "", // First column spans 2 rows
-              idx === 2 ? "lg:row-span-2" : "" // Third column spans 2 rows
+              idx === 0 ? "lg:row-span-2" : "",
+              idx === 2 ? "lg:row-span-2" : ""
             )}
           >
             {/* Section Heading */}
@@ -89,7 +30,6 @@ const Footer: React.FC<FooterProps> = ({ isDark }) => {
             >
               {section.heading}
             </h4>
-            {/* Section Links */}
             <ul>
               {section.links.map((link, linkIdx) => (
                 <li key={linkIdx} className="mb-2">
@@ -109,7 +49,6 @@ const Footer: React.FC<FooterProps> = ({ isDark }) => {
         ))}
       </div>
 
-      {/* Copyright section */}
       <div className="flex font-assistant px-[4vw] justify-between items-center">
         <p
           className={clsx(

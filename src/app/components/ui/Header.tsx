@@ -5,45 +5,18 @@ import Link from "next/link";
 import { IconButton, Drawer } from "@mui/material";
 import { SortRounded } from "@mui/icons-material";
 import clsx from "clsx";
-import { useScroll } from "@/context/ScrollContext";
+import { navigationData } from "@/lib/constants";
 
-// Corrected navLinks array without a trailing comma
-const navLinks = [
-  { href: "/about", label: "About us" },
-  { href: "/insights", label: "Insights" },
-  { href: "/projects", label: "Projects" },
-  { href: "/services", label: "Services" },
-  { href: "/contact", label: "Contact" },
-];
-
-// Updated NavLink component
-const NavLink: React.FC<HeaderProps> = ({
-  href,
-  label,
-  scrolled,
-  isDark,
-  noAnimations,
-  onClick,
-}) => {
-  const textColor = noAnimations
-    ? "text-black"
-    : isDark
-    ? "text-white"
-    : scrolled
-    ? "text-black"
-    : "text-white";
-
-  const hoverColor = noAnimations
-    ? "hover:underline"
-    : isDark
-    ? "hover:text-white"
-    : "hover:underline";
+const NavItem: React.FC<HeaderProps> = ({ href, label, isDark, onClick }) => {
   return (
     <Link href={href} passHref>
       <p
         onClick={onClick}
-        className={`font-assistant font-medium text-lg cursor-pointer text-center whitespace-nowrap ${textColor} ${hoverColor}`}
-        style={{ minWidth: "120px" }}
+        className={clsx(
+          "font-assistant font-medium text-lg cursor-pointer text-center whitespace-nowrap",
+          isDark ? "text-white hover:underline" : "text-black hover:underline",
+          "min-w-[120px]"
+        )}
       >
         {label}
       </p>
@@ -51,17 +24,7 @@ const NavLink: React.FC<HeaderProps> = ({
   );
 };
 
-const EasternTradeGroupLogo: React.FC<HeaderProps> = ({
-  scrolled,
-  isDark,
-  noAnimations,
-}) => {
-  const filterStyle = noAnimations
-    ? "invert(1)"
-    : scrolled && !isDark
-    ? "invert(1)"
-    : "invert(0)";
-
+const Logo: React.FC<HeaderProps> = ({ isDark }) => {
   return (
     <div className="flex flex-1">
       <Link href="/">
@@ -69,90 +32,73 @@ const EasternTradeGroupLogo: React.FC<HeaderProps> = ({
           src={require("../../assets/images/logo1.png")}
           alt="Logo"
           className={clsx(
-            `transition-all duration-300 ease-in-out hover:scale-105 w-[125px] lg:w-[200px]`,
+            "transition-all duration-300 ease-in-out hover:scale-105 w-[125px] lg:w-[200px]",
             {
-              "lg:w-[150px] lg:ml-[6px]": scrolled,
+              "filter invert-0": isDark,
             }
           )}
-          style={{ filter: filterStyle }}
         />
       </Link>
     </div>
   );
 };
 
-// Header component
+type DrawerToggleProps = {
+  isDark: boolean;
+  toggleDrawer: () => void;
+};
+
+const DrawerToggle: React.FC<DrawerToggleProps> = ({
+  isDark,
+  toggleDrawer,
+}) => {
+  return (
+    <IconButton
+      onClick={toggleDrawer}
+      className={clsx(
+        "absolute font-xl right-[4vw] md:right-[10vw] top-[50%] translate-y-[-50%] z-2 lg:hidden",
+        isDark ? "text-white" : "text-black"
+      )}
+    >
+      <SortRounded />
+    </IconButton>
+  );
+};
+
 const Header: React.FC<{
   isDark?: boolean;
-  noAnimations?: boolean;
-  scrolled?: boolean;
-}> = ({ isDark = false, noAnimations = false }) => {
-  const { scrolled, nearBottom } = useScroll();
+}> = ({ isDark = false }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
-  const headerBg = noAnimations
-    ? "bg-[rgba(255,255,255,1)]"
-    : isDark
-    ? "bg-[rgba(0,0,0,0.5)]"
-    : scrolled && !nearBottom
-    ? "bg-[rgba(255,255,255,1)]"
-    : "bg-[rgba(0,0,0,0)]";
-
-  const headerText = noAnimations
-    ? "text-black"
-    : isDark || !scrolled
-    ? "text-white"
-    : "text-black";
-
   return (
     <header
       className={clsx(
-        "main  flex flex-col fixed top-0 left-0 right-0 z-[100] = border-b-white border-opacity-20 border-b-[0.5px]",
-        {
-          " bg-gradient-to-b from-black-transparent to-transparent": !scrolled,
-          "transition-all duration-300 ease-in-out": scrolled,
-          [headerBg]: true,
-          [headerText]: true,
-          "h-auto -translate-y-full": nearBottom,
-        }
+        "main flex flex-col absolute left-0 right-0 z-[100] border-b-white border-opacity-20 border-b-[0.5px]",
+        {}
       )}
     >
-      <EasternTradeGroupLogo
-        scrolled={scrolled}
-        isDark={isDark}
-        noAnimations={noAnimations}
-        href={""}
-      />
+      <Logo isDark={isDark} href={""} />
 
       {/* Navigation links */}
       <div className="hidden lg:flex items-end h-[auto] flex-grow-0">
-        {navLinks.map((item) => (
-          <NavLink
+        {navigationData.map((item) => (
+          <NavItem
             key={item.href}
             href={item.href}
             label={item.label}
-            scrolled={scrolled}
             isDark={isDark}
-            noAnimations={noAnimations}
           />
         ))}
       </div>
-
-      {/* Drawer for mobile */}
-      <IconButton
-        onClick={toggleDrawer}
-        className={`absolute right-[4vw] md:right-[10vw] top-[50%] translate-y-[-50%] z-2 lg:hidden ${headerText}`}
-      >
-        <SortRounded />
-      </IconButton>
+      <DrawerToggle isDark={isDark} toggleDrawer={toggleDrawer} />
 
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
-        <div className="w-[50vw] p-[4vh_4vh] bg-black  h-full flex flex-col">
-          {navLinks.map((item) => (
+        <div className="w-[50vw] p-[4vh_4vh] bg-black h-full flex flex-col">
+          {navigationData.map((item) => (
             <Link href={item.href} passHref key={item.href}>
-              <p className="font-assistant mb-6 text-white ">{item.label}</p>
+              <p className="font-assistant mb-6 text-white">{item.label}</p>
             </Link>
           ))}
         </div>
