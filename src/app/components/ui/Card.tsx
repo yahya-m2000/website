@@ -21,12 +21,15 @@ const Card: React.FC<CardProps> = ({
         isDark ? "bg-black border-2 border-gray-900" : "bg-white"
       )}
     >
-      <div
-        className="md:w-full w-[100px] lg:min-h-[250px] md:min-h-[200px] min-h-[100px] bg-gray-500 bg-cover bg-center transform transition-transform duration-300 ease-in-out hover:scale-105 overflow-hidden"
-        style={{
-          backgroundImage: `url(${backgroundImage || placeholderImage})`,
-        }}
-      />
+      {/* Image container with overflow-hidden */}
+      <div className="flex md:w-full lg:min-h-[250px] md:min-h-[200px] min-h-[100px] bg-gray-500 overflow-hidden">
+        <div
+          className="flex-1 bg-cover bg-center transition-transform duration-300 ease-in-out hover:scale-105"
+          style={{
+            backgroundImage: `url(${backgroundImage || placeholderImage})`,
+          }}
+        />
+      </div>
 
       <div className="flex flex-1 flex-col justify-between z-10 px-[2vw] py-[4vh]">
         <div>
@@ -47,7 +50,7 @@ const Card: React.FC<CardProps> = ({
           <p
             className={clsx(
               "font-assistant font-normal text-sm md:line-clamp-1",
-              isDark ? " text-white" : " text-black"
+              isDark ? "text-white" : "text-black"
             )}
           >
             {body}
@@ -56,8 +59,8 @@ const Card: React.FC<CardProps> = ({
         {/* Date */}
         <p
           className={clsx(
-            "uppercase font-assistant text-black font-bold text-sm mt-[auto]",
-            isDark ? " text-white" : " text-black"
+            "uppercase font-assistant text-black font-bold md:text-sm text-xs mt-[5px]",
+            isDark ? "text-white" : "text-black"
           )}
         >
           {date}

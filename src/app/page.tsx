@@ -22,11 +22,11 @@ export default function Home() {
         />
         <FeaturedInsights />
         <Paragraph
-          title="Let's Connect"
+          title="About us"
           text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim v"
           buttonUrl="/contact"
           image="https://via.placeholder.com/600x400"
-          isReversed={true}
+          // isReversed={true}
         />
         <Footer isDark={false} />
       </main>

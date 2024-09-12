@@ -12,20 +12,23 @@ const Paragraph: React.FC<ParagraphProps> = ({
 }) => {
   return (
     <div
-      className={clsx("flex flex-wrap h-auto px-[4vw] py-[4vh]", {
+      className={clsx("py-[7.5vh] flex flex-wrap main h-auto", {
         "flex-col": buttonUrl && isCentered,
         "lg:flex-row-reverse": isReversed,
         "lg:flex-row": !isReversed,
-        "md:flex-col-reverse": true, // Always column reverse on medium screens
+        "md:flex-col-reverse": true,
       })}
     >
       {/* Text Section */}
       <div
-        className={clsx("flex-1", {
-          "lg:ml-12": isReversed && !isCentered,
-          "lg:mr-12": !isReversed && !isCentered,
-          "lg:mx-auto": isCentered, // Centered margins if content is centered
-        })}
+        className={clsx(
+          "flex flex-col md:flex-[0.66] flex-[1] justify-center md:items-start items-center",
+          {
+            "lg:ml-12 ml-0": isReversed && !isCentered,
+            "lg:mr-12 ml-0": !isReversed && !isCentered,
+            "lg:mx-auto mx-0": isCentered,
+          }
+        )}
       >
         <h2
           className={clsx(
@@ -38,8 +41,8 @@ const Paragraph: React.FC<ParagraphProps> = ({
           {title}
         </h2>
         <p
-          className={clsx("font-assistant text-base text-black", {
-            "mx-auto md:max-w-[50vw]": isCentered, // Center text with max width control
+          className={clsx("font-assistant md:text-lg text-base text-black ", {
+            "mx-auto md:max-w-[50vw] ": isCentered, // Center text with max width control
           })}
         >
           {text}
@@ -49,7 +52,7 @@ const Paragraph: React.FC<ParagraphProps> = ({
       {/* Image Section */}
       {image && (
         <div
-          className="flex-[0.33] h-auto w-full lg:w-[50%] bg-cover bg-center"
+          className="flex-[0.33] rounded-md min-h-[200px] md:mb-[10px] w-full bg-cover bg-center hidden md:block"
           style={{ backgroundImage: `url(${image})` }}
         />
       )}

@@ -8,7 +8,6 @@ const FeaturedInsights = () => {
 
   return (
     <div className="main bg-background-paper">
-      {/* Content Grid */}
       <CardGrid
         insights={mockInsights}
         itemsToShow={itemsToShow}
