@@ -56,7 +56,7 @@ const DrawerToggle: React.FC<DrawerToggleProps> = ({
     <IconButton
       onClick={toggleDrawer}
       className={clsx(
-        "absolute font-xl right-[4vw] md:right-[10vw] top-[50%] translate-y-[-50%] z-2 lg:hidden",
+        "font-xl z-2 lg:hidden",
         isDark ? "text-white" : "text-black"
       )}
     >
@@ -75,7 +75,7 @@ const Header: React.FC<{
   return (
     <header
       className={clsx(
-        "main flex flex-col absolute left-0 right-0 z-[100] border-b-white border-opacity-20 border-b-[0.5px]",
+        "main flex flex-row lg:flex-col justify-between lg-justify-normal absolute left-0 right-0 z-[100] border-b-white border-opacity-20 border-b-[0.5px]",
         {}
       )}
     >
