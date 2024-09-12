@@ -48,7 +48,7 @@ const DrawerToggle: React.FC<DrawerToggleProps> = ({
   toggleDrawer,
 }) => {
   return (
-    <IconButton onClick={toggleDrawer} className="z-2 block lg:hidden">
+    <IconButton onClick={toggleDrawer} className="block lg:hidden z-2">
       <Menu
         className={clsx("font-4xl", isDark ? "text-white" : "text-black")}
       />
