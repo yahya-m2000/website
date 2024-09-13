@@ -13,40 +13,67 @@ import {
   faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
 
-const socialMediaLinks = [
-  {
-    platform: "Twitter",
-    url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      "Check out this article!"
-    )}&url=${encodeURIComponent(window.location.href)}`,
-    icon: faTwitter,
-    color: "text-blue-400",
-  },
-  {
-    platform: "Facebook",
-    url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      window.location.href
-    )}`,
-    icon: faFacebook,
-    color: "text-blue-600",
-  },
-  {
-    platform: "LinkedIn",
-    url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-      window.location.href
-    )}`,
-    icon: faLinkedin,
-    color: "text-blue-700",
-  },
-  {
-    platform: "WhatsApp",
-    url: `https://api.whatsapp.com/send?text=${encodeURIComponent(
-      "Check out this article: " + window.location.href
-    )}`,
-    icon: faWhatsapp,
-    color: "text-green-500",
-  },
-];
+const SocialMediaLinks = () => {
+  const [currentUrl, setCurrentUrl] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCurrentUrl(window.location.href); // Only set the current URL on the client-side
+    }
+  }, []);
+
+  const socialMediaLinks = [
+    {
+      platform: "Twitter",
+      url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        "Check out this article!"
+      )}&url=${encodeURIComponent(currentUrl)}`,
+      icon: faTwitter,
+      color: "text-blue-400",
+    },
+    {
+      platform: "Facebook",
+      url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        currentUrl
+      )}`,
+      icon: faFacebook,
+      color: "text-blue-600",
+    },
+    {
+      platform: "LinkedIn",
+      url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+        currentUrl
+      )}`,
+      icon: faLinkedin,
+      color: "text-blue-700",
+    },
+    {
+      platform: "WhatsApp",
+      url: `https://api.whatsapp.com/send?text=${encodeURIComponent(
+        "Check out this article: " + currentUrl
+      )}`,
+      icon: faWhatsapp,
+      color: "text-green-500",
+    },
+  ];
+
+  return (
+    <div>
+      {socialMediaLinks.map((link, index) => (
+        <a
+          key={index}
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`mb-2 flex items-center space-x-2 ${link.color} hover:underline`}
+        >
+          <FontAwesomeIcon icon={link.icon} />
+          <span>{link.platform}</span>
+        </a>
+      ))}
+    </div>
+  );
+};
 
 const richTextRenderOptions = {
   renderNode: {
@@ -173,18 +200,7 @@ export default function InsightPage({ params }: Params) {
         </div>
         <div className="flex-[0.2]">
           <div className="sticky md:top-[10vh] flex flex-row md:justify-center justify-between items-end md:min-h-[20vh] bg-background-paper rounded-md hover:shadow-md shadow-slate-500 transition-all duration-300">
-            {socialMediaLinks.map((link) => (
-              <a
-                key={link.platform}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`px-[1vw] py-[1vh]  border-t-[2px] border-white items-end ${link.color} hover:underline `}
-              >
-                <FontAwesomeIcon icon={link.icon} size={"2x"} />
-                <span className="sr-only">{`Share on ${link.platform}`}</span>
-              </a>
-            ))}
+            <SocialMediaLinks />
           </div>
         </div>
       </div>

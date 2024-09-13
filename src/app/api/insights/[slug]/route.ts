@@ -10,7 +10,13 @@ export async function GET(
     console.log("Fetching insight with slug:", params.slug);
     const entry = await fetchEntryBySlug("article", params.slug);
     console.log("Insight fetched successfully:", entry);
-    return NextResponse.json(entry);
+    return NextResponse.json(entry, {
+      headers: {
+        "Access-Control-Allow-Origin": "*", // Allow all origins
+        "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    });
   } catch (error) {
     console.error("Failed to fetch insight:", error);
     return NextResponse.json(
