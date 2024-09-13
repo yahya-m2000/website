@@ -32,8 +32,8 @@ body {
   }
 }
 :root {
-  --font-assistant: var(--font-assistant);
-  --font-inria-serif: var(--font-inria-serif);
-  --font-julius-sans: var(--font-julius-sans);
-  --font-rozha-one: var(--font-rozha-one);
+  --font-assistant: "Assistant", sans-serif;
+  --font-inria-serif: "Inria Serif", serif;
+  --font-julius-sans: "Julius Sans One", sans-serif;
+  --font-rozha-one: "Rozha One", serif;
 }

@@ -2,27 +2,25 @@
 
 import React from "react";
 import Slider from "react-slick";
-import Card from "./Card"; // Import your card component here
+import Card from "./Card";
 import {
   ArrowBackIosRounded,
   ArrowForwardIosRounded,
 } from "@mui/icons-material";
 import clsx from "clsx";
 
-// Custom Previous Arrow
 const PrevArrow = ({ onClick }: { onClick?: () => void }) => (
   <div
-    className="absolute top-[50%] left-[-50px] z-10 transform -translate-y-1/2 cursor-pointer hidden md:block" // Hidden on screens smaller than md
+    className="absolute top-[50%] left-[-50px] z-10 transform -translate-y-1/2 cursor-pointer hidden md:block"
     onClick={onClick}
   >
     <ArrowBackIosRounded className="text-black hover:text-primary" />
   </div>
 );
 
-// Custom Next Arrow
 const NextArrow = ({ onClick }: { onClick?: () => void }) => (
   <div
-    className="absolute top-[50%] right-[-50px] z-10 transform -translate-y-1/2 cursor-pointer hidden md:block" // Hidden on screens smaller than md
+    className="absolute top-[50%] right-[-50px] z-10 transform -translate-y-1/2 cursor-pointer hidden md:block"
     onClick={onClick}
   >
     <ArrowForwardIosRounded className="text-black hover:text-primary" />
@@ -54,10 +52,10 @@ const HorizontalCarousel: React.FC<{
               <li
                 key={index}
                 className={clsx(
-                  "scale-75 rounded-full cursor-pointer transition-all duration-300 ease-in-out transform",
+                  " rounded-full cursor-pointer transition-all duration-300 ease-in-out transform",
                   dotElement?.props?.className?.includes("slick-active")
-                    ? "bg-primary "
-                    : "bg-gray-300 hover:bg-primary scale-50"
+                    ? "bg-primary scale-75 "
+                    : "bg-gray-300 scale-50"
                 )}
               >
                 {dot}
@@ -95,18 +93,27 @@ const HorizontalCarousel: React.FC<{
   return (
     <div className="horizontal-carousel w-full relative">
       <Slider {...settings}>
-        {cards.map((card, index) => (
-          <div key={index} className="px-[1vw] py-[1vh]">
-            <Card
-              title={card.title}
-              tag={card.tag}
-              body={card.body}
-              date={card.date}
-              backgroundImage={card.backgroundImage}
-              isDark={isDark}
-            />
-          </div>
-        ))}
+        {cards.map((card, index) => {
+          console.log(card.basePath);
+          return (
+            <div key={index} className="px-[1vw] py-[1vh]">
+              <Card
+                title={card.title}
+                tags={card.tags}
+                body={card.body}
+                date={card.date}
+                backgroundImage={card.backgroundImage}
+                basePath={card.basePath}
+                onClick={() => {}}
+                isDark={isDark}
+                slug={card.slug}
+                author={""}
+                heroImage={""}
+                images={undefined}
+              />
+            </div>
+          );
+        })}
       </Slider>
     </div>
   );

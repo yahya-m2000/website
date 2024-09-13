@@ -1,19 +1,27 @@
 "use client";
 import React from "react";
 import clsx from "clsx";
+import Link from "next/link";
+// import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+// import { BLOCKS, Document } from "@contentful/rich-text-types";
 
 const placeholderImage = "https://via.placeholder.com/600x400";
 
 const Card: React.FC<CardProps> = ({
   title,
-  tag,
-  body,
+  tags,
+  subtitle,
   date,
-  backgroundImage,
+  heroImage,
   isDark,
   onClick,
+  basePath,
+  slug,
 }) => {
-  return (
+  // const isValidBody = (body: any): body is Document =>
+  //   body && body.nodeType === BLOCKS.DOCUMENT;
+
+  const cardContent = (
     <div
       onClick={onClick}
       className={clsx(
@@ -21,12 +29,11 @@ const Card: React.FC<CardProps> = ({
         isDark ? "bg-black border-2 border-gray-900" : "bg-white"
       )}
     >
-      {/* Image container with overflow-hidden */}
       <div className="flex md:w-full lg:min-h-[250px] md:min-h-[200px] min-h-[100px] bg-gray-500 overflow-hidden">
         <div
           className="flex-1 bg-cover bg-center transition-transform duration-300 ease-in-out hover:scale-105"
           style={{
-            backgroundImage: `url(${backgroundImage || placeholderImage})`,
+            backgroundImage: `url(${heroImage || placeholderImage})`,
           }}
         />
       </div>
@@ -39,7 +46,7 @@ const Card: React.FC<CardProps> = ({
               isDark ? "text-white" : "text-subtitle"
             )}
           >
-            {tag}
+            {Array.isArray(tags) ? tags.join(", ") : tags}
           </p>
 
           <h3
@@ -50,16 +57,15 @@ const Card: React.FC<CardProps> = ({
           >
             {title}
           </h3>
-          <p
-            className={clsx(
-              "font-assistant font-normal text-sm md:line-clamp-1",
-              isDark ? "text-white" : "text-black"
-            )}
-          >
-            {body}
+          {/* <div className="font-assistant font-normal text-sm md:line-clamp-1">
+            {isValidBody(body)
+              ? documentToReactComponents(body)
+              : "No content available"}
+          </div> */}
+          <p className="font-assistant font-normal text-sm md:line-clamp-1">
+            {subtitle}
           </p>
         </div>
-        {/* Date */}
         <p
           className={clsx(
             "uppercase font-assistant font-bold md:text-sm text-xs mt-[5px]",
@@ -70,6 +76,14 @@ const Card: React.FC<CardProps> = ({
         </p>
       </div>
     </div>
+  );
+
+  return title ? (
+    <Link href={`/${basePath}/${slug}`} passHref>
+      {cardContent}
+    </Link>
+  ) : (
+    cardContent
   );
 };
 

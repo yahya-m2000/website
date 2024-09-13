@@ -1,16 +1,15 @@
-"use client";
 import React from "react";
 import { Card } from "../ui";
 
 type CardGridProps = {
-  insights: Insight[];
+  data: CardProps[];
   itemsToShow: number;
   isDark: boolean;
   isHome?: boolean;
 };
 
 const CardGrid: React.FC<CardGridProps> = ({
-  insights,
+  data = [],
   itemsToShow,
   isDark,
   isHome = false,
@@ -23,7 +22,19 @@ const CardGrid: React.FC<CardGridProps> = ({
           : "grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[2vw] w-full"
       }
     >
-      {insights.slice(0, itemsToShow).map((insight, index) => {
+      {data.slice(0, itemsToShow).map((card, index) => {
+        const {
+          title,
+          subtitle,
+          tags,
+          body,
+          heroImage,
+          date,
+          images,
+          slug,
+          basePath,
+          author,
+        } = card;
         const gridClass = isHome
           ? index === 0
             ? "md:col-span-3 md:row-start-1"
@@ -39,12 +50,17 @@ const CardGrid: React.FC<CardGridProps> = ({
         return (
           <div className={gridClass} key={index}>
             <Card
-              title={insight.title}
-              tag={insight.subtitle}
-              body={insight.body}
-              date={insight.date}
-              backgroundImage={insight.image}
+              title={title}
+              subtitle={subtitle}
+              tags={tags}
+              body={body}
+              date={new Date(date).toLocaleDateString("en-UK")}
+              heroImage={heroImage}
               isDark={isDark}
+              basePath={basePath}
+              slug={slug}
+              author={author}
+              images={images || []}
             />
           </div>
         );

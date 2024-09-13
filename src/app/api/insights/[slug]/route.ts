@@ -7,7 +7,9 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   try {
-    const entry = await fetchEntryBySlug("article", params.slug); // Using slug
+    console.log("Fetching insight with slug:", params.slug);
+    const entry = await fetchEntryBySlug("article", params.slug);
+    console.log("Insight fetched successfully:", entry);
     return NextResponse.json(entry);
   } catch (error) {
     console.error("Failed to fetch insight:", error);

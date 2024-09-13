@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 declare global {
   type HeaderProps = {
     href: string;
@@ -13,40 +15,47 @@ declare global {
     toggleDrawer: () => void;
   };
 
-  type CardProps = {
-    title: string;
-    tag: string;
-    body?: string;
-    date: string;
-    backgroundImage?: string;
-    isDark?: boolean;
-    isFocused?: boolean;
-    onClick?: () => void;
+  //
+  export type RichTextBody = {
+    data: Record<string, unknown>;
+    content: Array<{
+      data: Record<string, unknown>;
+      content: Array<{
+        data: Record<string, unknown>;
+        marks: unknown[];
+        value: string;
+        nodeType: string;
+      }>;
+      nodeType: string;
+    }>;
+    nodeType: string;
   };
 
-  type Insight = {
+  export type InsightProps = {
     title: string;
-    subtitle: string;
-    image?: string;
-    body?: string;
+    subtitle?: string;
+    tag?: string;
+    body: string | RichTextBody;
     date: string;
+    basePath: string;
+    author?: string;
+    tags?: string[];
+    heroImage?: string | StaticImageData;
+    images?: string[];
+    slug?: string;
+  };
+
+  export type CardProps = InsightProps & {
+    backgroundImage?: string; // Specific to Card
+    isDark?: boolean; // Specific to Card
+    isFocused?: boolean;
+    onClick?: () => void;
   };
 
   type CardGridProps = {
     insights: Insight[];
     itemsToShow: number;
     isDark: boolean;
-  };
-
-  type HeroImageProps = {
-    title: string;
-    backgroundImage: image;
-    tag: string;
-    body: string;
-    author: string;
-    date: string;
-    url?: string;
-    onClick?: () => void;
   };
 
   type HorizontalCarouselProps = {

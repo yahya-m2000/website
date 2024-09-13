@@ -65,7 +65,7 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedNav, setSelectedNav] = useState<NavigationKeys | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null); // Ref for the header
+  const headerRef = useRef<HTMLDivElement>(null);
 
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
@@ -79,12 +79,11 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
     }
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         headerRef.current &&
-        !headerRef.current.contains(event.target as Node) && // Check against headerRef
+        !headerRef.current.contains(event.target as Node) &&
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
@@ -98,7 +97,6 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
     };
   }, [dropdownRef, headerRef]);
 
-  // Close dropdown on window resize for smaller screens
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 1024 && dropdownOpen) {
@@ -113,7 +111,7 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [dropdownOpen]);
+  }, [drawerOpen, dropdownOpen]);
 
   return (
     <>
@@ -126,7 +124,7 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
       />
 
       <header
-        ref={headerRef} // Attach ref to header
+        ref={headerRef}
         className={clsx(
           "absolute main flex flex-row lg:flex-col justify-between lg-justify-normal left-0 w-full z-[50] transition-all duration-300 ease-in-out",
           dropdownOpen ? "shadow-lg bg-white " : ""
@@ -142,7 +140,7 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
               isDark={isDark}
               dropdownOpen={dropdownOpen}
               onClick={() => handleNavClick(key as NavigationKeys)}
-              isSelected={selectedNav === key} // Check if this is the selected item
+              isSelected={selectedNav === key}
             />
           ))}
         </div>

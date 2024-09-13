@@ -41,11 +41,12 @@ export default function Projects() {
         <Header isDark={true} />
         <HeroImage
           title={"Services"}
-          backgroundImage={bgImage}
+          heroImage={bgImage}
           body="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim v..."
           tag={""}
           author={""}
           date={""}
+          basePath={""}
         />
 
         <div className="main">

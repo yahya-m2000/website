@@ -1,95 +1,198 @@
-// "use client";
-// import { useState, useEffect } from "react";
-// import { useParams } from "next/navigation";
-// import { Box, Typography, Container } from "@mui/material";
-// import Image from "next/image";
-// import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-// import { Header, Layout } from "@/components/ui";
+"use client";
+import React, { useState, useEffect } from "react";
+import { Header, Layout, HeroImage, Footer } from "@/components/ui";
+import TrendingCarousel from "@/components/home/TrendingCarousel";
+import { notFound } from "next/navigation";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { BLOCKS, Node, INLINES, Document } from "@contentful/rich-text-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTwitter,
+  faFacebook,
+  faLinkedin,
+  faWhatsapp,
+} from "@fortawesome/free-brands-svg-icons";
 
-// const InsightPage = () => {
-//   const [insight, setInsight] = useState<any>(null);
-//   const [error, setError] = useState<string | null>(null);
-//   const { slug } = useParams();
+const socialMediaLinks = [
+  {
+    platform: "Twitter",
+    url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      "Check out this article!"
+    )}&url=${encodeURIComponent(window.location.href)}`,
+    icon: faTwitter,
+    color: "text-blue-400",
+  },
+  {
+    platform: "Facebook",
+    url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      window.location.href
+    )}`,
+    icon: faFacebook,
+    color: "text-blue-600",
+  },
+  {
+    platform: "LinkedIn",
+    url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+      window.location.href
+    )}`,
+    icon: faLinkedin,
+    color: "text-blue-700",
+  },
+  {
+    platform: "WhatsApp",
+    url: `https://api.whatsapp.com/send?text=${encodeURIComponent(
+      "Check out this article: " + window.location.href
+    )}`,
+    icon: faWhatsapp,
+    color: "text-green-500",
+  },
+];
 
-//   useEffect(() => {
-//     const getInsight = async () => {
-//       try {
-//         const response = await fetch(`/api/insights/${slug}`);
-//         console.log(slug);
+const richTextRenderOptions = {
+  renderNode: {
+    [BLOCKS.HEADING_1]: (_node: Node, children: React.ReactNode) => (
+      <h1 className="font-assistant text-4xl font-bold mb-4">{children}</h1>
+    ),
+    [BLOCKS.HEADING_2]: (_node: Node, children: React.ReactNode) => (
+      <h2 className="font-inriaSerif text-3xl font-semibold mb-3">
+        {children}
+      </h2>
+    ),
+    [BLOCKS.HEADING_3]: (_node: Node, children: React.ReactNode) => (
+      <h2 className="font-inriaSerif text-2xl font-semibold mb-3">
+        {children}
+      </h2>
+    ),
+    [BLOCKS.PARAGRAPH]: (_node: Node, children: React.ReactNode) => (
+      <p className="font-inriaSerif text-lg leading-relaxed mb-4">{children}</p>
+    ),
 
-//         if (!response.ok) {
-//           throw new Error("Network response was not ok");
-//         }
-//         const data = await response.json();
+    [INLINES.HYPERLINK]: (node: Node, children: React.ReactNode) => {
+      const { uri } = node.data;
+      return (
+        <a
+          href={uri}
+          className="relative text-blue-600 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[1px] after:bg-blue-600 after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left z-30"
+        >
+          {children}
+        </a>
+      );
+    },
 
-//         console.log(data);
-//         setInsight(data);
-//       } catch (err) {
-//         console.error("Failed to fetch insight:", err);
-//         setError("Failed to load insight. Please try again later.");
-//       }
-//     };
-//     getInsight();
-//   }, [slug]);
+    [BLOCKS.QUOTE]: (_node: Node, children: React.ReactNode) => (
+      <blockquote className="text-primary font-semibold w-1/2 float-start  pr-[2vh] ">
+        {children}
+      </blockquote>
+    ),
 
-//   if (error) {
-//     return (
-//       <Box sx={{ padding: "20px" }}>
-//         <Typography variant="h2" gutterBottom>
-//           Insight
-//         </Typography>
-//         <Typography color="error">{error}</Typography>
-//       </Box>
-//     );
-//   }
+    [BLOCKS.EMBEDDED_ASSET]: (node: Node) => {
+      const { file, title } = (node.data.target as any).fields;
+      return <img src={file.url} alt={title} />;
+    },
+  },
+};
 
-//   if (!insight) {
-//     return (
-//       <Box sx={{ padding: "20px" }}>
-//         <Typography>Loading...</Typography>
-//       </Box>
-//     );
-//   }
+type Params = {
+  params: {
+    slug: string;
+  };
+};
 
-//   const createdAt = insight?.createdAt
-//     ? new Date(insight?.createdAt).toDateString()
-//     : "Unknown Date";
-//   return (
-//     <Layout>
-//       <Header />
-//       <Typography variant="h3" gutterBottom>
-//         {insight.title}
-//       </Typography>
-//       <Typography variant="subtitle1" gutterBottom>
-//         {insight.subHeading}
-//       </Typography>
-//       <Typography variant="caption" gutterBottom>
-//         By {insight.author} on {createdAt}
-//       </Typography>
-//       <Box my={4}>
-//         <Image
-//           src={`https:${insight.heroImage.fields?.file.url}`}
-//           alt={insight.heroImage.fields?.title}
-//           width={750}
-//           height={500}
-//           style={{ width: "100%", height: "auto" }}
-//         />
-//       </Box>
-//       <Typography variant="body1" gutterBottom>
-//         {documentToReactComponents(insight.body)}
-//       </Typography>
-//     </Layout>
-//   );
-// };
+export default function InsightPage({ params }: Params) {
+  const { slug } = params;
+  const [insight, setInsight] = useState<InsightProps | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-// export default InsightPage;
-import React from 'react'
+  useEffect(() => {
+    const fetchInsight = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/insights/${slug}`
+        );
+        const data = await response.json();
+        console.log(data);
+        if (Array.isArray(data) && data.length > 0) {
+          setInsight(data[0]); // Set the first object from the array as the insight
+        } else {
+          throw new Error("No data found");
+        }
+      } catch (error) {
+        setError("Failed to fetch the insight");
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchInsight();
+  }, [slug]);
 
-const page = () => {
+  if (loading) {
+    return <div></div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!insight) {
+    return notFound();
+  }
+
+  const { title, subtitle, author, date, body, heroImage, tags } = insight;
+  const isValidBody = (body: any): body is Document =>
+    body && body.nodeType === BLOCKS.DOCUMENT;
+  const imageUrl =
+    typeof heroImage === "string" && heroImage.startsWith("//")
+      ? `https:${heroImage}`
+      : heroImage;
+
   return (
-    <div>page</div>
-  )
+    <Layout>
+      <Header isDark={true} />
+      <HeroImage
+        title={title}
+        subtitle={subtitle}
+        heroImage={imageUrl}
+        tags={tags}
+        author={author}
+        date={date}
+        body={body}
+        images={undefined}
+        slug={slug}
+        basePath=""
+      />
+
+      <div className="main flex flex-1 flex-col-reverse md:flex-row  bg-white   border-b border-b-slate-500 border-[1px]">
+        <div className="flex-[0.8] md:mr-[2vw] h-full ">
+          {isValidBody(body)
+            ? documentToReactComponents(body, richTextRenderOptions)
+            : "No content available"}
+        </div>
+        <div className="flex-[0.2]">
+          <div className="sticky md:top-[10vh] flex flex-row md:justify-center justify-between items-end md:min-h-[20vh] bg-background-paper rounded-md hover:shadow-md shadow-slate-500 transition-all duration-300">
+            {socialMediaLinks.map((link) => (
+              <a
+                key={link.platform}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`px-[1vw] py-[1vh]  border-t-[2px] border-white items-end ${link.color} hover:underline `}
+              >
+                <FontAwesomeIcon icon={link.icon} size={"2x"} />
+                <span className="sr-only">{`Share on ${link.platform}`}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <TrendingCarousel />
+      <Footer />
+    </Layout>
+  );
 }
 
-export default page
+{
+  /* <p>{tags?.join(", ")}</p> */
+}

@@ -31,7 +31,7 @@ export default function Projects() {
   // Function to filter insights based on selected tag
   const handleFilterByTag = (tag: string) => {
     const filtered = mockInsights.filter((insight) =>
-      insight.tags.includes(tag)
+      insight.tags?.includes(tag)
     );
     setFilteredInsights(filtered);
   };
@@ -42,11 +42,12 @@ export default function Projects() {
         <Header isDark={true} />
         <HeroImage
           title={"Placeholder Featured Insight"}
-          backgroundImage={bgImage}
+          heroImage={bgImage}
           tag={"Technology"}
           body="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim v..."
           author={"Test"}
           date={"01 January 2025"}
+          basePath={""}
         />
         <div className="main">
           <h3 className="font-assistant text-white text-3xl md:w-[40vw] justify-start">
@@ -73,7 +74,7 @@ export default function Projects() {
               style={{ opacity: loading ? 0 : 1 }}
             >
               <CardGrid
-                insights={filteredInsights}
+                data={filteredInsights}
                 itemsToShow={filteredInsights.length}
                 isDark={true}
               />
