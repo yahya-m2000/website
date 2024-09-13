@@ -109,7 +109,7 @@ export default function InsightPage({ params }: Params) {
     const fetchInsight = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/insights/${slug}`
+          `${process.env.NEXT_PUBLIC_API_URL}insights/${slug}`
         );
         const data = await response.json();
         console.log(data);

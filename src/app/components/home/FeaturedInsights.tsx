@@ -11,7 +11,9 @@ const FeaturedInsights = () => {
   useEffect(() => {
     const fetchInsights = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/insights");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}insights`
+        );
         const data = await response.json();
         console.log("Fetched Data:", data); // Log the fetched data
         setInsights(data); // Set the fetched data to insights state
