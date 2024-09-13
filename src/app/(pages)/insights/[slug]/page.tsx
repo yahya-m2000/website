@@ -12,14 +12,20 @@ import {
   faLinkedin,
   faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
-import theme from "@/theme";
+import Image from "next/image";
 
-const SocialMediaLinks = () => {
+const SocialMediaLinks = ({
+  title,
+  heroImage,
+}: {
+  title: string;
+  heroImage: string;
+}) => {
   const [currentUrl, setCurrentUrl] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setCurrentUrl(window.location.href); // Only set the current URL on the client-side
+      setCurrentUrl(window.location.href);
     }
   }, []);
 
@@ -27,8 +33,10 @@ const SocialMediaLinks = () => {
     {
       platform: "Twitter",
       url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        "Check out this article!"
-      )}&url=${encodeURIComponent(currentUrl)}`,
+        `${title}`
+      )}&url=${encodeURIComponent(currentUrl)}&image=${encodeURIComponent(
+        heroImage
+      )}`,
       icon: faTwitter,
       color: "text-blue-400",
     },
@@ -36,6 +44,8 @@ const SocialMediaLinks = () => {
       platform: "Facebook",
       url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         currentUrl
+      )}&quote=${encodeURIComponent(title)}&picture=${encodeURIComponent(
+        heroImage
       )}`,
       icon: faFacebook,
       color: "text-blue-600",
@@ -44,23 +54,25 @@ const SocialMediaLinks = () => {
       platform: "LinkedIn",
       url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
         currentUrl
-      )}`,
+      )}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(
+        title
+      )}&source=${encodeURIComponent(heroImage)}`,
       icon: faLinkedin,
       color: "text-blue-700",
     },
     {
       platform: "WhatsApp",
       url: `https://api.whatsapp.com/send?text=${encodeURIComponent(
-        "Check out this article: " + currentUrl
-      )}`,
+        `${title} - ${currentUrl}`
+      )}&image=${encodeURIComponent(heroImage)}`,
       icon: faWhatsapp,
       color: "text-green-500",
     },
   ];
 
   return (
-    <div className=" border-b-[1px] border-slate-400">
-      <p className="uppercase font-bold text-base font-assistant ">Share</p>
+    <div className="border-b-[1px] border-slate-400">
+      <p className="uppercase font-bold text-base font-assistant">Share</p>
       <div className="flex flex-row">
         {socialMediaLinks.map((link, index) => (
           <a
@@ -68,15 +80,9 @@ const SocialMediaLinks = () => {
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={` ${link.color} hover:underline md:mr-[1vw] my-[2vh] mr-[4vw]`}
+            className={`${link.color} hover:underline md:mr-[1vw] my-[2vh] mr-[4vw]`}
           >
-            <FontAwesomeIcon
-              icon={link.icon}
-              size="2x"
-              // className="fill-primary"
-              // color={theme.palette.primary.main}
-            />
-            {/* <span>{link.platform}</span> */}
+            <FontAwesomeIcon icon={link.icon} size="2x" />
           </a>
         ))}
       </div>
@@ -124,7 +130,18 @@ const richTextRenderOptions = {
     [BLOCKS.EMBEDDED_ASSET]: (node: Node) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { file, title } = (node.data.target as any).fields;
-      return <img src={file.url} alt={title} />;
+
+      return (
+        <div className="py-[1vh] flex md:w-[27vw] md:h-auto w-full h-[30vh] ">
+          <Image
+            src={`https:${file.url}`} // Ensure the URL has https:// prefix
+            alt={title}
+            width={1000}
+            height={1000}
+            className="rounded-md  object-cover"
+          />
+        </div>
+      );
     },
   },
 };
@@ -176,7 +193,8 @@ export default function InsightPage({ params }: Params) {
     return notFound();
   }
 
-  const { title, subtitle, author, date, body, heroImage, tags } = insight;
+  const { title, subtitle, author, date, body, heroImage, tags, images } =
+    insight;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isValidBody = (body: any): body is Document =>
     body && body.nodeType === BLOCKS.DOCUMENT;
@@ -209,7 +227,8 @@ export default function InsightPage({ params }: Params) {
         </div>
         <div className="flex-[0.2]">
           <div className="sticky md:top-[10vh] flex flex-col justify-left items-start md:min-h-[20vh]  transition-all duration-300">
-            <SocialMediaLinks />
+            <SocialMediaLinks title={title} heroImage={imageUrl} />
+
             {/* <p className="uppercase font-bold text-base font-assistant">
               Related Insights
             </p>
