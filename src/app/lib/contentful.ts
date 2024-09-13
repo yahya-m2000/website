@@ -25,18 +25,30 @@ export async function fetchEntries(contentType: string) {
     });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return entries.items.map((item: any) => ({
-      title: item.fields.title,
-      subtitle: item.fields.subtitle,
-      author: item.fields.author,
-      tags: item.fields.tags,
-      heroImage: item.fields.heroImage?.fields?.file?.url ?? "",
-      date: item.fields.heroImage?.sys?.createdAt ?? "",
-      body: item.fields.body,
-      images: item.fields.images ?? "",
-      slug: item.fields.slug,
-      basePath: item.fields.basePath,
-    }));
+    return entries.items.map((item: any) => {
+      const imageUrls = item.fields.images
+        ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          item.fields.images.map(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (image: any) => `https:${image.fields.file.url}`
+          )
+        : [];
+
+      return {
+        title: item.fields.title,
+        subtitle: item.fields.subtitle,
+        author: item.fields.author,
+        tags: item.fields.tags,
+        heroImage: item.fields.heroImage?.fields?.file?.url
+          ? `https:${item.fields.heroImage.fields.file.url}`
+          : "",
+        date: item.fields.heroImage?.sys?.createdAt ?? "",
+        body: item.fields.body,
+        images: imageUrls, // Return only image URLs
+        slug: item.fields.slug,
+        basePath: item.fields.basePath,
+      };
+    });
   } catch (error) {
     console.error("Error fetching entries:", error);
     throw error;
@@ -64,6 +76,13 @@ export async function fetchEntryBySlug(contentType: string, slug: string) {
     });
 
     if (entries.items.length > 0) {
+      const item = entries.items[0];
+      const imageUrls = Array.isArray(item.fields.images)
+        ? item.fields.images.map(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (image: any) => `https:${image.fields.file.url}`
+          )
+        : [];
       console.log("Entry found:", entries.items[0].fields); // Log the found entry
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return entries.items.map((item: any) => ({
@@ -74,7 +93,7 @@ export async function fetchEntryBySlug(contentType: string, slug: string) {
         heroImage: item.fields.heroImage?.fields?.file?.url ?? "",
         date: item.fields.heroImage?.sys?.createdAt ?? "",
         body: item.fields.body,
-        images: item.fields.images ?? "",
+        images: imageUrls ?? "",
         slug: item.fields.slug,
         basePath: item.fields.basePath,
       }));
