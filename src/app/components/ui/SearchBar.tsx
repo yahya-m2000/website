@@ -2,37 +2,34 @@
 import React, { useState, useEffect } from "react";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import SortRoundedIcon from "@mui/icons-material/SortRounded";
-import { mockInsights } from "@/assets/mockData/insights"; // Ensure this path is correct
+import { mockInsights } from "@/assets/mockData/insights";
 
 type SearchBarProps = {
   onSearch: (term: string) => void;
-  onFilterByTag: (tag: string) => void; // Add handler for filtering by tags
+  onFilterByTag: (tag: string) => void;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false); // Toggle for showing the dropdown
+  const [showDropdown, setShowDropdown] = useState(false);
   const [tagsWithCount, setTagsWithCount] = useState<{ [key: string]: number }>(
     {}
   );
 
-  // Handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  // Handle key press event
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      onSearch(searchTerm); // Trigger search only when Enter is pressed
+      onSearch(searchTerm);
     }
   };
 
-  // Compute tags and their counts from mockInsights
   useEffect(() => {
     const tagCounts: { [key: string]: number } = {};
     mockInsights.forEach((insight) => {
-      insight.tags.forEach((tag) => {
+      insight.tags?.forEach((tag) => {
         if (tagCounts[tag]) {
           tagCounts[tag] += 1;
         } else {
@@ -43,10 +40,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
     setTagsWithCount(tagCounts);
   }, []);
 
-  // Handle tag selection
   const handleTagSelect = (tag: string) => {
-    onFilterByTag(tag); // Trigger filter by tag
-    setShowDropdown(false); // Close dropdown after selection
+    onFilterByTag(tag);
+    setShowDropdown(false);
   };
 
   return (
@@ -56,31 +52,29 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
           type="text"
           value={searchTerm}
           onChange={handleInputChange}
-          onKeyPress={handleKeyPress} // Add key press listener
+          onKeyPress={handleKeyPress}
           placeholder="Search..."
           className="font-assistant text-white placeholder:italic w-full px-[2vw] py-[2vh] bg-black focus:outline-none"
         />
         <button
           type="submit"
           className="absolute right-0 top-1/2 transform -translate-y-1/2 text-white rounded-lg px-[2vw] py-[2vh] transition-colors duration-300"
-          onClick={() => onSearch(searchTerm)} // Also allow search on button click
+          onClick={() => onSearch(searchTerm)}
         >
           <ArrowForwardRoundedIcon />
         </button>
       </div>
 
-      {/* Filter by tag dropdown */}
       <div className="relative">
         <button
           type="button"
           className="flex flex-row text-white  px-[2vw] my-[2vh] transition-colors duration-300"
-          onClick={() => setShowDropdown(!showDropdown)} // Toggle dropdown
+          onClick={() => setShowDropdown(!showDropdown)}
         >
           <SortRoundedIcon className="mr-[2vw]" />
           <p className="font-assistant italic">Filter By...</p>
         </button>
 
-        {/* Dropdown content */}
         {showDropdown && (
           <div className="absolute z-20 right-0 mt-2 w-56 bg-black text-white shadow-lg">
             <ul className="p-2">
@@ -88,13 +82,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
                 <li
                   key={tag}
                   onClick={() => handleTagSelect(tag)}
-                  className="font-assistant cursor-pointer flex justify-between p-2 relative group" // Added relative and group
+                  className="font-assistant cursor-pointer flex justify-between p-2 relative group"
                 >
-                  {/* Tag text */}
                   <span>{tag}</span>
                   <span>{tagsWithCount[tag]}</span>
 
-                  {/* Sliding border */}
                   <span className="absolute bottom-0 left-0 w-full h-[1px] bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out origin-left"></span>
                 </li>
               ))}

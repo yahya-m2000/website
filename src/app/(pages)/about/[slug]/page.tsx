@@ -2,7 +2,6 @@
 import { Layout, Header, Footer } from "@/components/ui";
 import React, { useEffect, useState } from "react";
 
-// Placeholder data for tabs
 const tabData = [
   {
     id: 1,
@@ -49,23 +48,19 @@ const tabData = [
 const Page = () => {
   const [selectedTab, setSelectedTab] = useState(1);
 
-  // Handle initial URL parsing to set the correct tab on page load
   useEffect(() => {
-    const path = window.location.pathname.split("/").pop(); // Get the last part of the URL
+    const path = window.location.pathname.split("/").pop();
     const foundTab = tabData.find((tab) => tab.url === path);
     if (foundTab) {
       setSelectedTab(foundTab.id);
     }
   }, []);
 
-  // Handle tab selection and URL update
   const handleTabChange = (tabId: number) => {
     const selectedTab = tabData.find((tab) => tab.id === tabId);
     if (selectedTab) {
-      // Update the selected tab
       setSelectedTab(tabId);
 
-      // Use the history API to update the URL without a page reload
       window.history.pushState(null, "", `/about/${selectedTab.url}`);
     }
   };

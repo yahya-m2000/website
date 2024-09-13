@@ -5,6 +5,7 @@ export const mockCards = [
     body: "This is the body of card 1.",
     date: "12 Dec 2023",
     backgroundImage: "https://via.placeholder.com/600x400",
+    basePath: "insights", // Add basePath here
   },
   {
     title: "Card 2",
@@ -12,6 +13,7 @@ export const mockCards = [
     body: "This is the body of card 2.",
     date: "15 Dec 2023",
     backgroundImage: "https://via.placeholder.com/600x400",
+    basePath: "projects", // Example different basePath
   },
   {
     title: "Card 3",
@@ -19,6 +21,7 @@ export const mockCards = [
     body: "This is the body of card 3.",
     date: "18 Dec 2023",
     backgroundImage: "https://via.placeholder.com/600x400",
+    basePath: "insights",
   },
   {
     title: "Card 4",
@@ -26,6 +29,7 @@ export const mockCards = [
     body: "This is the body of card 4.",
     date: "20 Dec 2023",
     backgroundImage: "https://via.placeholder.com/600x400",
+    basePath: "projects",
   },
   {
     title: "Card 5",
@@ -33,6 +37,7 @@ export const mockCards = [
     body: "This is the body of card 5.",
     date: "25 Dec 2023",
     backgroundImage: "https://via.placeholder.com/600x400",
+    basePath: "insights",
   },
   {
     title: "Card 6",
@@ -40,5 +45,6 @@ export const mockCards = [
     body: "This is the body of card 6.",
     date: "30 Dec 2023",
     backgroundImage: "https://via.placeholder.com/600x400",
+    basePath: "projects",
   },
 ];
