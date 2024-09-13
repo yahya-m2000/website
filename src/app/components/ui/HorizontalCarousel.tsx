@@ -43,26 +43,26 @@ const HorizontalCarousel: React.FC<{
     customPaging: () => <div className="!hidden" />,
     appendDots: (dots: React.ReactNode[]) => (
       <div>
-        <ul className="flex justify-center space-x-5">
+        <div className="flex justify-center space-x-5">
           {dots.map((dot, index) => {
             // Cast dots[index] to ReactElement to access props
             const dotElement = dot as React.ReactElement | null;
 
             return (
-              <li
+              <div
                 key={index}
                 className={clsx(
                   " rounded-full cursor-pointer transition-all duration-300 ease-in-out transform",
                   dotElement?.props?.className?.includes("slick-active")
-                    ? "bg-primary scale-75 "
+                    ? "bg-primary scale-50 "
                     : "bg-gray-300 scale-50"
                 )}
               >
                 {dot}
-              </li>
+              </div>
             );
           })}
-        </ul>
+        </div>
       </div>
     ),
     dotsClass: "slick-dots custom-dots",
