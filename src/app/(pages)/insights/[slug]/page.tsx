@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Header, Layout, HeroImage, Footer, Card } from "@/components/ui";
+import { Header, Layout, HeroImage, Footer } from "@/components/ui";
 import TrendingCarousel from "@/components/home/TrendingCarousel";
 import { notFound } from "next/navigation";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
@@ -71,7 +71,7 @@ const SocialMediaLinks = ({
   ];
 
   return (
-    <div className="border-b-[1px] border-slate-400">
+    <div className="border-b-[1px] border-slate-400 mb-[2vh]">
       <p className="uppercase font-bold text-base font-assistant">Share</p>
       <div className="flex flex-row">
         {socialMediaLinks.map((link, index) => (
@@ -193,16 +193,16 @@ export default function InsightPage({ params }: Params) {
     return notFound();
   }
 
-  const { title, subtitle, author, date, body, heroImage, tags, images } =
-    insight;
+  const { title, subtitle, author, date, body, heroImage, tags } = insight;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isValidBody = (body: any): body is Document =>
     body && body.nodeType === BLOCKS.DOCUMENT;
   const imageUrl =
     typeof heroImage === "string" && heroImage.startsWith("//")
       ? `https:${heroImage}`
-      : heroImage;
-
+      : typeof heroImage === "string"
+      ? heroImage
+      : "https://via.placeholder.com/300"; // Default image URL in case heroImage is undefined or not a string
   return (
     <Layout>
       <Header isDark={true} />
