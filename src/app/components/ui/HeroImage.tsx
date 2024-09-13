@@ -22,7 +22,7 @@ const HeroImage: React.FC<InsightProps> = ({
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-primary to-transparent z-10 backdrop-blur-sm backdrop-brightness-50" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-500 to-transparent z-10  backdrop-brightness-50" />
 
       <div className="main flex absolute min-h-[60vh] items-end lg:w-[75vw]  z-20">
         <div className="">
