@@ -86,6 +86,7 @@ const richTextRenderOptions = {
     ),
 
     [BLOCKS.EMBEDDED_ASSET]: (node: Node) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { file, title } = (node.data.target as any).fields;
       return <img src={file.url} alt={title} />;
     },
@@ -140,6 +141,7 @@ export default function InsightPage({ params }: Params) {
   }
 
   const { title, subtitle, author, date, body, heroImage, tags } = insight;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isValidBody = (body: any): body is Document =>
     body && body.nodeType === BLOCKS.DOCUMENT;
   const imageUrl =
