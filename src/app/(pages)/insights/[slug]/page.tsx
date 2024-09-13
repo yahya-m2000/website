@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Header, Layout, HeroImage, Footer } from "@/components/ui";
+import { Header, Layout, HeroImage, Footer, Card } from "@/components/ui";
 import TrendingCarousel from "@/components/home/TrendingCarousel";
 import { notFound } from "next/navigation";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
@@ -12,6 +12,7 @@ import {
   faLinkedin,
   faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
+import theme from "@/theme";
 
 const SocialMediaLinks = () => {
   const [currentUrl, setCurrentUrl] = useState("");
@@ -58,20 +59,28 @@ const SocialMediaLinks = () => {
   ];
 
   return (
-    <>
-      {socialMediaLinks.map((link, index) => (
-        <a
-          key={index}
-          href={link.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`${link.color} hover:underline md:mx-[2vw] my-[2vh] mr-[4vw]`}
-        >
-          <FontAwesomeIcon icon={link.icon} size="2x" />
-          {/* <span>{link.platform}</span> */}
-        </a>
-      ))}
-    </>
+    <div className=" border-b-[1px] border-slate-400">
+      <p className="uppercase font-bold text-base font-assistant ">Share</p>
+      <div className="flex flex-row">
+        {socialMediaLinks.map((link, index) => (
+          <a
+            key={index}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={` ${link.color} hover:underline md:mr-[1vw] my-[2vh] mr-[4vw]`}
+          >
+            <FontAwesomeIcon
+              icon={link.icon}
+              size="2x"
+              // className="fill-primary"
+              // color={theme.palette.primary.main}
+            />
+            {/* <span>{link.platform}</span> */}
+          </a>
+        ))}
+      </div>
+    </div>
   );
 };
 
@@ -199,8 +208,12 @@ export default function InsightPage({ params }: Params) {
             : "No content available"}
         </div>
         <div className="flex-[0.2]">
-          <div className="sticky md:top-[10vh] flex flex-row md:justify-center justify-left items-end md:min-h-[20vh] md:bg-background-paper rounded-md hover:shadow-md shadow-slate-500 transition-all duration-300">
+          <div className="sticky md:top-[10vh] flex flex-col justify-left items-start md:min-h-[20vh]  transition-all duration-300">
             <SocialMediaLinks />
+            {/* <p className="uppercase font-bold text-base font-assistant">
+              Related Insights
+            </p>
+            <Card title={""} body={""} date={""} basePath={""} /> */}
           </div>
         </div>
       </div>
@@ -212,5 +225,4 @@ export default function InsightPage({ params }: Params) {
 }
 
 {
-  /* <p>{tags?.join(", ")}</p> */
 }
