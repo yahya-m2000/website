@@ -58,20 +58,20 @@ const SocialMediaLinks = () => {
   ];
 
   return (
-    <div>
+    <>
       {socialMediaLinks.map((link, index) => (
         <a
           key={index}
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`mb-2 flex items-center space-x-2 ${link.color} hover:underline`}
+          className={`${link.color} hover:underline md:mx-[2vw] my-[2vh] mr-[4vw]`}
         >
-          <FontAwesomeIcon icon={link.icon} />
-          <span>{link.platform}</span>
+          <FontAwesomeIcon icon={link.icon} size="2x" />
+          {/* <span>{link.platform}</span> */}
         </a>
       ))}
-    </div>
+    </>
   );
 };
 
@@ -107,7 +107,7 @@ const richTextRenderOptions = {
     },
 
     [BLOCKS.QUOTE]: (_node: Node, children: React.ReactNode) => (
-      <blockquote className="text-primary font-semibold w-1/2 float-start  pr-[2vh] ">
+      <blockquote className="text-primary font-semibold border-l-4 border-primary pl-4 md:w-1/2 float-start  pr-[2vh] ">
         {children}
       </blockquote>
     ),
@@ -192,14 +192,14 @@ export default function InsightPage({ params }: Params) {
         basePath=""
       />
 
-      <div className="main flex flex-1 flex-col-reverse md:flex-row  bg-white   border-b border-b-slate-500 border-[1px]">
+      <div className="main flex flex-1 flex-col-reverse md:flex-row  bg-white   border-b border-b-slate-300 border-[1px]">
         <div className="flex-[0.8] md:mr-[2vw] h-full ">
           {isValidBody(body)
             ? documentToReactComponents(body, richTextRenderOptions)
             : "No content available"}
         </div>
         <div className="flex-[0.2]">
-          <div className="sticky md:top-[10vh] flex flex-row md:justify-center justify-between items-end md:min-h-[20vh] bg-background-paper rounded-md hover:shadow-md shadow-slate-500 transition-all duration-300">
+          <div className="sticky md:top-[10vh] flex flex-row md:justify-center justify-left items-end md:min-h-[20vh] md:bg-background-paper rounded-md hover:shadow-md shadow-slate-500 transition-all duration-300">
             <SocialMediaLinks />
           </div>
         </div>
