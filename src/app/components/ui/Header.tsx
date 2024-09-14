@@ -156,13 +156,13 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
         <Logo isDark={isDark} dropdownOpen={dropdownOpen} />
 
         <div className="hidden lg:flex items-end h-[auto]">
-          {navigationTabs.map((tab, index) => (
+          {navigationTabs.map((navItem, index) => (
             <NavItem
               key={index}
-              label={tab.title}
+              label={navItem.title}
               isDark={isDark}
               dropdownOpen={dropdownOpen}
-              onClick={() => handleNavClick(index)}
+              onClick={() => handleNavClick(index)} // Set selected navigation
               isSelected={selectedNav === index}
             />
           ))}
@@ -201,9 +201,10 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
                     className="text-gray-500 text-lg font-assistant hover:cursor-pointer hover:text-black"
                   >
                     <Link
-                      href={`/${navigationTabs[selectedNav!].slug}/${tab
+                      href={`${navigationTabs[selectedNav!].slug}/${tab
                         .toLowerCase()
-                        .replace(/\s+/g, "-")}`}
+                        .replace(/\s+/g, "-")
+                        .replace(/[\u200B\u2060]/g, "")}`} // Removing zero-width space and other invisible characters
                     >
                       {tab}
                     </Link>
