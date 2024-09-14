@@ -55,6 +55,27 @@ export async function fetchEntries(contentType: string) {
   }
 }
 
+export async function fetchNavigation(contentType: string) {
+  try {
+    const entries = await client.getEntries({
+      content_type: contentType,
+      select: ["fields.title", "fields.tabs", "fields.slug"],
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return entries.items.map((item: any) => {
+      return {
+        title: item.fields.title,
+        slug: item.fields.slug,
+        tabs: item.fields.tabs,
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching entries:", error);
+    throw error;
+  }
+}
+
 export async function fetchEntryBySlug(contentType: string, slug: string) {
   try {
     console.log(`Fetching entry with slug: ${slug}`); // Log the slug for debugging

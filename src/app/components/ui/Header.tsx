@@ -5,9 +5,6 @@ import Link from "next/link";
 import { IconButton, Drawer } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 import clsx from "clsx";
-import { navigationDataWithTabs } from "@/assets/mockData/tabsData";
-
-type NavigationKeys = keyof typeof navigationDataWithTabs;
 
 const NavItem: React.FC<{
   label: string;
@@ -61,23 +58,45 @@ const DrawerToggle: React.FC<{ isDark: boolean; toggleDrawer: () => void }> = ({
 );
 
 const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [navigationTabs, setNavigationTabs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedNav, setSelectedNav] = useState<NavigationKeys | null>(null);
+  const [selectedNav, setSelectedNav] = useState<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
-  const handleNavClick = (navKey: NavigationKeys) => {
-    if (selectedNav === navKey) {
+  const handleNavClick = (navIndex: number) => {
+    if (selectedNav === navIndex) {
       setSelectedNav(null);
       setDropdownOpen(false);
     } else {
-      setSelectedNav(navKey);
+      setSelectedNav(navIndex);
       setDropdownOpen(true);
     }
   };
+
+  useEffect(() => {
+    const fetchNavigationTabs = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}navigation`
+        );
+        const data = await response.json();
+        console.log("Fetched Data:", data);
+        setNavigationTabs(data);
+      } catch (error) {
+        console.error("Error fetching insights:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNavigationTabs();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -113,6 +132,10 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
     };
   }, [drawerOpen, dropdownOpen]);
 
+  if (loading) {
+    return <div></div>;
+  }
+
   return (
     <>
       <div
@@ -133,14 +156,14 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
         <Logo isDark={isDark} dropdownOpen={dropdownOpen} />
 
         <div className="hidden lg:flex items-end h-[auto]">
-          {Object.keys(navigationDataWithTabs).map((key) => (
+          {navigationTabs.map((tab, index) => (
             <NavItem
-              key={key}
-              label={navigationDataWithTabs[key as NavigationKeys].title}
+              key={index}
+              label={tab.title}
               isDark={isDark}
               dropdownOpen={dropdownOpen}
-              onClick={() => handleNavClick(key as NavigationKeys)}
-              isSelected={selectedNav === key}
+              onClick={() => handleNavClick(index)}
+              isSelected={selectedNav === index}
             />
           ))}
         </div>
@@ -149,11 +172,9 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
 
         <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
           <div className="w-[50vw] p-[4vh_4vh] bg-black h-full flex flex-col">
-            {Object.keys(navigationDataWithTabs).map((key) => (
-              <Link href={`/${key}`} passHref key={key}>
-                <p className="font-assistant mb-6 text-white">
-                  {navigationDataWithTabs[key as NavigationKeys].title}
-                </p>
+            {navigationTabs.map((tab, index) => (
+              <Link href={`/${tab.slug}`} passHref key={index}>
+                <p className="font-assistant mb-6 text-white">{tab.title}</p>
               </Link>
             ))}
           </div>
@@ -168,18 +189,24 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
               : "top-full opacity-0 h-0"
           )}
         >
-          <div className=" ">
-            <h3 className="font-bold font-assistant text-b;acl text-lg pb-[2vh]">
-              {navigationDataWithTabs[selectedNav!]?.title}
+          <div className="p-[4vh_4vh]">
+            <h3 className="font-bold font-assistant text-lg pb-[2vh]">
+              {navigationTabs[selectedNav!]?.title}
             </h3>
             <ul>
-              {navigationDataWithTabs[selectedNav!]?.tabs?.map(
+              {navigationTabs[selectedNav!]?.tabs?.map(
                 (tab: string, index: number) => (
                   <li
                     key={index}
                     className="text-gray-500 text-lg font-assistant hover:cursor-pointer hover:text-black"
                   >
-                    {tab}
+                    <Link
+                      href={`/${navigationTabs[selectedNav!].slug}/${tab
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                    >
+                      {tab}
+                    </Link>
                   </li>
                 )
               )}
