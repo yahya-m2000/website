@@ -1,12 +1,10 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
-
 import { Menu } from "@mui/icons-material";
 import { IconButton, Drawer } from "@mui/material";
-
 import { cleanUrlString } from "@/utils/cleanURLstring";
 
 const NavItem: React.FC<{
@@ -60,10 +58,10 @@ const DrawerToggle: React.FC<{ isDark: boolean; toggleDrawer: () => void }> = ({
   </IconButton>
 );
 
-const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [navigationTabs, setNavigationTabs] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+const Header: React.FC<{ isDark?: boolean; navigationTabs: any[] }> = ({
+  isDark = false,
+  navigationTabs,
+}) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedNav, setSelectedNav] = useState<number | null>(null);
@@ -81,65 +79,6 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
       setDropdownOpen(true);
     }
   };
-
-  useEffect(() => {
-    const fetchNavigationTabs = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}navigation`
-        );
-        const data = await response.json();
-        console.log("Fetched Data:", data);
-        const orderedTabs = data.reverse(); // Oldest to newest
-
-        setNavigationTabs(orderedTabs);
-      } catch (error) {
-        console.error("Error fetching insights:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNavigationTabs();
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        headerRef.current &&
-        !headerRef.current.contains(event.target as Node) &&
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setDropdownOpen(false);
-        setSelectedNav(null);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [dropdownRef, headerRef]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 1024 && dropdownOpen) {
-        setDropdownOpen(false);
-      }
-      if (window.innerWidth > 1024 && drawerOpen) {
-        setDrawerOpen(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [drawerOpen, dropdownOpen]);
-
-  if (loading) {
-    return <div></div>;
-  }
 
   return (
     <>

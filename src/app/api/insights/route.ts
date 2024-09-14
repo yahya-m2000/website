@@ -1,14 +1,19 @@
-// app/api/insights/route.ts
 import { NextResponse } from "next/server";
 import { fetchEntries } from "@/lib/contentful";
 import { verifyAuth } from "@/lib/verifyAuth";
+
+// List of authorized emails
+const authorizedEmails = ["your-email@example.com"]; // Replace with the authorized email(s)
 
 export async function GET(req: Request) {
   // Verify the user’s JWT
   const authPayload = await verifyAuth(req);
 
-  if (!authPayload) {
-    return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
+  if (!authPayload || !authorizedEmails.includes(authPayload.email)) {
+    return NextResponse.json(
+      { error: `Unauthorised access: ${authPayload?.email}` },
+      { status: 401 }
+    );
   }
 
   // If authenticated, fetch and return the entries

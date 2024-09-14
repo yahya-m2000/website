@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import { Footer, Header, Layout } from "@/components/ui";
 import HeroImage from "@/components/ui/HeroImage";
@@ -6,10 +5,13 @@ import SearchBar from "@/components/ui/SearchBar";
 import CardGrid from "@/components/ui/CardGrid";
 import bgImage from "@/assets/images/projects_background.png";
 import { mockInsights } from "@/assets/mockData/insights";
+import { fetchNavigation } from "@/lib/contentful";
 
-export default function Projects() {
+export default async function Projects() {
   const [filteredInsights, setFilteredInsights] = useState(mockInsights);
   const [loading, setLoading] = useState(false); // Add loading state
+
+  const navigationTabs = await fetchNavigation("navigation");
 
   // Function to filter insights based on search term
   const handleSearch = (term: string) => {
@@ -39,7 +41,7 @@ export default function Projects() {
   return (
     <Layout>
       <main className="hide-scrollbar">
-        <Header isDark={true} />
+        <Header isDark={true} navigationTabs={navigationTabs} />
         <HeroImage
           title={"Insights"}
           heroImage={bgImage}
@@ -48,6 +50,7 @@ export default function Projects() {
           author={"Test"}
           date={"01 January 2025"}
           basePath={""}
+          images={[]}
         />
         <div className="main">
           <h3 className="font-assistant text-white text-3xl md:w-[40vw] justify-start">

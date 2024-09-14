@@ -94,7 +94,7 @@ const HorizontalCarousel: React.FC<{
     <div className="horizontal-carousel w-full relative">
       <Slider {...settings}>
         {cards.map((card, index) => {
-          console.log(card.basePath);
+          // console.log(card.basePath);
           return (
             <div key={index} className="px-[1vw] py-[1vh]">
               <Card
@@ -109,7 +109,7 @@ const HorizontalCarousel: React.FC<{
                 slug={card.slug}
                 author={""}
                 heroImage={""}
-                images={undefined}
+                images={[]}
               />
             </div>
           );
