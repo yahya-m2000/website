@@ -2,7 +2,7 @@ import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 // import * as bcrypt from "bcrypt"; // Only needed if you plan to add credentials-based authentication later
 import jwt from "jsonwebtoken";
-import { NextAuthOptions, getServerSession } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
 // Define your authOptions with Google and GitHub Providers
