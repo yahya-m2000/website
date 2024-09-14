@@ -1,22 +1,22 @@
+// app/api/insights/route.ts
 import { NextResponse } from "next/server";
-import { authOptions } from "@/lib/common/authOptions"; // Ensure correct path to auth options
-import { getServerSession } from "next-auth/next";
-
 import { fetchEntries } from "@/lib/contentful";
+import { verifyAuth } from "@/lib/verifyAuth";
 
-export async function GET(/* req: Request */) {
-  const session = await getServerSession(authOptions);
+export async function GET(req: Request) {
+  // Verify the user’s JWT
+  const authPayload = await verifyAuth(req);
 
-  // If the user is not authenticated, return a 401 Unauthorized response
-  if (!session) {
+  if (!authPayload) {
     return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
   }
 
+  // If authenticated, fetch and return the entries
   try {
     const entries = await fetchEntries("article");
     return NextResponse.json(entries, {
       headers: {
-        "Access-Control-Allow-Origin": "*", // Allow all origins
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, Authorization",
       },
