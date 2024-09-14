@@ -65,7 +65,7 @@ type Params = {
 // Server-side fetching for the InsightPage
 export default async function InsightPage({ params }: { params: Params }) {
   const { slug } = params;
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/";
   const currentUrl = `${baseUrl}insights/${slug}`;
 
   const navigationTabs = await fetchNavigation("navigation");
