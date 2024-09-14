@@ -2,9 +2,12 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { IconButton, Drawer } from "@mui/material";
-import { Menu } from "@mui/icons-material";
 import clsx from "clsx";
+
+import { Menu } from "@mui/icons-material";
+import { IconButton, Drawer } from "@mui/material";
+
+import { cleanUrlString } from "@/utils/cleanURLstring";
 
 const NavItem: React.FC<{
   label: string;
@@ -16,7 +19,7 @@ const NavItem: React.FC<{
   <p
     onClick={onClick}
     className={clsx(
-      "relative font-assistant font-medium text-lg cursor-pointer whitespace-nowrap mr-[2vw] after:content-[''] after:absolute after:left-0 after:top-[5vh] after:w-full after:h-[2px] after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left z-30 transition-all",
+      "relative font-assistant font-medium text-lg cursor-pointer whitespace-nowrap mr-[2vw] mt-[2vh] after:content-[''] after:absolute after:left-0 after:top-[5vh] after:w-full after:h-[2px] after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left z-30 transition-all",
       isSelected
         ? "text-primary after:bg-primary"
         : dropdownOpen
@@ -87,7 +90,9 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
         );
         const data = await response.json();
         console.log("Fetched Data:", data);
-        setNavigationTabs(data);
+        const orderedTabs = data.reverse(); // Oldest to newest
+
+        setNavigationTabs(orderedTabs);
       } catch (error) {
         console.error("Error fetching insights:", error);
       } finally {
@@ -189,7 +194,7 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
               : "top-full opacity-0 h-0"
           )}
         >
-          <div className="p-[4vh_4vh]">
+          <div>
             <h3 className="font-bold font-assistant text-lg pb-[2vh]">
               {navigationTabs[selectedNav!]?.title}
             </h3>
@@ -201,10 +206,9 @@ const Header: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => {
                     className="text-gray-500 text-lg font-assistant hover:cursor-pointer hover:text-black"
                   >
                     <Link
-                      href={`${navigationTabs[selectedNav!].slug}/${tab
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")
-                        .replace(/[\u200B\u2060]/g, "")}`} // Removing zero-width space and other invisible characters
+                      href={`/${
+                        navigationTabs[selectedNav!]?.slug
+                      }/${cleanUrlString(tab)}`}
                     >
                       {tab}
                     </Link>
