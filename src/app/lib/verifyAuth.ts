@@ -3,6 +3,11 @@
 import { jwtVerify, KeyLike, JWTPayload } from "jose";
 import jwksClient from "jwks-rsa";
 
+// Define the structure of the payload returned by Auth0
+interface AuthPayload {
+  email: string;
+}
+
 // Set up JWKS client
 const client = jwksClient({
   jwksUri: `${process.env.AUTH0_ISSUER_BASE_URL}/.well-known/jwks.json`,
@@ -23,7 +28,7 @@ function getKey(header: any, callback: any) {
 }
 
 // Verify the JWT
-export async function verifyAuth(req: Request) {
+export async function verifyAuth(req: Request): Promise<AuthPayload | null> {
   try {
     const authHeader = req.headers.get("authorization");
 
@@ -54,7 +59,12 @@ export async function verifyAuth(req: Request) {
       }
     );
 
-    return payload;
+    // Check if the payload contains the email
+    if (payload && payload.email) {
+      return { email: payload.email as string };
+    }
+
+    return null;
   } catch (error) {
     console.error("JWT verification error:", error);
     return null;

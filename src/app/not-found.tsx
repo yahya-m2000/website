@@ -1,10 +1,12 @@
 import { Footer, Header, HeroImage, Layout } from "./components/ui";
+import { fetchNavigation } from "./lib/contentful";
 
-export default function NotFound() {
+export default async function NotFound() {
+  const navigationTabs = await fetchNavigation("navigation");
   return (
     <Layout>
       <main>
-        <Header isDark={true} />
+        <Header isDark={true} navigationTabs={navigationTabs} />
         <HeroImage
           title={"404 Not Found"}
           subtitle=""
@@ -12,6 +14,7 @@ export default function NotFound() {
           body={""}
           date={""}
           basePath={""}
+          images={[]}
         />
         <Footer />
       </main>

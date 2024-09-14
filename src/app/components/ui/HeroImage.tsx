@@ -14,10 +14,10 @@ const HeroImage: React.FC<InsightProps> = ({
       {/* Background Image */}
       <Image
         src={heroImage || fallbackImage}
-        layout="fill"
-        objectFit="cover"
+        fill
         alt={title || "Background"}
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 object-cover"
+        priority
       />
 
       {/* Overlay */}
