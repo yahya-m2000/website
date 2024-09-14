@@ -1,6 +1,5 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/common/authOptions";
-import { GetServerSideProps } from "next";
 import Image from "next/image";
 
 export default async function AuthPage() {
