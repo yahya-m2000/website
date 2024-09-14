@@ -62,7 +62,12 @@ export default function Projects() {
         </div>
 
         {/* SearchBar Component */}
-        <SearchBar onSearch={handleSearch} onFilterByTag={handleFilterByTag} />
+        <SearchBar
+          onSearch={handleSearch}
+          onFilterByTag={handleFilterByTag}
+          initialSearchTerm={""}
+          initialTag={""}
+        />
 
         {/* Display the filtered insights using the CardGrid component */}
         <div className="main min-h-[20vh]">
