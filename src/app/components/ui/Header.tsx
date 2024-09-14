@@ -57,7 +57,7 @@ const DrawerToggle: React.FC<{ isDark: boolean; toggleDrawer: () => void }> = ({
     <Menu className={clsx("font-4xl", isDark ? "text-white" : "text-black")} />
   </IconButton>
 );
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Header: React.FC<{ isDark?: boolean; navigationTabs: any[] }> = ({
   isDark = false,
   navigationTabs,
