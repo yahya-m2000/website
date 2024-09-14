@@ -42,6 +42,7 @@ const richTextRenderOptions = {
       </blockquote>
     ),
     [BLOCKS.EMBEDDED_ASSET]: (node: Node) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { file, title } = (node.data.target as any).fields;
       return (
         <div className="py-[1vh] flex md:w-[27vw] md:h-auto w-full h-[30vh] ">
@@ -64,7 +65,6 @@ type Params = {
 // Server-side fetching for the InsightPage
 export default async function InsightPage({ params }: { params: Params }) {
   const { slug } = params;
-
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const currentUrl = `${baseUrl}insights/${slug}`;
 
