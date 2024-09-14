@@ -71,7 +71,7 @@ const Page = () => {
     <Layout>
       {/* Wrapper for full-height page */}
       <div className="min-h-screen flex flex-col">
-        <Header isDark={false} />
+        <Header isDark={false} navigationTabs={[]} />
         <div className="pt-[15vh]" />
         <main className="main flex-grow min-h-screen h-auto pb-[15vh]">
           {/* Tabs and Content Section */}
