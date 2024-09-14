@@ -1,20 +1,26 @@
 import { getServerSession } from "next-auth/next";
-import { NextApiRequest, NextApiResponse } from "next";
-import { authOptions } from "@/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/common/authOptions";
+import { GetServerSideProps } from "next";
+import Image from "next/image";
 
-export default async function AuthPage(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  // Fetch the session using getServerSession
-  const session = await getServerSession(req, res, authOptions);
+export default async function AuthPage() {
+  const session = await getServerSession(authOptions);
 
-  if (session) {
-    // Signed in
-    console.log("Session", JSON.stringify(session, null, 2));
-    return res.status(200).json({ session });
-  } else {
-    // Not Signed in
-    return res.status(401).json({ error: "Not authenticated" });
+  if (!session) {
+    // Not signed in
+    return <p>Please sign in to continue.</p>;
   }
+
+  return (
+    <div>
+      <h1>Welcome, {session.user?.name}</h1>
+      <p>Email: {session.user?.email}</p>
+      <Image
+        src={session.user?.image || ""}
+        alt={session.user?.name || ""}
+        width={100}
+        height={100}
+      />
+    </div>
+  );
 }
