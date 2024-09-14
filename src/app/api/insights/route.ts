@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { authOptions } from "@/api/auth/[...nextauth]/route"; // Ensure correct path to auth options
+import { authOptions } from "@/lib/common/authOptions"; // Ensure correct path to auth options
 import { getServerSession } from "next-auth/next";
 
 import { fetchEntries } from "@/lib/contentful";
