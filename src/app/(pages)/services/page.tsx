@@ -38,7 +38,7 @@ export default function Projects() {
   return (
     <Layout>
       <main className="hide-scrollbar">
-        <Header isDark={true} />
+        <Header isDark={true} navigationTabs={[]} />
         <HeroImage
           title={"Services"}
           heroImage={bgImage}
