@@ -5,8 +5,10 @@ import SortRoundedIcon from "@mui/icons-material/SortRounded";
 import { mockInsights } from "@/assets/mockData/insights";
 
 type SearchBarProps = {
-  onSearch: (term: string) => void;
-  onFilterByTag: (tag: string) => void;
+  initialSearchTerm: string;
+  initialTag: string;
+  onSearch?: (term: string) => void;
+  onFilterByTag?: (tag: string) => void;
 };
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
@@ -21,8 +23,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      onSearch(searchTerm);
+    if (e.key === "Enter" && onSearch) {
+      onSearch(searchTerm); // Check if onSearch is defined before calling
     }
   };
 
@@ -41,7 +43,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
   }, []);
 
   const handleTagSelect = (tag: string) => {
-    onFilterByTag(tag);
+    if (onFilterByTag) {
+      onFilterByTag(tag); // Check if onFilterByTag is defined before calling
+    }
     setShowDropdown(false);
   };
 
@@ -54,12 +58,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
           placeholder="Search..."
-          className="font-assistant text-white placeholder:italic w-full px-[2vw] py-[2vh] bg-black focus:outline-none"
+          className="font-assistant text-white rounded-md placeholder:italic w-full px-[2vw] py-[2vh] bg-background-paper focus:outline-none"
         />
         <button
           type="submit"
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 text-white rounded-lg px-[2vw] py-[2vh] transition-colors duration-300"
-          onClick={() => onSearch(searchTerm)}
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 text-primary rounded-lg px-[2vw] py-[2vh] transition-colors duration-300"
+          onClick={() => onSearch && onSearch(searchTerm)} // Check if onSearch is defined before calling
         >
           <ArrowForwardRoundedIcon />
         </button>
@@ -68,7 +72,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
       <div className="relative">
         <button
           type="button"
-          className="flex flex-row text-white  px-[2vw] my-[2vh] transition-colors duration-300"
+          className="flex flex-row rounded-md text-primary  px-[2vw] mb-[2vh] transition-colors duration-300"
           onClick={() => setShowDropdown(!showDropdown)}
         >
           <SortRoundedIcon className="mr-[2vw]" />
@@ -76,7 +80,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
         </button>
 
         {showDropdown && (
-          <div className="absolute z-20 right-0 mt-2 w-56 bg-black text-white shadow-lg">
+          <div className="absolute z-20 right-0 mt-2 w-56 bg-background-paper text-primary shadow-lg">
             <ul className="p-2">
               {Object.keys(tagsWithCount).map((tag) => (
                 <li
