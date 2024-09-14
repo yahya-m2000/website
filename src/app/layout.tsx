@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "./assets/logo_background_left.png",
+        url: "./assets/images/thumbnail.jpg",
         width: 1200,
         height: 630,
         alt: "THE EASTERN TRADE GROUP",
@@ -30,12 +30,12 @@ export const metadata: Metadata = {
     title: "THE EASTERN TRADE GROUP",
     description:
       "We believe in innovation and, more importantly, the innovators themselves.",
-    images: ["./assets/logo_background_left.png"],
+    images: ["./assets/images/thumbnail.jpg"],
   },
   icons: {
-    icon: "./assets/logo_background_left.png",
-    shortcut: "./assets/logo_background_left.png",
-    apple: "./assets/logo_background_left.png",
+    icon: "./assets/images/thumbnail.jpg",
+    shortcut: "./assets/images/thumbnail.jpg",
+    apple: "./assets/images/thumbnail.jpg",
   },
   authors: [{ name: "Yahya Gadiid", url: "jadiid.co.uk" }],
   keywords: ["innovation", "trade", "technology", "business"],
