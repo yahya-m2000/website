@@ -1,6 +1,6 @@
 // app/api/insights/[slug]/route.ts
 import { NextResponse } from "next/server";
-import { fetchEntryBySlug } from "@/lib/contentful";
+import { fetchInsightBySlug } from "@/lib/api/src/contentful";
 
 export async function GET(
   _request: Request,
@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     console.log("Fetching insight with slug:", params.slug);
-    const entry = await fetchEntryBySlug("article", params.slug);
+    const entry = await fetchInsightBySlug("article", params.slug);
     console.log("Insight fetched successfully:", entry);
     return NextResponse.json(entry, {
       headers: {

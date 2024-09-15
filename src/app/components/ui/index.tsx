@@ -1,6 +1,6 @@
-import Card from "./Card";
+import Card from "./card/Card";
 import Footer from "./Footer";
-import Header from "./Header";
+import Header from "./header/Header";
 // import HorizontalCarousel from "./HorizontalCarousel";
 import Layout from "./Layout";
 import Paragraph from "./Paragraph";

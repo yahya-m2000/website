@@ -20,13 +20,13 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/app/*"],
-      "@/styles/*": ["./src/app/styles/components/*"],
-      "@/context/*": ["./src/app/context/*"],
-      "@/lib/*": ["./src/app/lib/*"],
-      "@/types/*": ["./src/app/types/*"],
-      "@/utils/*": ["./src/app/utils/*"],
-      "@/fonts/*": ["./src/app/styles/fonts/*"]
+      "@/*": ["./src/app/*"]
+      // "@/styles/*": ["./src/app/styles/components/*"],
+      // "@/context/*": ["./src/app/context/*"],
+      // "@/lib/*": ["./src/app/lib/*"],
+      // "@/types/*": ["./src/app/types/*"],
+      // "@/utils/*": ["./src/app/utils/*"],
+      // "@/fonts/*": ["src/app/fonts/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

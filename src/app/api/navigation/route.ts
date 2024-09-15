@@ -1,6 +1,6 @@
 // app/api/insights/route.ts
 import { NextResponse } from "next/server";
-import { fetchNavigation } from "@/lib/contentful";
+import { fetchNavigation } from "@/lib/api/src/contentful";
 
 export async function GET() {
   try {

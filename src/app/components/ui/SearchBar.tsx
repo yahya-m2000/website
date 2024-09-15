@@ -1,52 +1,71 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import SortRoundedIcon from "@mui/icons-material/SortRounded";
-import { mockInsights } from "@/assets/mockData/insights";
+import { useRouter } from "next/navigation";
 
-type SearchBarProps = {
-  initialSearchTerm: string;
-  initialTag: string;
-  onSearch?: (term: string) => void;
-  onFilterByTag?: (tag: string) => void;
+// A separate component for the dropdown filter
+const FilterDropdown: React.FC<{
+  tagsWithCount: { [key: string]: number };
+  onTagSelect: (tag: string) => void;
+}> = ({ tagsWithCount, onTagSelect }) => {
+  return (
+    <div className="absolute z-20 right-0 mt-2 w-56 bg-background-paper text-primary shadow-lg">
+      <ul className="p-2">
+        {Object.keys(tagsWithCount).map((tag) => (
+          <li
+            key={tag}
+            onClick={() => onTagSelect(tag)}
+            className="font-assistant cursor-pointer flex justify-between p-2 relative group"
+          >
+            <span>{tag}</span>
+            <span>{tagsWithCount[tag]}</span>
+            <span className="absolute bottom-0 left-0 w-full h-[1px] bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out origin-left"></span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const SearchBar: React.FC<SearchProps & { insights: InsightProps[] }> = ({
+  initialSearchTerm,
+  initialTag,
+  // onFilterByTag,
+  insights,
+}) => {
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [tagsWithCount, setTagsWithCount] = useState<{ [key: string]: number }>(
-    {}
-  );
+  const [selectedTag, setSelectedTag] = useState(initialTag);
+  const router = useRouter();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (searchTerm) params.set("term", searchTerm);
+    if (selectedTag) params.set("tag", selectedTag);
+    router.push(`?${params.toString()}`);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && onSearch) {
-      onSearch(searchTerm); // Check if onSearch is defined before calling
-    }
-  };
-
-  useEffect(() => {
+  const tagsWithCount = useMemo(() => {
     const tagCounts: { [key: string]: number } = {};
-    mockInsights.forEach((insight) => {
+    insights.forEach((insight) => {
       insight.tags?.forEach((tag) => {
-        if (tagCounts[tag]) {
-          tagCounts[tag] += 1;
-        } else {
-          tagCounts[tag] = 1;
-        }
+        tagCounts[tag] = (tagCounts[tag] || 0) + 1;
       });
     });
-    setTagsWithCount(tagCounts);
-  }, []);
+    return tagCounts;
+  }, [insights]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   const handleTagSelect = (tag: string) => {
-    if (onFilterByTag) {
-      onFilterByTag(tag); // Check if onFilterByTag is defined before calling
-    }
-    setShowDropdown(false);
+    setSelectedTag(tag); // Update selected tag
+    handleSearch(); // Trigger search with updated tag
+    setShowDropdown(false); // Close dropdown after selecting
   };
 
   return (
@@ -55,15 +74,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
         <input
           type="text"
           value={searchTerm}
-          onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyDown} // Replaced onKeyPress with onKeyDown
+          onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search..."
-          className="font-assistant text-white rounded-md placeholder:italic w-full px-[2vw] py-[2vh] bg-background-paper focus:outline-none"
+          className="font-assistant text-black rounded-md placeholder:italic w-full px-[2vw] py-[2vh] bg-background-paper focus:outline-none"
         />
         <button
           type="submit"
           className="absolute right-0 top-1/2 transform -translate-y-1/2 text-primary rounded-lg px-[2vw] py-[2vh] transition-colors duration-300"
-          onClick={() => onSearch && onSearch(searchTerm)} // Check if onSearch is defined before calling
+          onClick={handleSearch}
         >
           <ArrowForwardRoundedIcon />
         </button>
@@ -80,22 +99,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onFilterByTag }) => {
         </button>
 
         {showDropdown && (
-          <div className="absolute z-20 right-0 mt-2 w-56 bg-background-paper text-primary shadow-lg">
-            <ul className="p-2">
-              {Object.keys(tagsWithCount).map((tag) => (
-                <li
-                  key={tag}
-                  onClick={() => handleTagSelect(tag)}
-                  className="font-assistant cursor-pointer flex justify-between p-2 relative group"
-                >
-                  <span>{tag}</span>
-                  <span>{tagsWithCount[tag]}</span>
-
-                  <span className="absolute bottom-0 left-0 w-full h-[1px] bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out origin-left"></span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FilterDropdown
+            tagsWithCount={tagsWithCount}
+            onTagSelect={handleTagSelect}
+          />
         )}
       </div>
     </div>

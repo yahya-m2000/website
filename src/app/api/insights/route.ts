@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { fetchEntries } from "@/lib/contentful";
-import { verifyAuth } from "@/lib/verifyAuth";
+import { fetchInsights } from "@/lib/api/src/contentful";
+import { verifyAuth } from "@/lib/api/src/verifyAuth";
 
 // List of authorized emails
 const authorizedEmails = ["your-email@example.com"]; // Replace with the authorized email(s)
@@ -18,7 +18,7 @@ export async function GET(req: Request) {
 
   // If authenticated, fetch and return the entries
   try {
-    const entries = await fetchEntries("article");
+    const entries = await fetchInsights("article");
     return NextResponse.json(entries, {
       headers: {
         "Access-Control-Allow-Origin": "*",

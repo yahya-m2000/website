@@ -3,7 +3,7 @@ import { UserProvider } from "@auth0/nextjs-auth0/client";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./globals.css";
-import { assistant, inriaSerif } from "./styles/fonts";
+import { assistant, inriaSerif } from "./fonts";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.theeasterntradegroup.com/"),

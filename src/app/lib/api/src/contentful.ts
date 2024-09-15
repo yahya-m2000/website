@@ -6,8 +6,7 @@ const client = createClient({
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
 });
 
-// Function to fetch all entries for a specific content type
-export async function fetchEntries(contentType: string) {
+export async function fetchInsights(contentType: string) {
   try {
     const entries = await client.getEntries({
       content_type: contentType,
@@ -21,6 +20,7 @@ export async function fetchEntries(contentType: string) {
         "fields.images",
         "fields.slug",
         "fields.basePath",
+        "fields.isFeatured",
       ],
     });
 
@@ -39,19 +39,20 @@ export async function fetchEntries(contentType: string) {
         subtitle: item.fields.subtitle,
         author: item.fields.author,
         tags: item.fields.tags,
-        heroImage: item.fields.heroImage?.fields?.file?.url
-          ? `https:${item.fields.heroImage.fields.file.url}`
-          : "",
+        heroImage: item.fields.heroImage?.fields?.file?.url.startsWith("//")
+          ? `https:${item.fields.heroImage.fields.file.url}` // Fix protocol-relative URL
+          : item.fields.heroImage?.fields?.file?.url || "",
         date: item.fields.heroImage?.sys?.createdAt ?? "",
         body: item.fields.body,
         images: imageUrls, // Return only image URLs
         slug: item.fields.slug,
         basePath: item.fields.basePath,
+        isFeatured: item.fields.isFeatured,
       };
     });
   } catch (error) {
     console.error("Error fetching entries:", error);
-    throw error;
+    return null; // Return null on error
   }
 }
 
@@ -76,7 +77,34 @@ export async function fetchNavigation(contentType: string) {
   }
 }
 
-export async function fetchEntryBySlug(contentType: string, slug: string) {
+export async function fetchFAQS(contentType: string) {
+  try {
+    const entries = await client.getEntries({
+      content_type: contentType,
+      select: [
+        "fields.question",
+        "fields.answer",
+        "fields.order",
+        "fields.category",
+      ],
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return entries.items.map((item: any) => {
+      return {
+        question: item.fields.question,
+        answer: item.fields.answer,
+        order: item.fields.order,
+        category: item.fields.category,
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching entries:", error);
+    throw error;
+  }
+}
+
+export async function fetchInsightBySlug(contentType: string, slug: string) {
   try {
     console.log(`Fetching entry with slug: ${slug}`); // Log the slug for debugging
     const entries = await client.getEntries({
@@ -93,6 +121,7 @@ export async function fetchEntryBySlug(contentType: string, slug: string) {
         "fields.images",
         "fields.slug",
         "fields.basePath",
+        "fields.isFeatured",
       ],
     });
 
@@ -111,19 +140,63 @@ export async function fetchEntryBySlug(contentType: string, slug: string) {
         subtitle: item.fields.subtitle,
         author: item.fields.author,
         tags: item.fields.tags,
-        heroImage: item.fields.heroImage?.fields?.file?.url ?? "",
+        heroImage: item.fields.heroImage?.fields?.file?.url.startsWith("//")
+          ? `https:${item.fields.heroImage.fields.file.url}` // Fix protocol-relative URL
+          : item.fields.heroImage?.fields?.file?.url || "",
         date: item.fields.heroImage?.sys?.createdAt ?? "",
         body: item.fields.body,
         images: imageUrls ?? "",
         slug: item.fields.slug,
         basePath: item.fields.basePath,
+        isFeatured: item.fields.isFeatured,
       }));
     } else {
       console.log("No entry found with the given slug"); // Log no entry found
-      throw new Error("Entry not found");
+      return null; // Return null on error
     }
   } catch (error) {
     console.error("Error fetching entry by slug:", error);
-    throw error;
+    return null; // Return null on error
+  }
+}
+
+export async function fetchTextBlockBySlug(contentType: string, slug: string) {
+  try {
+    console.log(`Fetching entry with slug: ${slug}`); // Log the slug for debugging
+    const entries = await client.getEntries({
+      content_type: contentType,
+      "fields.slug": slug,
+      limit: 1,
+      select: [
+        "fields.title",
+        "fields.subtitle",
+        "fields.heroImage",
+        "fields.body",
+        "fields.callToAction",
+        "fields.slug",
+      ],
+    });
+
+    if (entries.items.length > 0) {
+      console.log("Entry found:", entries.items[0].fields); // Log the found entry
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return entries.items.map((item: any) => ({
+        title: item.fields.title,
+        subtitle: item.fields.subtitle,
+        heroImage: item.fields.heroImage?.fields?.file?.url.startsWith("//")
+          ? `https:${item.fields.heroImage.fields.file.url}` // Fix protocol-relative URL
+          : item.fields.heroImage?.fields?.file?.url || "",
+        date: item.fields.heroImage?.sys?.createdAt ?? "",
+        body: item.fields.body,
+        callTOAction: item.fields.callToAction,
+        slug: item.fields.slug,
+      }));
+    } else {
+      console.log("No entry found with the given slug"); // Log no entry found
+      return null; // Return null on error
+    }
+  } catch (error) {
+    console.error("Error fetching entry by slug:", error);
+    return null; // Return null on error
   }
 }

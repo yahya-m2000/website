@@ -3,9 +3,8 @@ import React, { useState } from "react";
 import { Footer, Header, Layout } from "@/components/ui";
 import HeroImage from "@/components/ui/HeroImage";
 import SearchBar from "@/components/ui/SearchBar";
-import CardGrid from "@/components/ui/CardGrid";
-import bgImage from "@/assets/images/projects_background.png";
-import { mockInsights } from "@/assets/mockData/insights";
+import CardGrid from "@/components/ui/card/CardGrid";
+import { mockInsights } from "@/assets/data/insights";
 
 export default function Projects() {
   const [filteredInsights, setFilteredInsights] = useState(mockInsights);
@@ -40,15 +39,7 @@ export default function Projects() {
     <Layout>
       <main className="hide-scrollbar bg-black">
         <Header isDark={true} navigationTabs={[]} />
-        <HeroImage
-          title={"Placeholder Featured Insight"}
-          heroImage={bgImage}
-          tag={"Technology"}
-          body="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim v..."
-          author={"Test"}
-          date={"01 January 2025"}
-          basePath={""}
-        />
+        <HeroImage title={""} body={""} date={""} basePath={""} />
         <div className="main">
           <h3 className="font-assistant text-white text-3xl md:w-[40vw] justify-start">
             We at the Eastern Trade Group believe in
@@ -67,6 +58,7 @@ export default function Projects() {
           onFilterByTag={handleFilterByTag}
           initialSearchTerm={""}
           initialTag={""}
+          insights={[]}
         />
 
         {/* Display the filtered insights using the CardGrid component */}

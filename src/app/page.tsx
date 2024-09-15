@@ -1,36 +1,53 @@
 import { Footer, Header, Layout, Paragraph } from "@/components/ui";
-import HeroImage from "./components/ui/HeroImage";
-import FeaturedInsights from "./components/home/FeaturedInsights";
-import TrendingCarousel from "./components/home/TrendingCarousel";
-import bgImage from "@/assets/images/home_background.jpg";
-import { fetchEntries, fetchNavigation } from "@/lib/contentful";
+import { FeaturedInsights, TrendingCarousel } from "@/components/pages/home";
+import { renderHeroImage } from "./lib/common/src/ui/renderHeroImage";
+import { placeholderHeroImage } from "./assets/data/placeholderHeroImage";
 
-// Server component for Home page
+import {
+  fetchInsights,
+  fetchInsightBySlug,
+  fetchNavigation,
+} from "@/lib/api/src/contentful";
+
 export default async function Home() {
-  // Fetch insights and navigation server-side inside this async function
-  const insights = await fetchEntries("article");
-  const navigationTabs = await fetchNavigation("navigation");
+  const [insights, navigationTabs] = await Promise.all([
+    fetchInsights("article").then((res) => res || []), // Fallback to an empty array if null or undefined
+    fetchNavigation("navigation"),
+  ]);
 
+  // featured insight or project for the hero image
+  const featuredInsight = insights.find((insight) => insight.isFeatured);
+
+  let featuredHeroImage = null;
+  if (featuredInsight) {
+    featuredHeroImage = await fetchInsightBySlug(
+      "article",
+      featuredInsight.slug
+    );
+  }
+
+  // Rendering
   return (
     <Layout>
       <main>
-        {/* Pass the fetched navigationTabs data to the Header component */}
         <Header isDark={true} navigationTabs={navigationTabs} />
-        <HeroImage
-          title={"Placeholder Featured Insight #1 Technology"}
-          subtitle="Placeholder Subtitle!!!"
-          heroImage={bgImage}
-          tag={"Technology"}
-          body="Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-            quae ab illo inventore veritatis et quasi architecto beatae vitae
-            dicta sunt explicabo. Nemo enim v..."
-          author={"Test"}
-          date={"01 January 2025"}
-          basePath=""
-          images={[]}
-        />
-        {/* Pass the fetched insights data to the FeaturedInsights component */}
+
+        {/* HeroImage rendering */}
+        {renderHeroImage(
+          featuredHeroImage
+            ? {
+                title: featuredHeroImage[0].title,
+                subtitle: featuredHeroImage[0].subtitle,
+                heroImage: featuredHeroImage[0].heroImage,
+                tags: featuredHeroImage[0].tags,
+                author: featuredHeroImage[0].author,
+                date: featuredHeroImage[0].date,
+                body: "",
+                basePath: "",
+              }
+            : placeholderHeroImage
+        )}
+
         <FeaturedInsights insights={insights} />
         <Paragraph
           title="About us"

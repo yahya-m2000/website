@@ -1,6 +1,13 @@
 import { StaticImageData } from "next/image";
 
 declare global {
+  type SearchProps = {
+    initialSearchTerm: string;
+    initialTag: string;
+    onSearch: (term: string) => void;
+    onFilterByTag?: (tag: string) => void;
+  };
+
   type HeaderProps = {
     href: string;
     label?: string;
@@ -13,6 +20,10 @@ declare global {
   type DrawerToggleProps = {
     isDark: boolean;
     toggleDrawer: () => void;
+  };
+
+  type Params = {
+    slug: string;
   };
 
   //
@@ -42,6 +53,7 @@ declare global {
     tags?: string[];
     heroImage?: string | StaticImageData;
     images?: string[];
+    isFeatured?: boolean;
     slug?: string;
   };
 
@@ -73,15 +85,6 @@ declare global {
     buttonUrl?: string;
     isReversed?: boolean;
     isCentered?: boolean;
-  };
-
-  type TextProps = {
-    fontWeight?: string | number;
-    fontSize?: string;
-    color?: string;
-    textAlign?: "left" | "center" | "right" | "justify";
-    margin?: string;
-    padding?: string;
   };
 }
 

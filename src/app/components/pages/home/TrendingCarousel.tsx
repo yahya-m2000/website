@@ -1,6 +1,6 @@
 import React from "react";
-import HorizontalCarousel from "../ui/HorizontalCarousel";
-import { mockCards } from "@/assets/mockData/cards";
+import HorizontalCarousel from "../../ui/HorizontalCarousel";
+import { mockCards } from "@/assets/data/cards";
 
 const TrendingCarousel = () => {
   return (

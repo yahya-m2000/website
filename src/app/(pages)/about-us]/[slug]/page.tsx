@@ -1,5 +1,5 @@
 "use client";
-import { Layout, Header, Footer } from "@/components/ui";
+import { Layout, Header, Footer } from "@/components/ui/";
 import React, { useEffect, useState } from "react";
 
 const tabData = [
