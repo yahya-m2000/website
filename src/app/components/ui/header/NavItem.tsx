@@ -1,14 +1,5 @@
-// NavItem.tsx
 import clsx from "clsx";
 import React from "react";
-
-interface NavItemProps {
-  label: string;
-  isDark: boolean;
-  dropdownOpen: boolean;
-  onClick: () => void;
-  isSelected: boolean;
-}
 
 const NavItem: React.FC<NavItemProps> = ({
   label,
@@ -16,20 +7,25 @@ const NavItem: React.FC<NavItemProps> = ({
   dropdownOpen,
   onClick,
   isSelected,
+  isInDrawer = false, // default to false if not passed
 }) => (
   <p
     onClick={onClick}
     className={clsx(
-      "relative font-assistant font-medium text-lg cursor-pointer whitespace-nowrap mr-[2vw] mt-[2vh]",
-      "after:content-[''] after:absolute after:left-0 after:top-[5vh] after:w-full after:h-[2px] after:scale-x-0 after:origin-left",
-      "after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left z-30 transition-all",
+      // Use the font-assistant and universal styles
+      "font-assistant font-medium text-lg cursor-pointer transition-all duration-300",
+      isInDrawer
+        ? "text-black mb-6 px-4 py-3 text-xl bg-gray-100 rounded-md hover:bg-gray-200"
+        : "lg:mr-[2vw] mt-[2vh] hover-underline", // Applies hover underline
+
+      // Conditional text color classes
       isSelected
-        ? "text-primary after:bg-primary"
+        ? "text-primary"
         : dropdownOpen
-        ? "text-black after:bg-primary"
+        ? "text-black"
         : isDark
-        ? "text-white after:bg-white"
-        : "text-black after:bg-white"
+        ? "text-white"
+        : "text-black"
     )}
   >
     {label}

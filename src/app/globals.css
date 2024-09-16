@@ -2,25 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base global styles */
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Custom utility classes */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+  .hover-underline {
+    @apply relative after:content-[''] after:absolute after:left-0 after:top-[5vh] after:w-full after:h-[2px] after:scale-x-0 after:origin-left after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100;
+  }
 }
 
+/* Base layout and typography */
 @layer base {
+  /* Container styling */
   .main {
-    @apply px-[4vw] md:px-[12vw] lg:py-[4vh] md:py-[2vh] py-[2vh]; /* Apply Tailwind utilities here */
+    @apply px-[4vw] md:px-[12vw] lg:py-[4vh] md:py-[2vh] py-[2vh];
   }
   .container {
-    @apply px-[2vw] py-[2vh]; /* Apply Tailwind utilities here */
+    @apply px-[2vw] py-[2vh];
   }
+
+  /* Typography */
   .title {
     @apply text-4xl lg:text-5xl md:text-5xl font-extrabold font-assistant;
   }
@@ -31,6 +40,8 @@ body {
     @apply text-base font-light font-assistant;
   }
 }
+
+/* Custom CSS variables for fonts */
 :root {
   --font-assistant: "Assistant", sans-serif;
   --font-inria-serif: "Inria Serif", serif;

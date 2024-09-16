@@ -9,6 +9,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <ThemeProvider theme={theme}>
       <ScrollProvider>
         <CssBaseline />
+        <div className="flex flex-1 justify-center bg-red-700">
+          <p className="subheading text-white">CURRENTLY IN DEVELOPMENT</p>
+        </div>
         {children}
       </ScrollProvider>
     </ThemeProvider>

@@ -1,16 +1,14 @@
-// Logo.tsx
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
 import React from "react";
 
-interface LogoProps {
-  isDark: boolean;
-  dropdownOpen: boolean;
-}
-
-const Logo: React.FC<LogoProps> = ({ isDark, dropdownOpen }) => (
-  <div className="flex flex-1">
+const Logo: React.FC<LogoProps> = ({
+  isDark,
+  dropdownOpen,
+  isMobile = false,
+}) => (
+  <div className={clsx("flex", isMobile ? "justify-center mb-4" : "flex-1")}>
     <Link href="/">
       <Image
         src={require("../../../assets/images/logo1.png")}

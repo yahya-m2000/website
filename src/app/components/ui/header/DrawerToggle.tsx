@@ -4,11 +4,6 @@ import { Menu } from "@mui/icons-material";
 import clsx from "clsx";
 import React from "react";
 
-interface DrawerToggleProps {
-  isDark: boolean;
-  toggleDrawer: () => void;
-}
-
 const DrawerToggle: React.FC<DrawerToggleProps> = ({
   isDark,
   toggleDrawer,

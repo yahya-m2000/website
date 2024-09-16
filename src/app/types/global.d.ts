@@ -1,12 +1,7 @@
 import { StaticImageData } from "next/image";
 
 declare global {
-  type SearchProps = {
-    initialSearchTerm: string;
-    initialTag: string;
-    onSearch: (term: string) => void;
-    onFilterByTag?: (tag: string) => void;
-  };
+  // HEADER PROPS
 
   type HeaderProps = {
     href: string;
@@ -17,9 +12,66 @@ declare global {
     overrideScrollStyle?: boolean;
     noAnimations?: boolean;
   };
-  type DrawerToggleProps = {
+
+  interface NavigationTab {
+    title: string;
+    slug: string;
+    tabs?: string[];
+  }
+
+  interface HeaderProps {
+    isDark?: boolean;
+    navigationTabs: NavigationTab[];
+  }
+
+  interface NavItemProps {
+    label: string;
+    isDark: boolean;
+    dropdownOpen: boolean;
+    onClick: () => void;
+    isSelected: boolean;
+    isInDrawer?: boolean;
+  }
+
+  interface MobileDrawerProps {
+    drawerOpen: boolean;
+    closeDrawer: () => void;
+    navigationTabs: NavigationTab[];
+    selectedNav: number | null;
+    handleNavClick: (navIndex: number) => void;
+    drawerRef: React.RefObject<HTMLDivElement>;
+    dropdownRef: React.RefObject<HTMLDivElement>;
+    isDark: boolean;
+  }
+
+  interface LogoProps {
+    isDark: boolean;
+    dropdownOpen: boolean;
+    isMobile?: boolean;
+  }
+
+  interface DrawerToggleProps {
     isDark: boolean;
     toggleDrawer: () => void;
+  }
+
+  interface DropdownMenuProps {
+    navigationTabs: NavigationTab[];
+    dropdownOpen: boolean;
+    dropdownRef: React.RefObject<HTMLDivElement>;
+    isMobile: boolean;
+    selectedNav: number | null;
+    handleNavClick: (index: number) => void;
+    isDark: boolean;
+  }
+
+  // END OF HEADER PROPS
+
+  type SearchProps = {
+    initialSearchTerm: string;
+    initialTag: string;
+    onSearch: (term: string) => void;
+    onFilterByTag?: (tag: string) => void;
   };
 
   type Params = {

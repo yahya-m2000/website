@@ -30,3 +30,5 @@ export const formatDate = (date: string) =>
     month: "long",
     year: "numeric",
   });
+
+export const checkIsMobile = () => window.innerWidth < 1024;
