@@ -46,7 +46,8 @@ const Header: React.FC<HeaderProps> = ({ isDark = false, navigationTabs }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      const isNowMobile = window.innerWidth < 1024;
+      const isNowMobile =
+        typeof window !== "undefined" && window.innerWidth < 1024;
       setIsMobile(isNowMobile);
 
       // Close both drawer and dropdown when switching from mobile to desktop
