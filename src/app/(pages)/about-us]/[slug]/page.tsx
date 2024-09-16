@@ -49,10 +49,12 @@ const Page = () => {
   const [selectedTab, setSelectedTab] = useState(1);
 
   useEffect(() => {
-    const path = window.location.pathname.split("/").pop();
-    const foundTab = tabData.find((tab) => tab.url === path);
-    if (foundTab) {
-      setSelectedTab(foundTab.id);
+    if (typeof window !== "undefined") {
+      const path = window.location.pathname.split("/").pop();
+      const foundTab = tabData.find((tab) => tab.url === path);
+      if (foundTab) {
+        setSelectedTab(foundTab.id);
+      }
     }
   }, []);
 
@@ -60,8 +62,9 @@ const Page = () => {
     const selectedTab = tabData.find((tab) => tab.id === tabId);
     if (selectedTab) {
       setSelectedTab(tabId);
-
-      window.history.pushState(null, "", `/about/${selectedTab.url}`);
+      if (typeof window !== "undefined") {
+        window.history.pushState(null, "", `/about/${selectedTab.url}`);
+      }
     }
   };
 

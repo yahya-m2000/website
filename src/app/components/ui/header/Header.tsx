@@ -45,24 +45,25 @@ const Header: React.FC<HeaderProps> = ({ isDark = false, navigationTabs }) => {
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      const isNowMobile =
-        typeof window !== "undefined" && window.innerWidth < 1024;
-      setIsMobile(isNowMobile);
+    if (typeof window !== "undefined") {
+      const handleResize = () => {
+        const isNowMobile = window.innerWidth < 1024;
+        setIsMobile(isNowMobile);
 
-      // Close both drawer and dropdown when switching from mobile to desktop
-      if (!isNowMobile) {
-        setDrawerOpen(false);
-        setDropdownOpen(false);
-        setSelectedNav(null);
-      }
-    };
+        // Close both drawer and dropdown when switching from mobile to desktop
+        if (!isNowMobile) {
+          setDrawerOpen(false);
+          setDropdownOpen(false);
+          setSelectedNav(null);
+        }
+      };
 
-    window.addEventListener("resize", handleResize);
+      window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, []);
 
   useEffect(() => {
