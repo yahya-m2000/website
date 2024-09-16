@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({ isDark = false, navigationTabs }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedNav, setSelectedNav] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  const [isMobile, setIsMobile] = useState(false); // Don't initialize with window.innerWidth
   const headerRef = useRef<HTMLDivElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -45,6 +45,7 @@ const Header: React.FC<HeaderProps> = ({ isDark = false, navigationTabs }) => {
   };
 
   useEffect(() => {
+    // Only run this code on the client side
     if (typeof window !== "undefined") {
       const handleResize = () => {
         const isNowMobile = window.innerWidth < 1024;
@@ -58,6 +59,7 @@ const Header: React.FC<HeaderProps> = ({ isDark = false, navigationTabs }) => {
         }
       };
 
+      handleResize(); // Check on mount
       window.addEventListener("resize", handleResize);
 
       return () => {
