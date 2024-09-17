@@ -18,7 +18,9 @@ export const richTextRenderOptions = {
       </h2>
     ),
     [BLOCKS.PARAGRAPH]: (_node: Node, children: React.ReactNode) => (
-      <p className="font-inriaSerif text-lg leading-relaxed mb-4">{children}</p>
+      <p className="font-inriaSerif lg:text-lg text-base leading-relaxed mb-4">
+        {children}
+      </p>
     ),
     [INLINES.HYPERLINK]: (node: Node, children: React.ReactNode) => {
       const { uri } = node.data;

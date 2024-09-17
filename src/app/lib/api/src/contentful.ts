@@ -6,6 +6,63 @@ const client = createClient({
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN as string,
 });
 
+export async function fetchPageContent(contentType: string) {
+  try {
+    const entries = await client.getEntries({
+      content_type: contentType,
+      select: [
+        "fields.title",
+        "fields.subtitle",
+        "fields.heroImage",
+        "fields.sections",
+        "fields.slug",
+        "sys.createdAt",
+      ],
+    });
+
+    return entries.items.map((item: any) => {
+      // Refine sections to include only relevant fields
+      const refinedSections = item.fields.sections?.map((sectionItem: any) => ({
+        title: sectionItem.fields.title,
+        subtitle: sectionItem.fields.subtitle,
+        body: sectionItem.fields.body,
+        callToAction: sectionItem.fields.callToAction
+          ? sectionItem.fields.callToAction.sys.id
+          : null,
+        quote: sectionItem.fields.quote,
+        author: sectionItem.fields.author,
+        socialLinks: sectionItem.fields.socialLinks
+          ? sectionItem.fields.socialLinks.sys.id
+          : null,
+        image: sectionItem.fields.image
+          ? `https:${sectionItem.fields.image.fields.file.url}`
+          : null, // Adding the image field to the section if it exists
+      }));
+      // Get image URLs for images, if they exist
+      const imageUrls = item.fields.images
+        ? item.fields.images.map(
+            (image: any) => `https:${image.fields.file.url}`
+          )
+        : [];
+
+      return {
+        title: item.fields.title,
+        subtitle: item.fields.subtitle,
+        heroImage: item.fields.heroImage?.fields?.file?.url.startsWith("//")
+          ? `https:${item.fields.heroImage.fields.file.url}`
+          : item.fields.heroImage?.fields?.file?.url || "",
+        date: item.sys.createdAt,
+        sections: refinedSections,
+        slug: item.fields.slug,
+        imageUrls,
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching entries:", error);
+    return null; // Return null on error
+  }
+}
+
 export async function fetchInsights(contentType: string) {
   try {
     const entries = await client.getEntries({

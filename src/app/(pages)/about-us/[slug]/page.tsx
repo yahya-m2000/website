@@ -2,13 +2,14 @@ import { Footer, Header, HeroImage, Layout } from "@/components/ui";
 import {
   fetchFAQS,
   fetchNavigation,
-  fetchTextBlockBySlug,
+  fetchPageContent,
 } from "@/lib/api/src/contentful";
 import { richTextRenderOptions } from "@/lib/common/src/ui/richTextRenderOptions";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { notFound } from "next/navigation";
 import React from "react";
 import { Document } from "@contentful/rich-text-types";
+import Section from "@/components/ui/Section";
 
 type FAQ = {
   question: string;
@@ -16,14 +17,24 @@ type FAQ = {
   order: number;
   category: string;
 };
-type TextBlock = {
+
+type Section = {
+  title: string;
+  subtitle: string;
+  body: Document;
+  callToAction?: string;
+  quote?: string;
+  author?: string;
+  image?: string;
+};
+
+type PageContent = {
+  slug: string;
   title: string;
   subtitle: string;
   heroImage: string;
   date: string;
-  body: Document;
-  callToAction?: string;
-  slug: string;
+  sections?: Section[];
 };
 
 const FAQSection: React.FC<{ faqs: FAQ[] }> = ({ faqs }) => (
@@ -39,35 +50,53 @@ const FAQSection: React.FC<{ faqs: FAQ[] }> = ({ faqs }) => (
   </div>
 );
 
-export default async function Page({ params }: { params: Params }) {
+export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
 
+  // Fetch navigation tabs
   const navigationTabs = await fetchNavigation("navigation");
 
-  let data: FAQ[] | TextBlock[] | null = null;
-  let title: string, subtitle: string, heroImage: string;
-  let body: Document | undefined;
+  let faqs: FAQ[] | null = null;
+  let content: PageContent | null = null;
 
   if (slug === "faq") {
-    data = await fetchFAQS("faq");
+    // Fetch FAQ content
+    faqs = await fetchFAQS("faq");
+  } else {
+    // Fetch page content
+    const pageContentData = await fetchPageContent("pageContent");
+
+    // Check if pageContentData is null before accessing it
+    if (pageContentData) {
+      content =
+        pageContentData.find((page: PageContent) => page.slug === slug) || null;
+    }
+  }
+
+  // Handle 404 not found cases
+  if (!faqs && !content) {
+    return notFound();
+  }
+
+  let title = "";
+  let subtitle = "";
+  let heroImage = "";
+  let sections: Section[] | undefined;
+
+  // If it's FAQ content
+  if (faqs) {
     title = "Frequently Asked Questions";
     subtitle = "";
     heroImage = "/default-faq-hero.jpg";
-  } else {
-    const textBlockData = await fetchTextBlockBySlug("textBlock", slug);
-
-    if (!textBlockData || textBlockData.length === 0) return notFound();
-
-    const insight = textBlockData[0] as TextBlock;
-    title = insight.title;
-    subtitle = insight.subtitle;
-    heroImage = insight.heroImage;
-    body = insight.body;
-
-    data = textBlockData;
   }
 
-  if (!data) return notFound();
+  // If it's regular page content
+  if (content) {
+    title = content.title;
+    subtitle = content.subtitle;
+    heroImage = content.heroImage;
+    sections = content.sections; // Get all sections
+  }
 
   return (
     <Layout>
@@ -81,12 +110,19 @@ export default async function Page({ params }: { params: Params }) {
         basePath={""}
       />
       <div className="main flex flex-1 flex-col-reverse md:flex-row bg-white border-b border-b-slate-300 border-[1px]">
-        <div className="flex-[0.8] md:mr-[2vw] h-full">
-          {slug === "faq" ? (
-            <FAQSection faqs={data as FAQ[]} />
+        <div className="flex-[1] h-full">
+          {faqs ? (
+            <FAQSection faqs={faqs} />
           ) : (
-            <div className="textblock-section">
-              {body && documentToReactComponents(body, richTextRenderOptions)}
+            <div className="sections-container ">
+              {sections &&
+                sections.map((section, index) => (
+                  <Section
+                    key={index}
+                    section={section}
+                    isReversed={index % 2 === 1}
+                  />
+                ))}
             </div>
           )}
         </div>
