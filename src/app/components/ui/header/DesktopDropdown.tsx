@@ -42,9 +42,13 @@ export const DesktopDropdown: React.FC<DropdownMenuProps> = ({
           )}
         >
           <div>
-            <h3 className="font-bold font-assistant text-lg pb-[2vh]">
-              {navigationTabs[selectedNav]?.title}
-            </h3>
+            <Link
+              href={`/${cleanUrlString(navigationTabs[selectedNav]?.title)}`}
+            >
+              <h3 className="font-bold font-assistant text-lg pb-[2vh] text-gray-500 hover:text-black">
+                {navigationTabs[selectedNav]?.title}
+              </h3>
+            </Link>
             <ul>
               {/* Conditionally render tabs if they exist */}
               {

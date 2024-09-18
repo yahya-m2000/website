@@ -1,5 +1,6 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { richTextRenderOptions } from "@/lib/common/src/ui/richTextRenderOptions";
+import Image from "next/image";
 
 type SectionProps = {
   section: {
@@ -27,10 +28,12 @@ const Section: React.FC<SectionProps> = ({ section, isReversed }) => {
             isReversed ? "md:pl-[6vw]" : "md:pr-[6vw]"
           }`} // Adjust left or right margin for image
         >
-          <img
+          <Image
             src={section.image}
             alt={section.title}
             className="w-full h-auto"
+            width={2000}
+            height={2000}
           />
         </div>
       )}

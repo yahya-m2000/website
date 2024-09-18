@@ -16,7 +16,7 @@ const HeroImage: React.FC<InsightProps> = ({
   const formattedDate = useMemo(() => (date ? formatDate(date) : null), [date]);
 
   return (
-    <div className="relative min-h-[60vh]">
+    <div className="relative min-h-[500px]">
       {/* Background Image */}
       <Image
         src={heroImage || fallbackImage}
@@ -29,7 +29,7 @@ const HeroImage: React.FC<InsightProps> = ({
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-slate-500 to-transparent z-10 backdrop-brightness-50" />
 
-      <div className="main flex absolute min-h-[60vh] items-end lg:w-[75vw] z-20">
+      <div className="main flex absolute min-h-[500px] items-end lg:w-[75vw] z-20">
         <div>
           {/* Conditionally render tags if available */}
           {tags && (

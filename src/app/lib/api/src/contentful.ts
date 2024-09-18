@@ -18,10 +18,33 @@ export async function fetchPageContent(contentType: string) {
         "fields.slug",
         "sys.createdAt",
       ],
+      include: 2, // This makes sure the linked entries are included
     });
 
     return entries.items.map((item: any) => {
-      // Refine sections to include only relevant fields
+      const refinedForms = item.fields.sections?.map((sectionItem: any) => {
+        if (sectionItem.fields.formFields) {
+          // Resolve form fields and extract their data
+          const formFields = sectionItem.fields.formFields.map(
+            (fieldItem: any) => ({
+              label: fieldItem.fields.label,
+              type: fieldItem.fields.type,
+              placeholderText: fieldItem.fields.placeholderText,
+              id: fieldItem.fields.id,
+            })
+          );
+
+          return {
+            title: sectionItem.fields.title,
+            description: sectionItem.fields.description,
+            submitText: sectionItem.fields.submit,
+            successMessage: sectionItem.fields.successMessage,
+            formFields, // Include resolved form fields
+          };
+        }
+        return null;
+      });
+
       const refinedSections = item.fields.sections?.map((sectionItem: any) => ({
         title: sectionItem.fields.title,
         subtitle: sectionItem.fields.subtitle,
@@ -36,14 +59,8 @@ export async function fetchPageContent(contentType: string) {
           : null,
         image: sectionItem.fields.image
           ? `https:${sectionItem.fields.image.fields.file.url}`
-          : null, // Adding the image field to the section if it exists
+          : null,
       }));
-      // Get image URLs for images, if they exist
-      const imageUrls = item.fields.images
-        ? item.fields.images.map(
-            (image: any) => `https:${image.fields.file.url}`
-          )
-        : [];
 
       return {
         title: item.fields.title,
@@ -52,14 +69,14 @@ export async function fetchPageContent(contentType: string) {
           ? `https:${item.fields.heroImage.fields.file.url}`
           : item.fields.heroImage?.fields?.file?.url || "",
         date: item.sys.createdAt,
+        form: refinedForms ? refinedForms[0] : null, // Get the form data if available
         sections: refinedSections,
         slug: item.fields.slug,
-        imageUrls,
       };
     });
   } catch (error) {
     console.error("Error fetching entries:", error);
-    return null; // Return null on error
+    return null;
   }
 }
 

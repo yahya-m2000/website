@@ -6,7 +6,7 @@ import {
 } from "@/lib/api/src/contentful";
 import { richTextRenderOptions } from "@/lib/common/src/ui/richTextRenderOptions";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation"; // Import redirect
 import React from "react";
 import { Document } from "@contentful/rich-text-types";
 import Section from "@/components/ui/Section";
@@ -52,6 +52,11 @@ const FAQSection: React.FC<{ faqs: FAQ[] }> = ({ faqs }) => (
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
+
+  // If slug is "contact-us", redirect to the /contact-us page
+  if (slug === "contact-us") {
+    redirect("/contact-us"); // Perform the redirect
+  }
 
   // Fetch navigation tabs
   const navigationTabs = await fetchNavigation("navigation");
