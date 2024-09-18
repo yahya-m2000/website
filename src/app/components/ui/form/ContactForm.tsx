@@ -2,153 +2,189 @@
 
 import React, { useState } from "react";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-
-type FormField = {
-  label: string;
-  type?: string;
-  placeholderText: string;
-  validationRules?: string;
-  id: number;
-};
-
-type FormProps = {
-  title: string;
-  description: any; // Rich text data
-  submitText: string;
-  successMessage: any; // Rich text data
-  formFields?: FormField[];
-};
+import { richTextRenderOptions } from "@/lib/common/src/ui/richTextRenderOptions";
 
 const ContactForm: React.FC<{ form: FormProps }> = ({ form }) => {
   const [formValues, setFormValues] = useState<{ [key: string]: string }>({});
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [generalError, setGeneralError] = useState<string | null>(null); // New state
 
-  // Handle input change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
     setFormErrors({ ...formErrors, [name]: "" }); // Clear error when typing
+    setGeneralError(null); // Clear general error when typing
+    e.target.setCustomValidity("");
   };
-
-  // Validation logic based on field type and validation rules
   const validateForm = () => {
     const errors: { [key: string]: string } = {};
+    let isValid = true;
+
     form?.formFields?.forEach((field) => {
-      const value = formValues[field.label.toLowerCase().replace(" ", "-")];
+      const fieldName = field.label.toLowerCase().replace(" ", "-");
+      const value = formValues[fieldName]?.trim() || ""; // Default to empty string if no value
       const rules = field.validationRules?.split("|") || [];
 
       // Required field validation
       if (rules.includes("required") && !value) {
-        errors[
-          field.label.toLowerCase().replace(" ", "-")
-        ] = `${field.label} is required.`;
+        errors[fieldName] = `${field.label} is required.`;
+        isValid = false;
       }
 
-      // Email validation
-      if (field.type === "email" && value && !/^\S+@\S+\.\S+$/.test(value)) {
-        errors[field.label.toLowerCase().replace(" ", "-")] =
-          "Please enter a valid email address.";
-      }
+      // Additional validation based on field type
+      if (value) {
+        if (field.type === "email" && !/^\S+@\S+\.\S+$/.test(value)) {
+          errors[fieldName] = "Please enter a valid email address.";
+          isValid = false;
+        }
 
-      // Phone number validation (must be all integers)
-      if (field.type === "tel" && value && !/^\d+$/.test(value)) {
-        errors[field.label.toLowerCase().replace(" ", "-")] =
-          "Phone number must contain only digits.";
-      }
+        if (field.type === "tel" && !/^\d+$/.test(value)) {
+          errors[fieldName] = "Phone number must contain only digits.";
+          isValid = false;
+        }
 
-      // First name validation (must start with an uppercase letter)
-      if (
-        field.label.toLowerCase() === "name" &&
-        value &&
-        !/^[A-Z]/.test(value)
-      ) {
-        errors[field.label.toLowerCase().replace(" ", "-")] =
-          "Name must start with an uppercase letter.";
+        if (field.label.toLowerCase() === "name" && !/^[A-Z]/.test(value)) {
+          errors[fieldName] = "Name must start with an uppercase letter.";
+          isValid = false;
+        }
       }
 
       // Minimum length validation
       const minLengthRule = rules.find((rule) => rule.startsWith("minLength"));
       if (minLengthRule) {
         const minLength = parseInt(minLengthRule.split(":")[1]);
-        if (value && value.length < minLength) {
+        if (value.length < minLength) {
           errors[
-            field.label.toLowerCase().replace(" ", "-")
+            fieldName
           ] = `${field.label} must be at least ${minLength} characters.`;
+          isValid = false;
         }
       }
     });
 
     setFormErrors(errors);
-    return Object.keys(errors).length === 0; // Return true if no errors
+    return isValid;
   };
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setGeneralError(null);
     const isValid = validateForm();
 
     if (isValid) {
-      setIsSubmitted(true);
-      // Submit the form data here
-      console.log("Form submitted successfully!", formValues);
+      try {
+        const response = await fetch("/api/send-email", {
+          method: "POST", // Make sure it's POST
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formValues["name"],
+            email: formValues["email"],
+            message: formValues["message"],
+            subject: formValues["subject"],
+            phoneNumber: formValues["phone-number"], // Make sure this matches
+          }),
+        });
+
+        if (response.ok) {
+          setIsSubmitted(true);
+          console.log("Email sent successfully");
+        } else {
+          setGeneralError("Failed to send email. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error submitting the form:", error);
+        setGeneralError("An error occurred. Please try again later.");
+      }
     } else {
-      setIsSubmitted(false);
+      setGeneralError("Please fill in all required fields."); // Show general error
     }
   };
 
   return (
-    <div className="form-container p-6 border border-gray-300 rounded-md">
-      <h2 className="text-2xl font-bold mb-4">{form.title}</h2>
+    <div className="flex flex-1 md:flex-row flex-col">
+      {/* <h2 className="text-2xl font-bold mb-4">{form.title}</h2> */}
 
       {/* Render rich text for description */}
-      <div className="mb-4">{documentToReactComponents(form.description)}</div>
-
-      <form onSubmit={handleSubmit}>
-        {form.formFields?.map((field, index) => (
-          <div key={index} className="mb-4">
-            <label
-              htmlFor={`form-field-${field.id}`}
-              className="block text-sm font-medium text-gray-700"
-            >
-              {field.label}
-            </label>
-            <input
-              id={`form-field-${field.id}`}
-              name={field.label.toLowerCase().replace(" ", "-")}
-              type={field.type || "text"}
-              placeholder={field.placeholderText}
-              value={
-                formValues[field.label.toLowerCase().replace(" ", "-")] || ""
-              }
-              onChange={handleChange}
-              className={`mt-1 block w-full p-2 border border-gray-300 rounded-md ${
-                formErrors[field.label.toLowerCase().replace(" ", "-")]
-                  ? "border-red-500"
-                  : ""
-              }`}
-            />
-            {formErrors[field.label.toLowerCase().replace(" ", "-")] && (
-              <p className="text-red-500 text-sm mt-1">
-                {formErrors[field.label.toLowerCase().replace(" ", "-")]}
-              </p>
-            )}
+      <div className="mb-4 flex-[0.33]">
+        {documentToReactComponents(form.description, richTextRenderOptions)}
+      </div>
+      <div className="p-6 border-gray-300 flex-[0.66] transition-all duration-300">
+        {generalError && (
+          <div className="text-red-500 font-inriaSerif text-sm mb-4">
+            {generalError}
           </div>
-        ))}
-        <button
-          type="submit"
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
-        >
-          {form.submitText}
-        </button>
-      </form>
+        )}
+        <form onSubmit={handleSubmit}>
+          {form.formFields?.map((field, index) => (
+            <div key={index} className="mb-4">
+              <label
+                htmlFor={`form-field-${field.id}`}
+                className="block font-inriaSerif text-sm font-medium text-gray-700"
+              >
+                {field.label}
+              </label>
+              {field.label === "Message" ? (
+                <textarea
+                  id={`form-field-${field.id}`}
+                  name={field.label.toLowerCase().replace(" ", "-")}
+                  placeholder={field.placeholderText}
+                  value={
+                    formValues[field.label.toLowerCase().replace(" ", "-")] ||
+                    ""
+                  }
+                  onChange={handleChange}
+                  required
+                  className={`mt-1 font-inriaSerif block w-full p-2 border-b hover:bg-gray-50 transition-colors duration-300 border-gray-300 focus:outline-none focus:border-primary-light focus:bg-gray-50 focus:ring-[0.5px] focus:ring-primary ${
+                    formErrors[field.label.toLowerCase().replace(" ", "-")]
+                      ? "border-red-500"
+                      : ""
+                  } h-40 resize-none`}
+                />
+              ) : (
+                <input
+                  id={`form-field-${field.id}`}
+                  name={field.label.toLowerCase().replace(" ", "-")}
+                  type={field.type}
+                  placeholder={field.placeholderText}
+                  required
+                  value={
+                    formValues[field.label.toLowerCase().replace(" ", "-")] ||
+                    ""
+                  }
+                  onChange={handleChange}
+                  className={`mt-1 font-inriaSerif block w-full p-2 border-b hover:bg-gray-50 transition-colors duration-300 border-gray-300 focus:outline-none focus:border-primary-light focus:bg-gray-50 focus:ring-[0.5px] focus:ring-primary ${
+                    formErrors[field.label.toLowerCase().replace(" ", "-")]
+                      ? "border-red-500"
+                      : ""
+                  }`}
+                />
+              )}
 
-      {/* Render rich text for success message */}
-      {isSubmitted && (
-        <div className="mt-4 text-green-600">
-          {documentToReactComponents(form.successMessage)}
-        </div>
-      )}
+              {formErrors[field.label.toLowerCase().replace(" ", "-")] && (
+                <p className="text-red-500 font-assistant text-sm mt-1">
+                  {formErrors[field.label.toLowerCase().replace(" ", "-")]}
+                </p>
+              )}
+            </div>
+          ))}
+          <button
+            type="submit"
+            className="mt-4 font-inriaSerif text-primary px-4 py-2 rounded-md"
+          >
+            {form.submitText}
+          </button>
+        </form>
+        {isSubmitted && (
+          <div className="mt-4 font-inriaSerif text-green-600">
+            {documentToReactComponents(form.successMessage)}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

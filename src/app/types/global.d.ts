@@ -67,6 +67,26 @@ declare global {
 
   // END OF HEADER PROPS
 
+  // FORM PROPS
+
+  type FormField = {
+    label: string;
+    type?: string;
+    placeholderText: string;
+    validationRules?: string;
+    id: number;
+  };
+
+  type FormProps = {
+    title: string;
+    description: any; // Rich text data
+    submitText: string;
+    successMessage: any; // Rich text data
+    formFields?: FormField[];
+  };
+
+  // END OF FORM PROPS
+
   type SearchProps = {
     initialSearchTerm: string;
     initialTag: string;
