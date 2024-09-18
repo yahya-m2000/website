@@ -158,6 +158,15 @@ declare global {
     isReversed?: boolean;
     isCentered?: boolean;
   };
+
+  type PageContent = {
+    slug: string;
+    title: string;
+    subtitle: string;
+    heroImage: string;
+    date: string;
+    form?: Form;
+  };
 }
 
 export {};

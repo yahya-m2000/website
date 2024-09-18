@@ -1,36 +1,8 @@
 import { Footer, Header, HeroImage, Layout } from "@/components/ui";
-import Section from "@/components/ui/Section";
+
 import { fetchNavigation, fetchPageContent } from "@/lib/api/src/contentful";
 import React from "react";
 import ContactForm from "@/components/ui/form/ContactForm"; // Import the ContactForm component
-
-type Section = {
-  title: string;
-  subtitle: string;
-  body: any;
-  callToAction?: string;
-  quote?: string;
-  author?: string;
-  image?: string;
-};
-
-type Form = {
-  title: string;
-  description: string;
-  submitText: string;
-  successMessage: string;
-  formFields?: FormField[];
-};
-
-type PageContent = {
-  slug: string;
-  title: string;
-  subtitle: string;
-  heroImage: string;
-  date: string;
-  form?: Form;
-  sections?: Section[];
-};
 
 export default async function ContactUs() {
   // Fetch navigation tabs
@@ -51,8 +23,7 @@ export default async function ContactUs() {
   let title = "";
   let subtitle = "";
   let heroImage = "";
-  let form: Form | undefined;
-  let sections: Section[] | undefined;
+  let form: FormProps | undefined;
 
   // If it's regular page content
   if (content) {
@@ -60,7 +31,6 @@ export default async function ContactUs() {
     subtitle = content.subtitle;
     heroImage = content.heroImage;
     form = content.form; // Get the form data
-    sections = content.sections; // Get all sections if any
   }
 
   return (
