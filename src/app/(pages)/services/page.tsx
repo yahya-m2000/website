@@ -22,13 +22,13 @@ export default async function Page() {
   let title = "";
   let subtitle = "";
   let heroImage = "";
-  let sections: Section[] | undefined;
+  // let sections: Section[] | undefined;
 
   if (content) {
     title = content.title;
     subtitle = content.subtitle;
     heroImage = content.heroImage;
-    sections = content.sections;
+    // sections = content.sections;
   }
 
   const paragraphData = await fetchParagraph("paragraph");
