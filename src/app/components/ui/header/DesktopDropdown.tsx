@@ -16,7 +16,7 @@ export const DesktopDropdown: React.FC<DropdownMenuProps> = ({
     <>
       {/* Desktop Navigation */}
       {!isMobile && (
-        <div className="hidden lg:flex items-end h-[auto]">
+        <div className="hidden lg:flex items-end">
           {navigationTabs.map((navItem, index) => (
             <NavItem
               key={index}
@@ -35,17 +35,17 @@ export const DesktopDropdown: React.FC<DropdownMenuProps> = ({
         <div
           ref={dropdownRef}
           className={clsx(
-            "absolute main hidden lg:!block left-0 w-full z-[10] duration-500 ease-in-out",
+            "hidden lg:!block left-0 w-full z-[10] duration-500 ease-in-out",
             dropdownOpen
-              ? "top-full h-[32vh] opacity-100 translate-y-0 bg-white backdrop-blur-sm shadow-lg"
+              ? "top-full h-auto opacity-100 translate-y-0 backdrop-blur-sm "
               : "top-full opacity-0 h-0"
           )}
         >
-          <div>
+          <div className="mt-[20px]">
             <Link
               href={`/${cleanUrlString(navigationTabs[selectedNav]?.title)}`}
             >
-              <h3 className="font-bold font-assistant text-lg pb-[2vh] text-gray-500 hover:text-black">
+              <h3 className="font-bold font-assistant text-lg  text-gray-500 hover:text-black">
                 {navigationTabs[selectedNav]?.title}
               </h3>
             </Link>

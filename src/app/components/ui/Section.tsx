@@ -31,7 +31,6 @@ const Section: React.FC<SectionProps> = ({ section, isReversed }) => {
           <Image
             src={section.image}
             alt={section.title}
-            className="w-full h-auto"
             width={2000}
             height={2000}
           />
@@ -45,7 +44,7 @@ const Section: React.FC<SectionProps> = ({ section, isReversed }) => {
         }`} // Adjust left or right margin for text and ensure it wraps
       >
         {/* Section Title and Subtitle */}
-        <h2 className="font-inriaSerif text-4xl font-bold mb-4">
+        <h2 className="font-assistant text-4xl font-bold mb-4">
           {section.title}
         </h2>
 
