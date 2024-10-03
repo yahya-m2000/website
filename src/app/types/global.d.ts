@@ -14,6 +14,7 @@ declare global {
   };
   
   type PageContent = {
+    form: FormProps | undefined;
     slug: string;
     title: string;
     subtitle: string;
