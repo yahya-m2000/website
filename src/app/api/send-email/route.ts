@@ -6,13 +6,12 @@ export async function POST(req: NextRequest) {
     const { name, email, message, subject, phoneNumber } = await req.json();
 
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: 'smtp.gmail.com',
+      port: 465, // or use 587 for TLS
+      secure: true, // true for port 465, false for port 587
       auth: {
-        user: process.env.EMAIL_USER, // Your Gmail address
-        pass: process.env.EMAIL_PASS, // The App Password generated
-      },
-      tls: {
-        rejectUnauthorized: false,
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
