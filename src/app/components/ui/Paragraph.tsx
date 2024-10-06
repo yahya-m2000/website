@@ -12,7 +12,7 @@ const Paragraph: React.FC<ParagraphProps> = ({
 }) => {
   return (
     <div
-      className={clsx("py-[7.5vh] flex flex-wrap main h-auto", {
+      className={clsx("main py-[100px]  flex flex-wrap  h-auto", {
         "flex-col": buttonUrl && isCentered,
         "lg:flex-row-reverse": isReversed,
         "lg:flex-row": !isReversed,
@@ -21,14 +21,12 @@ const Paragraph: React.FC<ParagraphProps> = ({
     >
       {/* Text Section */}
       <div
-        className={clsx(
-          "flex flex-col md:flex-[0.66] flex-[1] justify-center",
-          {
-            "lg:ml-12 ml-0": isReversed && !isCentered,
-            "lg:mr-12 ml-0": !isReversed && !isCentered,
-            "lg:mx-auto mx-0": isCentered,
-          }
-        )}
+        className={clsx("flex flex-col  flex-[1] justify-center", {
+          "lg:ml-12 ml-0": isReversed && !isCentered,
+          "lg:mr-12 ml-0": !isReversed && !isCentered,
+          "lg:mx-auto mx-0": isCentered,
+          "md:flex-[0.66]": image,
+        })}
       >
         <h2
           className={clsx(

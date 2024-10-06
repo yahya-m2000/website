@@ -35,7 +35,6 @@ export default async function Home() {
       <main>
         <Header isDark={true} navigationTabs={navigationTabs} />
 
-        {/* HeroImage rendering */}
         {renderHeroImage(
           featuredHeroImage
             ? {
@@ -53,7 +52,6 @@ export default async function Home() {
 
         <FeaturedInsights insights={insights} />
 
-        {/* About Us Section (Paragraph) */}
         {aboutUsContent ? (
           <Paragraph
             title={aboutUsContent.title}

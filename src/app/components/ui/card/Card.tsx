@@ -27,7 +27,7 @@ const Card: React.FC<CardProps> = ({
   slug,
 }) => {
   const cardClasses = clsx(
-    "w-auto text-black lg:min-h-[500px] md:min-h-[500px] min-h-[100px] flex md:flex-col flex-row cursor-pointer overflow-hidden rounded-md transition-shadow duration-300 ease-in-out hover:shadow-lg",
+    "w-auto border-background-paper border-2 text-black lg:min-h-[500px] md:min-h-[500px] min-h-[100px] flex md:flex-col flex-row cursor-pointer overflow-hidden rounded-md transition-shadow duration-300 ease-in-out hover:shadow-lg",
     isDark ? "bg-black border-2 border-gray-900" : "bg-white"
   );
 

@@ -5,6 +5,9 @@ import Logo from "./Logo";
 import DrawerToggle from "./DrawerToggle";
 import MobileDrawer from "./MobileDrawer";
 import DesktopDropdown from "./DesktopDropdown";
+import NavItem from "./NavItem";
+
+import Link from "next/link";
 
 interface HeaderProps {
   isDark?: boolean;
@@ -92,18 +95,18 @@ const Header: React.FC<HeaderProps> = ({ isDark = false, navigationTabs }) => {
   return (
     <>
       {/* Overlay for dropdown and drawer */}
-      {(dropdownOpen || drawerOpen) && (
+      {/* {(dropdownOpen || drawerOpen) && (
         <div
           className="fixed inset-0 bg-slate-200 bg-opacity-25 z-[50] backdrop-brightness-50 duration-750"
           onClick={closeDrawer} // Close the drawer and dropdown when overlay is clicked
         />
-      )}
+      )} */}
 
       <header
         ref={headerRef}
         className={clsx(
-          "absolute main flex flex-row lg:flex-col justify-between lg-justify-normal left-0 w-full z-[50] transition-all duration-300 ease-in-out",
-          dropdownOpen ? "lg:shadow-lg lg:bg-white" : ""
+          "absolute main flex flex-row lg:flex-col justify-between lg-justify-normal left-0 w-full z-[50] transition-all duration-300 ease-in-out"
+          // dropdownOpen ? "lg:shadow-lg lg:bg-white" : ""
         )}
       >
         <Logo isDark={isDark} dropdownOpen={dropdownOpen} />
@@ -121,7 +124,7 @@ const Header: React.FC<HeaderProps> = ({ isDark = false, navigationTabs }) => {
             isDark={isDark}
           />
         )}
-        <DesktopDropdown
+        {/* <DesktopDropdown
           navigationTabs={navigationTabs}
           dropdownOpen={dropdownOpen}
           dropdownRef={dropdownRef}
@@ -129,7 +132,22 @@ const Header: React.FC<HeaderProps> = ({ isDark = false, navigationTabs }) => {
           selectedNav={selectedNav}
           handleNavClick={handleNavClick}
           isDark={isDark}
-        />
+        /> */}
+        {!isMobile && (
+          <div className="hidden lg:flex items-end">
+            {navigationTabs.map((navItem, index) => (
+              <Link href={`/${navItem.slug}`} key={index} passHref>
+                <NavItem
+                  label={navItem.title}
+                  isDark={isDark}
+                  onClick={() => setSelectedNav(index)}
+                  isSelected={selectedNav === index}
+                  dropdownOpen={false}
+                />
+              </Link>
+            ))}
+          </div>
+        )}
       </header>
     </>
   );

@@ -14,8 +14,8 @@ const Logo: React.FC<LogoProps> = ({
         src={require("../../../assets/images/logo1.png")}
         alt="Logo"
         className={clsx(
-          "transition-all duration-300 ease-in-out hover:scale-105 w-[125px] lg:w-[150px]",
-          dropdownOpen ? "invert" : isDark ? "" : "invert"
+          "transition-all duration-300 ease-in-out hover:scale-105 w-[125px] lg:w-[150px]"
+          // dropdownOpen ? "invert" : isDark ? "" : "invert"
         )}
       />
     </Link>

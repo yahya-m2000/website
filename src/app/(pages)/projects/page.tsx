@@ -1,86 +1,88 @@
-"use client";
-import React, { useState } from "react";
-import { Footer, Header, Layout } from "@/components/ui";
+import { Footer, Header, Layout, Paragraph } from "@/components/ui";
 import HeroImage from "@/components/ui/HeroImage";
-import SearchBar from "@/components/ui/SearchBar";
-import CardGrid from "@/components/ui/card/CardGrid";
-import { mockInsights } from "@/assets/data/insights";
+import SearchProjects from "@/components/ui/projects/SearchProjects";
+import Section from "@/components/ui/Section";
+import {
+  fetchInsights,
+  fetchNavigation,
+  fetchPageContent,
+  fetchParagraph,
+} from "@/lib/api/src/contentful";
 
-export default function Projects() {
-  const [filteredInsights, setFilteredInsights] = useState(mockInsights);
-  const [loading, setLoading] = useState(false); // Add loading state
+export default async function Projects() {
+  const [insights, navigationTabs, content] = await Promise.all([
+    fetchInsights("article").then((res) => res || []), // Fallback to empty array if null or undefined
+    fetchNavigation("navigation"),
+    fetchPageContent("pageContent").then((pages) =>
+      pages?.find((page) => page.slug === "projects")
+    ),
+  ]);
 
-  // Function to filter insights based on search term
-  const handleSearch = (term: string) => {
-    setLoading(true); // Start loading
+  const paragraphData = await fetchParagraph("paragraph");
 
-    setTimeout(() => {
-      if (term === "") {
-        setFilteredInsights(mockInsights); // Show all insights if no search term
-      } else {
-        const filtered = mockInsights.filter((insight) =>
-          insight.title.toLowerCase().includes(term.toLowerCase())
-        );
-        setFilteredInsights(filtered);
-      }
-      setLoading(false); // End loading
-    }, 1000); // Simulate network delay for loading
+  // Ensure you are looking for the right slug or page identifier
+  const paragraphContent = paragraphData?.find(
+    (page) => page.slug === "projects"
+  ) || {
+    title: "What we offer",
+    body: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium...",
+    image:
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?fit=crop&w=600&q=80",
   };
 
-  // Function to filter insights based on selected tag
-  const handleFilterByTag = (tag: string) => {
-    const filtered = mockInsights.filter((insight) =>
-      insight.tags?.includes(tag)
-    );
-    setFilteredInsights(filtered);
-  };
+  let title = "";
+  let subtitle = "";
+  let heroImage = "";
+  let sections: Section[] | undefined;
+
+  if (content) {
+    title = content.title;
+    subtitle = content.subtitle;
+    heroImage = content.heroImage;
+    sections = content.sections;
+  }
 
   return (
     <Layout>
-      <main className="hide-scrollbar bg-black">
-        <Header isDark={true} navigationTabs={[]} />
-        <HeroImage title={""} body={""} date={""} basePath={""} />
-        <div className="main">
-          <h3 className="font-assistant text-white text-3xl md:w-[40vw] justify-start">
-            We at the Eastern Trade Group believe in
-            <span className="font-extrabold"> innovation</span> and, more
-            importantly, the
-            <span className="font-extrabold"> innovators themselves.</span>
-          </h3>
-          <h3 className="pt-[4vh] font-extrabold font-assistant text-white text-3xl md:w-[40vw] justify-start">
-            Browse the work of our clients
-          </h3>
-        </div>
+      <main>
+        <Header isDark={true} navigationTabs={navigationTabs} />
 
-        {/* SearchBar Component */}
-        <SearchBar
-          onSearch={handleSearch}
-          onFilterByTag={handleFilterByTag}
-          initialSearchTerm={""}
-          initialTag={""}
-          insights={[]}
+        <HeroImage
+          title={title || "Projects"}
+          body={subtitle || ""}
+          heroImage={heroImage || ""}
+          date={""}
+          basePath={""}
         />
 
-        {/* Display the filtered insights using the CardGrid component */}
-        <div className="main min-h-[20vh]">
-          {loading ? (
-            <p className="text-white text-lg">Loading...</p> // Display loading message
-          ) : filteredInsights.length > 0 ? (
-            <div
-              className="transition-opacity duration-500 ease-in-out"
-              style={{ opacity: loading ? 0 : 1 }}
-            >
-              <CardGrid
-                data={filteredInsights}
-                itemsToShow={filteredInsights.length}
-                isDark={true}
-              />
+        <Paragraph
+          title={paragraphContent.title}
+          text={paragraphContent.body}
+          image={paragraphContent.image}
+          isReversed={true}
+        />
+        <div className="main flex flex-1 flex-col-reverse md:flex-row bg-white border-b border-b-slate-300 border-[1px]">
+          <div className="flex-[1] h-full">
+            <div className="sections-container">
+              {sections && sections.length > 0 ? (
+                sections.map((section, index) => (
+                  <Section
+                    key={index}
+                    section={section}
+                    isReversed={index % 2 === 1}
+                  />
+                ))
+              ) : (
+                <p>No sections available.</p>
+              )}
             </div>
-          ) : (
-            <p className="text-white text-lg">No results found.</p> // No results message
-          )}
+          </div>
         </div>
-        <Footer isDark={true} />
+
+        {/* Pass the insights to the client-side ProjectsClient */}
+        {/* <SearchProjects insights={insights} /> */}
+
+        <Footer />
       </main>
     </Layout>
   );

@@ -4,7 +4,6 @@ import clsx from "clsx";
 import Link from "next/link";
 import Logo from "./Logo";
 import NavItem from "./NavItem";
-import { cleanUrlString } from "@/lib/common/src/utils";
 
 const MobileDrawer: React.FC<MobileDrawerProps> = ({
   drawerOpen,
@@ -26,7 +25,7 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({
       <div className="w-[100vw] p-[4vh_4vh] bg-white h-full flex flex-col transition-all duration-300 ease-in-out">
         {/* top section with logo and close button */}
         <div className="flex justify-between items-center p-[2vh]">
-          <Logo isDark={isDark} dropdownOpen={drawerOpen} />
+          <Logo isDark={isDark} />
           <IconButton onClick={closeDrawer}>
             <CloseIcon />
           </IconButton>
@@ -36,24 +35,29 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({
           {/* navigation items container */}
           <div
             className={clsx(
-              "flex flex-col pr-[4vw] transition-all duration-300 ease-in-out",
-              selectedNav !== null ? "flex-[0.3]" : "flex-[1]" // adjust width when a nav item is selected
+              "flex flex-col pr-[4vw] transition-all duration-300 ease-in-out"
             )}
           >
             {navigationTabs.map((navItem, index) => (
-              <NavItem
-                key={index}
-                label={navItem.title}
-                isDark={isDark}
-                dropdownOpen={drawerOpen}
-                onClick={() => handleNavClick(index)}
-                isSelected={selectedNav === index}
-                isInDrawer={true}
-              />
+              <Link href={`/${navItem.slug}`} key={index} passHref>
+                <NavItem
+                  label={navItem.title}
+                  isDark={isDark}
+                  dropdownOpen={drawerOpen}
+                  onClick={() => closeDrawer()} // Close drawer when a NavItem is clicked
+                  isSelected={selectedNav === index}
+                  isInDrawer={true}
+                />
+              </Link>
             ))}
           </div>
 
-          {/* selected nav content */}
+          {/* 
+          Commenting out the code for selected nav content and tabs,
+          since we're now using direct navigation
+          */}
+
+          {/* 
           {selectedNav !== null && (
             <div
               ref={dropdownRef}
@@ -82,6 +86,7 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({
               </div>
             </div>
           )}
+          */}
         </div>
       </div>
     </Drawer>

@@ -22,9 +22,9 @@ const NavItem: React.FC<NavItemProps> = ({
       // Conditional text color classes
       isSelected
         ? "text-primary"
-        : dropdownOpen
-        ? "text-black"
-        : isDark
+        : // : dropdownOpen
+        // ? "text-black"
+        isDark
         ? "text-white"
         : "text-black"
     )}

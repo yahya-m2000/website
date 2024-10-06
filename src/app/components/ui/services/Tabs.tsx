@@ -1,26 +1,19 @@
-"use client"; // This makes the component a client-side component
+"use client";
 
 import React, { useState } from "react";
-import Paragraph from "@/components/ui/Paragraph";
+import Section from "../Section";
 
-interface Service {
-  title: string;
-  text: string;
-  image: string;
-}
-
-const ServiceTabs: React.FC<{ services: Service[] }> = ({ services }) => {
+const ServiceTabs: React.FC<{ services: Section[] }> = ({ services }) => {
   const [activeTab, setActiveTab] = useState(0);
 
-  // Handle tab change
   const handleTabChange = (index: number) => {
     setActiveTab(index);
   };
 
   return (
-    <div>
+    <div className="main">
       {/* Tabs for each service */}
-      <div className="flex justify-between space-x-4 main py-0 border-b border-black ">
+      <div className="flex justify-between py-0 border-b border-black ">
         {services.map((service, index) => (
           <button
             key={index}
@@ -34,12 +27,15 @@ const ServiceTabs: React.FC<{ services: Service[] }> = ({ services }) => {
         ))}
       </div>
 
-      {/* Paragraph that updates based on the selected tab */}
-      <Paragraph
-        text={services[activeTab].text}
-        image={services[activeTab].image}
-        isReversed={activeTab % 2 === 0} // Reverse every second paragraph for alternating layout
-        title={services[activeTab].title}
+      <Section
+        // isReversed={activeTab % 2 === 0}
+        section={{
+          title: services[activeTab].title,
+          subtitle: "",
+          body: services[activeTab].body,
+          image: services[activeTab].image,
+        }}
+        isReversed={false}
       />
     </div>
   );
