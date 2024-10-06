@@ -25,7 +25,7 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({
       <div className="w-[100vw] p-[4vh_4vh] bg-white h-full flex flex-col transition-all duration-300 ease-in-out">
         {/* top section with logo and close button */}
         <div className="flex justify-between items-center p-[2vh]">
-          <Logo isDark={isDark} />
+          <Logo isDark={isDark} dropdownOpen={false} />
           <IconButton onClick={closeDrawer}>
             <CloseIcon />
           </IconButton>
