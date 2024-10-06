@@ -6,11 +6,10 @@ export async function POST(req: NextRequest) {
     const { name, email, message, subject, phoneNumber } = await req.json();
 
     const transporter = nodemailer.createTransport({
-      host: "127.0.0.1", // Localhost for the ProtonMail Bridge
-      port: 1025,
+      service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: process.env.EMAIL_USER, // Your Gmail address
+        pass: process.env.EMAIL_PASS, // The App Password generated
       },
       tls: {
         rejectUnauthorized: false,
