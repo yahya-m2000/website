@@ -6,14 +6,12 @@ export async function POST(req: NextRequest) {
     const { name, email, message, subject, phoneNumber } = await req.json();
 
     const transporter = nodemailer.createTransport({
-      host: "127.0.0.1", // Localhost for the ProtonMail Bridge
-      port: 1025,
+      host: 'smtp.gmail.com',
+      port: 465, // or use 587 for TLS
+      secure: true, // true for port 465, false for port 587
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
-      },
-      tls: {
-        rejectUnauthorized: false,
       },
     });
 

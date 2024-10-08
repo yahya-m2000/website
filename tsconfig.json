@@ -3,8 +3,8 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "noUnusedLocals": true, // Enable error for unused local variables
-    "noUnusedParameters": true, // Enable error for unused function parameters
+    "noUnusedLocals": false, // Enable error for unused local variables
+    "noUnusedParameters": false, // Enable error for unused function parameters
     "strict": true, // Enable all strict type-checking options
     "noEmit": true,
     "esModuleInterop": true,

@@ -2,18 +2,14 @@ import { Footer, Header, HeroImage, Layout } from "@/components/ui";
 
 import { fetchNavigation, fetchPageContent } from "@/lib/api/src/contentful";
 import React from "react";
-import ContactForm from "@/components/ui/form/ContactForm"; // Import the ContactForm component
+import ContactForm from "@/components/ui/form/ContactForm";
 
 export default async function ContactUs() {
-  // Fetch navigation tabs
   const navigationTabs = await fetchNavigation("navigation");
 
   let content: PageContent | null = null;
-
-  // Fetch page content
   const pageContentData = await fetchPageContent("pageContent");
 
-  // Check if pageContentData contains the 'contact-us' slug
   if (pageContentData) {
     content =
       pageContentData.find((page: PageContent) => page.slug === "contact-us") ||
@@ -25,12 +21,11 @@ export default async function ContactUs() {
   let heroImage = "";
   let form: FormProps | undefined;
 
-  // If it's regular page content
   if (content) {
     title = content.title;
     subtitle = content.subtitle;
     heroImage = content.heroImage;
-    form = content.form; // Get the form data
+    form = content.form;
   }
 
   return (

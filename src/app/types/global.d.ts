@@ -1,6 +1,29 @@
 import { StaticImageData } from "next/image";
 
 declare global {
+  // PAGE PROPS
+
+  type Section = {
+    title: string;
+    subtitle: string;
+    body: Document;
+    callToAction?: string;
+    quote?: string;
+    author?: string;
+    image?: string;
+  };
+  
+  type PageContent = {
+    form: FormProps | undefined;
+    slug: string;
+    title: string;
+    subtitle: string;
+    heroImage: string;
+    date: string;
+    sections?: Section[];
+  };
+
+  // END OF PAGE PROPS 
   // HEADER PROPS
 
   type HeaderProps = {

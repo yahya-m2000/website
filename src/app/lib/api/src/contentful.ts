@@ -79,6 +79,35 @@ export async function fetchPageContent(contentType: string) {
     return null;
   }
 }
+export async function fetchParagraph(contentType: string) {
+  try {
+    const entries = await client.getEntries({
+      content_type: contentType,
+      select: [
+        "fields.title",
+        "fields.image",
+        "fields.body",
+        "fields.slug",
+      ],
+    });
+
+    return entries.items.map((item: any) => {
+
+      return {
+        title: item.fields.title,
+        body: item.fields.body,
+        slug: item.fields.slug,
+        image: item.fields.image?.fields?.file?.url.startsWith("//")
+          ? `https:${item.fields.image.fields.file.url}`
+          : item.fields.image?.fields?.file?.url || "",
+        date: item.sys.createdAt,
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching entries:", error);
+    return null;
+  }
+}
 
 export async function fetchInsights(contentType: string) {
   try {
@@ -223,47 +252,6 @@ export async function fetchInsightBySlug(contentType: string, slug: string) {
         slug: item.fields.slug,
         basePath: item.fields.basePath,
         isFeatured: item.fields.isFeatured,
-      }));
-    } else {
-      console.log("No entry found with the given slug"); // Log no entry found
-      return null; // Return null on error
-    }
-  } catch (error) {
-    console.error("Error fetching entry by slug:", error);
-    return null; // Return null on error
-  }
-}
-
-export async function fetchTextBlockBySlug(contentType: string, slug: string) {
-  try {
-    console.log(`Fetching entry with slug: ${slug}`); // Log the slug for debugging
-    const entries = await client.getEntries({
-      content_type: contentType,
-      "fields.slug": slug,
-      limit: 1,
-      select: [
-        "fields.title",
-        "fields.subtitle",
-        "fields.heroImage",
-        "fields.body",
-        "fields.callToAction",
-        "fields.slug",
-      ],
-    });
-
-    if (entries.items.length > 0) {
-      console.log("Entry found:", entries.items[0].fields); // Log the found entry
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return entries.items.map((item: any) => ({
-        title: item.fields.title,
-        subtitle: item.fields.subtitle,
-        heroImage: item.fields.heroImage?.fields?.file?.url.startsWith("//")
-          ? `https:${item.fields.heroImage.fields.file.url}` // Fix protocol-relative URL
-          : item.fields.heroImage?.fields?.file?.url || "",
-        date: item.fields.heroImage?.sys?.createdAt ?? "",
-        body: item.fields.body,
-        callTOAction: item.fields.callToAction,
-        slug: item.fields.slug,
       }));
     } else {
       console.log("No entry found with the given slug"); // Log no entry found

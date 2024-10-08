@@ -5,7 +5,7 @@ import Image from "next/image";
 type SectionProps = {
   section: {
     title: string;
-    subtitle: string;
+    subtitle?: string;
     body: any; // Adjust this type according to your actual data
     quote?: string;
     author?: string;
@@ -15,9 +15,11 @@ type SectionProps = {
 };
 
 const Section: React.FC<SectionProps> = ({ section, isReversed }) => {
+  const isRichText = section.body?.nodeType === "document"; // Check if body is rich text
+
   return (
     <div
-      className={`section flex flex-wrap my-[6vh] flex-col items-center justify-between md:items-center ${
+      className={`flex flex-wrap my-[25px] flex-col items-center justify-between md:items-center ${
         isReversed ? "md:flex-row-reverse" : "md:flex-row"
       }`}
     >
@@ -31,7 +33,6 @@ const Section: React.FC<SectionProps> = ({ section, isReversed }) => {
           <Image
             src={section.image}
             alt={section.title}
-            className="w-full h-auto"
             width={2000}
             height={2000}
           />
@@ -45,13 +46,19 @@ const Section: React.FC<SectionProps> = ({ section, isReversed }) => {
         }`} // Adjust left or right margin for text and ensure it wraps
       >
         {/* Section Title and Subtitle */}
-        <h2 className="font-inriaSerif text-4xl font-bold mb-4">
+        <h2 className="font-assistant text-4xl font-bold mb-4">
           {section.title}
         </h2>
+        {section.subtitle && (
+          <h3 className="font-assistant text-2xl mb-4">{section.subtitle}</h3>
+        )}
 
         {/* Section Body */}
         <div className="section-body">
-          {documentToReactComponents(section.body, richTextRenderOptions)}
+          {isRichText
+            ? documentToReactComponents(section.body, richTextRenderOptions) // Render rich text
+            : section.body}{" "}
+          {/* Render plain text */}
         </div>
 
         {/* Section Quote */}

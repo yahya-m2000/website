@@ -1,87 +1,69 @@
-"use client";
-import React, { useState } from "react";
 import { Footer, Header, Layout, Paragraph } from "@/components/ui";
 import HeroImage from "@/components/ui/HeroImage";
-import bgImage from "@/assets/images/projects_background.png";
+import {
+  fetchNavigation,
+  fetchPageContent,
+  fetchParagraph,
+} from "@/lib/api/src/contentful";
+import ServiceTabs from "@/components/ui/services/Tabs";
 
-// Mock services data
-const servicesData = [
-  {
-    title: "Consulting",
-    text: "Our consulting services help businesses navigate complex challenges...",
+export default async function Page() {
+  const navigationTabs = await fetchNavigation("navigation");
+  const pageContentData = await fetchPageContent("pageContent");
+  const paragraphData = await fetchParagraph("paragraph");
+
+  let content: PageContent | null = null;
+
+  if (pageContentData) {
+    content =
+      pageContentData.find((page: PageContent) => page.slug === "services") ||
+      null;
+  }
+  // Fetch paragraph content
+
+  // Ensure you are looking for the right slug or page identifier
+  const paragraphContent = paragraphData?.find(
+    (page) => page.slug === "services"
+  ) || {
+    title: "What we offer",
+    body: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium...",
     image:
       "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?fit=crop&w=600&q=80",
-  },
-  {
-    title: "Development",
-    text: "We provide world-class development services to bring your ideas to life...",
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?fit=crop&w=600&q=80",
-  },
-  {
-    title: "Design",
-    text: "Our design team focuses on creating visually stunning and user-friendly designs...",
-    image:
-      "https://images.unsplash.com/photo-1581091012184-9720b8b9a681?fit=crop&w=600&q=80",
-  },
-];
-
-export default function Projects() {
-  // State to manage the active tab
-  const [activeTab, setActiveTab] = useState(0);
-
-  // Handle tab change
-  const handleTabChange = (index: number) => {
-    setActiveTab(index);
   };
+
+  // Set default values or populate from the content fetched
+  const title = content?.title || "Services";
+  const subtitle = content?.subtitle || "Our Services Subtitle";
+  const heroImage = content?.heroImage || "/default-hero-image.jpg"; // Provide fallback image
+
+  // Extract sections from content (services data)
+  const servicesSections = content?.sections || [];
 
   return (
     <Layout>
-      <main className="hide-scrollbar">
-        <Header isDark={true} navigationTabs={[]} />
+      <main className="hide-scrollbar ">
+        <Header isDark={true} navigationTabs={navigationTabs} />
+
         <HeroImage
-          title={"Services"}
-          heroImage={bgImage}
-          body="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim v..."
-          tag={""}
-          author={""}
+          title={title}
+          body={""}
           date={""}
+          heroImage={heroImage}
+          subtitle={subtitle}
           basePath={""}
         />
-
-        <div className="main">
+        {/* Section to display the paragraph content */}
+        <div className="">
           <Paragraph
-            title="What we offer"
-            text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim v..."
-            image="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?fit=crop&w=600&q=80"
+            title={paragraphContent.title}
+            text={paragraphContent.body}
+            image={paragraphContent.image}
             isReversed={true}
           />
-
-          {/* Tabs for each service */}
-          <div className="flex justify-center space-x-4 my-8">
-            {servicesData.map((service, index) => (
-              <button
-                key={index}
-                onClick={() => handleTabChange(index)}
-                className={`px-4 py-2 rounded-md ${
-                  activeTab === index
-                    ? "bg-primary text-white"
-                    : "bg-gray-200 text-black"
-                }`}
-              >
-                {service.title}
-              </button>
-            ))}
-          </div>
-
-          {/* Paragraph that updates based on the selected tab */}
-          <Paragraph
-            text={servicesData[activeTab].text}
-            image={servicesData[activeTab].image}
-            isReversed={activeTab % 2 === 0} // Reverse every second paragraph for alternating layout
-            title={""}
-          />
         </div>
+
+        {/* Pass the sections data to ServiceTabs */}
+        <ServiceTabs services={servicesSections} />
 
         <Footer isDark={true} />
       </main>

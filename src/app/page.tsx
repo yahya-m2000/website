@@ -2,17 +2,20 @@ import { Footer, Header, Layout, Paragraph } from "@/components/ui";
 import { FeaturedInsights, TrendingCarousel } from "@/components/pages/home";
 import { renderHeroImage } from "./lib/common/src/ui/renderHeroImage";
 import { placeholderHeroImage } from "./assets/data/placeholderHeroImage";
-
 import {
   fetchInsights,
   fetchInsightBySlug,
   fetchNavigation,
+  fetchPageContent,
 } from "@/lib/api/src/contentful";
 
 export default async function Home() {
-  const [insights, navigationTabs] = await Promise.all([
+  const [insights, navigationTabs, aboutUsContent] = await Promise.all([
     fetchInsights("article").then((res) => res || []), // Fallback to an empty array if null or undefined
     fetchNavigation("navigation"),
+    fetchPageContent("pageContent").then((pages) =>
+      pages?.find((page) => page.slug === "about-us")
+    ),
   ]);
 
   // featured insight or project for the hero image
@@ -32,7 +35,6 @@ export default async function Home() {
       <main>
         <Header isDark={true} navigationTabs={navigationTabs} />
 
-        {/* HeroImage rendering */}
         {renderHeroImage(
           featuredHeroImage
             ? {
@@ -49,13 +51,20 @@ export default async function Home() {
         )}
 
         <FeaturedInsights insights={insights} />
-        <Paragraph
-          title="About us"
-          text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-            quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim v"
-          buttonUrl="/contact"
-          image="https://via.placeholder.com/600x400"
-        />
+
+        {aboutUsContent ? (
+          <Paragraph
+            title={aboutUsContent.title}
+            text={aboutUsContent.subtitle}
+            buttonUrl="/contact"
+            image={
+              aboutUsContent.heroImage || "https://via.placeholder.com/600x400"
+            }
+          />
+        ) : (
+          <p>About Us content not available.</p>
+        )}
+
         <TrendingCarousel />
         <Footer isDark={false} />
       </main>
